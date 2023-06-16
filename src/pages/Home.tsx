@@ -1,7 +1,7 @@
-import { DisplayData } from './DisplayData'
-import { useGetRuntimeStatus, useGetStatus } from './oasis-indexer/generated/api'
+import { DisplayData } from '../DisplayData'
+import { useGetRuntimeStatus, useGetStatus } from '../oasis-indexer/generated/api'
 
-export function App() {
+export function Home() {
   return (
     <>
       <h2>Consensus status</h2>
