@@ -21,6 +21,13 @@ body {
   min-height: 100vh;
 }
 
+a {
+  color: lightblue;
+}
+a:visited {
+  color: orchid;
+}
+
 table {
   border-spacing: 2ex 2px;
 }
