@@ -11,6 +11,22 @@ export function DisplayData({ result }: { result: UseQueryResult<AxiosResponse<a
   )
 }
 
+export function Recursive({ field, value, path }: {
+  field?: string
+  value: any
+  path: string
+}) {
+  if (!field) {
+    return <RecursiveValue value={value} path={path} />
+  }
+  return (
+    <div style={{ marginLeft: '2ex' }}>
+      <strong>{field}: </strong>
+      <RecursiveValue value={value} path={path} />
+    </div>
+  )
+}
+
 export function RecursiveValue({ value, path }: {
   value: any
   path: string
@@ -53,22 +69,6 @@ export function RecursiveValue({ value, path }: {
           />
         ))
       }
-    </div>
-  )
-}
-
-export function Recursive({ field, value, path }: {
-  field?: string
-  value: any
-  path: string
-}) {
-  if (!field) {
-    return <RecursiveValue value={value} path={path} />
-  }
-  return (
-    <div style={{ marginLeft: '2ex' }}>
-      <strong>{field}: </strong>
-      <RecursiveValue value={value} path={path} />
     </div>
   )
 }
