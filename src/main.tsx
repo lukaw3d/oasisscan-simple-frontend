@@ -10,9 +10,10 @@ axios.defaults.baseURL = 'https://index.oasislabs.com/v1/'
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      refetchOnReconnect: false,
+      refetchOnMount: false,
       refetchOnWindowFocus: false,
-      retry: false,
-    },
+    }
   },
 })
 

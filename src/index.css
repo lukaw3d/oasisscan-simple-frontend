@@ -20,3 +20,19 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+
+table {
+  border-spacing: 2ex 2px;
+}
+td {
+  max-width: 40ex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+td div {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
