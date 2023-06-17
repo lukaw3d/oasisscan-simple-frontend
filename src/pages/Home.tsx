@@ -13,6 +13,7 @@ export function Home() {
       <Link to="/emerald/blocks?limit=100&offset=0">Blocks</Link><br />
       <Link to="/emerald/transactions?limit=100&offset=0">Transactions</Link><br />
       <Link to="/emerald/events?limit=100&offset=0">Events</Link><br />
+      <Link to="/emerald/accounts/oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t">Accounts</Link><br />
 
       <h2>Sapphire status</h2>
       <DisplayData result={useGetRuntimeStatus('sapphire')}></DisplayData>
