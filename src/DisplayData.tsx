@@ -44,14 +44,18 @@ export function RecursiveValue({ value, path }: {
     return  (
       <div>
         <table>
+          <thead>
           <tr>
             {fields.map((field) => <th key={field} title={path ? path + '[*].' + field : field}>{field}</th>)}
           </tr>
+          </thead>
+          <tbody>
           {value.map((value, index) => (
             <tr key={index}>
               {fields.map((field) => <td key={field + index}><RecursiveValue value={value[field]} path={path ? path + '[*].' + field : field} /></td>)}
             </tr>
           ))}
+          </tbody>
         </table>
       </div>
     )
