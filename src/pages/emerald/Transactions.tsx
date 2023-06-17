@@ -1,13 +1,50 @@
-import { useSearchParams } from 'react-router-dom'
-import { DisplayData } from '../../DisplayData'
+import { Link, useSearchParams } from 'react-router-dom'
+import { CustomDisplayContext, DisplayData } from '../../DisplayData'
 import { useGetRuntimeTransactions } from '../../oasis-indexer/generated/api'
+import BigNumber from 'bignumber.js'
 
 export function Transactions() {
   const searchParams = Object.fromEntries(useSearchParams()[0])
   return (
     <>
       <h2>Transactions</h2>
-      <DisplayData result={useGetRuntimeTransactions('emerald', { ...searchParams })}></DisplayData>
+      <CustomDisplayContext.Provider value={{
+        fieldPriority: {
+          'transactions[*].round': -4,
+          'transactions[*].success': -3,
+          'transactions[*].method': -2,
+          'transactions[*].amount': -1,
+          'transactions[*].body': 100,
+        },
+        fieldDisplay: {
+          'transactions[*].round': ({ value }) => {
+            return <Link to={`/emerald/blocks?limit=1&to=${value}`}>{value}</Link>
+          },
+          'transactions[*].amount': ({ value }) => {
+            return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
+          },
+          'transactions[*].charged_fee': ({ value }) => {
+            return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
+          },
+          'transactions[*].fee': ({ value }) => {
+            return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
+          },
+          'transactions[*].hash': ({ value }) => {
+            return <Link to={`/emerald/transactions/${value}`}>{value}</Link>
+          },
+          'transactions[*].eth_hash': ({ value }) => {
+            return <span>0x{value}</span>
+          },
+          'transactions[*].sender_0': ({ value }) => {
+            return <Link to={`/emerald/accounts/${value}`}>{value}</Link>
+          },
+          'transactions[*].to': ({ value }) => {
+            return <Link to={`/emerald/accounts/${value}`}>{value}</Link>
+          },
+        },
+      }}>
+        <DisplayData result={useGetRuntimeTransactions('emerald', { ...searchParams })}></DisplayData>
+      </CustomDisplayContext.Provider>
     </>
   )
 }
