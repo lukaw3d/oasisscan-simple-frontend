@@ -19,6 +19,12 @@ export function Home() {
 
       <h2>Cipher status</h2>
       <DisplayData result={useGetRuntimeStatus('cipher')}></DisplayData>
+
+      <br />
+      <br />
+      <br />
+      <br />
+      <Link to="/converter">Converter</Link>
     </>
   )
 }
