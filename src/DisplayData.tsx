@@ -56,7 +56,7 @@ export function RecursiveValue({ value, path, parentValue }: {
     return (<span title={path + '  ' + JSON.stringify(value)}>{value.toString()}</span>)
   }
 
-  if (Array.isArray(value) && value.every(a => isPlainObject(a))) {
+  if (Array.isArray(value) && value.length > 2 && value.every(a => isPlainObject(a))) {
     const fields = [...new Set(value.flatMap(a => Object.keys(a)))]
       .sort((a, b) =>
         (customDisplay.fieldPriority[path ? path + '[*].' + a : a] ?? 0) -
@@ -83,6 +83,24 @@ export function RecursiveValue({ value, path, parentValue }: {
           ))}
           </tbody>
         </table>
+      </div>
+    )
+  }
+
+  if (Array.isArray(value)) {
+    return (
+      <div>
+        {
+          value.map((_, field) => (
+            <Recursive
+              key={field}
+              field={field + ''}
+              value={value[field]}
+              path={path ? path + '[*]' : '[*]'}
+              parentValue={value}
+            />
+          ))
+        }
       </div>
     )
   }
