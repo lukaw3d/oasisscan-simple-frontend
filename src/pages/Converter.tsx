@@ -1,22 +1,7 @@
 import { useEffect, useState } from 'react'
-import { AddressPreimage, useGetRuntimeAccountsAddress } from '../oasis-indexer/generated/api'
-
-export async function getEvmBech32Address(evmAddress: string) {
-  const oasis = await import('@oasisprotocol/client')
-  const oasisRT = await import('@oasisprotocol/client-rt')
-  const ethAddrU8 = oasis.misc.fromHex(evmAddress.replace('0x', ''))
-  const addr = await oasis.address.fromData(
-    oasisRT.address.V0_SECP256K1ETH_CONTEXT_IDENTIFIER,
-    oasisRT.address.V0_SECP256K1ETH_CONTEXT_VERSION,
-    ethAddrU8,
-  )
-  return oasis.staking.addressToBech32(addr)
-}
-
-export function getEthAccountAddress(preimage: AddressPreimage | undefined): string | undefined {
-  if (preimage?.context !== 'oasis-runtime-sdk/address: secp256k1eth' || !preimage.address_data) return undefined
-  return '0x' + Buffer.from(preimage.address_data, 'base64').toString('hex')
-}
+import { useGetRuntimeAccountsAddress } from '../oasis-indexer/generated/api'
+import { getEvmBech32Address } from '../utils/getEvmBech32Address'
+import { getEthAccountAddress } from '../utils/getEthAccountAddress'
 
 export function Converter() {
   const [fromEvm, setFromEvm] = useState("0xba504818fdd8d3dba2ef8fd9b4f4d5c71ad1d1d3")
