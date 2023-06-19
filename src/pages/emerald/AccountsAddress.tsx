@@ -2,6 +2,7 @@ import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { CustomDisplayContext, DisplayData } from '../../DisplayData'
 import { useGetRuntimeAccountsAddress, RuntimeAccount } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
+import { getEthAccountAddress } from '../../utils/getEthAccountAddress'
 
 export function AccountsAddress() {
   const address = useParams().address!
@@ -13,9 +14,15 @@ export function AccountsAddress() {
         fieldPriority: {
         },
         fieldDisplay: {
-          'address': ({ value }) => {
+          'address': ({ value, parentValue }: { value: string, parentValue: RuntimeAccount }) => {
             return <span>
-              <Link to={`/emerald/accounts/${value}`}>{value}</Link>
+              {getEthAccountAddress(parentValue.address_preimage)
+                ? <>
+                    {getEthAccountAddress(parentValue.address_preimage)}
+                    &nbsp;(<Link to={`/emerald/accounts/${value}`}>{value}</Link>)
+                  </>
+                : <Link to={`/emerald/accounts/${value}`}>{value}</Link>
+              }
               &nbsp;
               <Link to={`/emerald/transactions?offset=0&limit=100&rel=${value}`}>transactions</Link>
               &nbsp;
