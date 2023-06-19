@@ -1,6 +1,6 @@
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { CustomDisplayContext, DisplayData } from '../../DisplayData'
-import { useGetRuntimeAccountsAddress } from '../../oasis-indexer/generated/api'
+import { useGetRuntimeAccountsAddress, RuntimeAccount } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
 
 export function AccountsAddress() {
@@ -22,10 +22,10 @@ export function AccountsAddress() {
               <Link to={`/emerald/events?offset=0&limit=100&rel=${value}`}>events</Link>
             </span>
           },
-          'balances[*].balance': ({ value, parentValue }) => {
+          'balances[*].balance': ({ value, parentValue }: { value: string, parentValue: RuntimeAccount['balances'][number] }) => {
             return <span>{new BigNumber(value).shiftedBy(-parentValue.token_decimals).toFixed()}</span>
           },
-          'evm_balances[*].balance': ({ value, parentValue }) => {
+          'evm_balances[*].balance': ({ value, parentValue }: { value: string, parentValue: RuntimeAccount['evm_balances'][number] }) => {
             return <span>{new BigNumber(value).shiftedBy(-parentValue.token_decimals).toFixed()}</span>
           },
           'evm_balances[*].token_contract_addr': ({ value }) => {

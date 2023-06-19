@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayContext, DisplayData } from '../../DisplayData'
-import { useGetRuntimeBlocks } from '../../oasis-indexer/generated/api'
+import { useGetRuntimeBlocks, RuntimeBlockList } from '../../oasis-indexer/generated/api'
 
 export function Blocks() {
   const searchParams = Object.fromEntries(useSearchParams()[0])
@@ -19,7 +19,7 @@ export function Blocks() {
               <Link to={`/emerald/events?offset=0&limit=100&block=${value}`}>events</Link>
             </span>
           },
-          'blocks[*].num_transactions': ({ value, parentValue }) => {
+          'blocks[*].num_transactions': ({ value, parentValue }: { value: number, parentValue: RuntimeBlockList['blocks'][number] }) => {
             return <Link to={`/emerald/transactions/?offset=0&limit=100&block=${parentValue.round}`}>{value}</Link>
           },
           'blocks[*].timestamp': ({ value }) => {
