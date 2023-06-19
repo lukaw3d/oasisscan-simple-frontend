@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useGetRuntimeAccountsAddress } from '../oasis-indexer/generated/api'
+import { useGetRuntimeAccountsAddress, useGetRuntimeTransactionsTxHash } from '../oasis-indexer/generated/api'
 import { getEvmBech32Address } from '../utils/getEvmBech32Address'
 import { getEthAccountAddress } from '../utils/getEthAccountAddress'
 
@@ -19,6 +19,20 @@ export function Converter() {
     ? 'loading'
     : getEthAccountAddress(emeraldAccount.data?.data.address_preimage) ?? getEthAccountAddress(sapphireAccount.data?.data.address_preimage) ?? 'not found'
 
+  const [fromOasisTx, setFromOasisTx] = useState("d642cdd262fb27b861056cb4c1913d59679297bd482a5eadebf0e1d8bf484b82")
+  const emeraldOasisTx = useGetRuntimeTransactionsTxHash('emerald', fromOasisTx.replace('0x', ''))
+  const sapphireOasisTx = useGetRuntimeTransactionsTxHash('sapphire', fromOasisTx.replace('0x', ''))
+  const fromOasisTxResult = emeraldOasisTx.isLoading || sapphireOasisTx.isLoading
+    ? 'loading'
+    : '0x' + (emeraldOasisTx.data?.data.transactions[0]?.eth_hash ?? sapphireOasisTx.data?.data.transactions[0]?.eth_hash ?? 'not found')
+
+  const [fromEvmTx, setFromEvmTx] = useState("0x11800f21f3b1ea9ea84a25a0c5c96d425187e6f581e9b7388eebcedd468dbeee")
+  const emeraldEvmTx = useGetRuntimeTransactionsTxHash('emerald', fromEvmTx.replace('0x', ''))
+  const sapphireEvmTx = useGetRuntimeTransactionsTxHash('sapphire', fromEvmTx.replace('0x', ''))
+  const fromEvmTxResult = emeraldEvmTx.isLoading || sapphireEvmTx.isLoading
+    ? 'loading'
+    : emeraldEvmTx.data?.data.transactions[0]?.hash ?? sapphireEvmTx.data?.data.transactions[0]?.hash ?? 'not found'
+
   return (
     <div>
       <section>
@@ -34,6 +48,22 @@ export function Converter() {
         <input type="text" value={fromOasisAccount} onChange={e => setFromOasisAccount(e.target.value)} size={80} />
         <br />
         Result: {fromOasisAccountResult}
+      </section>
+      <br />
+      <br />
+      <section>
+        <h2>Convert EVM transaction hash to oasis (using https://index.oasislabs.com/v1/emerald/transaction/.. hash)</h2>
+        <input type="text" value={fromEvmTx} onChange={e => setFromEvmTx(e.target.value)} size={80} />
+        <br />
+        Result: {fromEvmTxResult}
+      </section>
+      <br />
+      <br />
+      <section>
+        <h2>Convert oasis transaction hash to EVM (using https://index.oasislabs.com/v1/emerald/transaction/.. eth_hash)</h2>
+        <input type="text" value={fromOasisTx} onChange={e => setFromOasisTx(e.target.value)} size={80} />
+        <br />
+        Result: {fromOasisTxResult}
       </section>
       <br />
       <br />
