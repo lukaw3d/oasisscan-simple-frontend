@@ -33,7 +33,8 @@ export function Home() {
 
       <br />
       <h2>Misc</h2>
-      <Link to="/converter">Converter</Link>
+      <Link to="/converter">Converter</Link><br />
+      <Link to="https://github.com/lukaw3d/oasis-indexer-simple-frontend">Source code</Link><br />
     </>
   )
 }
