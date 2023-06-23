@@ -15,7 +15,7 @@ export function Blocks({ paratime = 'emerald' as Runtime }) {
           'blocks[*].round': ({ value }) => {
             return <span>
               <Link to={`/${paratime}/blocks?limit=1&to=${value}`}>{value}</Link>
-              &nbsp;
+              ,&nbsp;
               <Link to={`/${paratime}/events?offset=0&limit=100&block=${value}`}>events</Link>
             </span>
           },

@@ -33,7 +33,7 @@ export function TransactionsHash({ paratime = 'emerald' as Runtime }) {
           'transactions[*].hash': ({ value }) => {
             return <span>
               <Link to={`/${paratime}/transactions/${value}`}>{value}</Link>
-              &nbsp;
+              ,&nbsp;
               <Link to={`/${paratime}/events?offset=0&limit=100&tx_hash=${value}`}>events</Link>
             </span>
           },

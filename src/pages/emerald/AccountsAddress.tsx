@@ -23,9 +23,9 @@ export function AccountsAddress({ paratime = 'emerald' as Runtime }) {
                   </>
                 : <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
               }
-              &nbsp;
+              ,&nbsp;
               <Link to={`/${paratime}/transactions?offset=0&limit=100&rel=${value}`}>transactions</Link>
-              &nbsp;
+              ,&nbsp;
               <Link to={`/${paratime}/events?offset=0&limit=100&rel=${value}`}>events</Link>
             </span>
           },
