@@ -1,0 +1,35 @@
+https://index.oasislabs.com/v1/spec/v1.html
+
+Endpoints used
+- [*] useGetStatus
+- [*] useGetConsensusBlocks
+- [ ] useGetConsensusBlocksHeight
+- [*] useGetConsensusTransactions
+- [*] useGetConsensusTransactionsTxHash
+- [*] useGetConsensusEvents
+- [ ] useGetConsensusEntities
+- [ ] useGetConsensusEntitiesEntityId
+- [ ] useGetConsensusEntitiesEntityIdNodes
+- [ ] useGetConsensusEntitiesEntityIdNodesNodeId
+- [ ] useGetConsensusValidators
+- [ ] useGetConsensusValidatorsEntityId
+- [ ] useGetConsensusAccounts
+- [*] useGetConsensusAccountsAddress
+- [ ] useGetConsensusAccountsAddressDelegations
+- [ ] useGetConsensusAccountsAddressDelegationsTo
+- [ ] useGetConsensusAccountsAddressDebondingDelegations
+- [ ] useGetConsensusAccountsAddressDebondingDelegationsTo
+- [ ] useGetConsensusEpochs
+- [ ] useGetConsensusEpochsEpoch
+- [ ] useGetConsensusProposals
+- [ ] useGetConsensusProposalsProposalId
+- [ ] useGetConsensusProposalsProposalIdVotes
+- [*] useGetRuntimeBlocks
+- [*] useGetRuntimeTransactions
+- [*] useGetRuntimeTransactionsTxHash
+- [*] useGetRuntimeEvents
+- [*] useGetRuntimeEvmTokens
+- [*] useGetRuntimeAccountsAddress
+- [*] useGetRuntimeStatus
+- [ ] useGetLayerStatsTxVolume
+- [ ] useGetLayerStatsActiveAccounts
