@@ -18,6 +18,11 @@ export function Home() {
 
       <h2>Sapphire status</h2>
       <DisplayData result={useGetRuntimeStatus('sapphire')}></DisplayData>
+      <Link to="/sapphire/blocks?limit=100&offset=0">Blocks</Link>, <Link to="/sapphire/blocks?limit=1000&to=1000">Blocks&lt;1000</Link><br />
+      <Link to="/sapphire/transactions?limit=100&offset=0">Transactions</Link><br />
+      <Link to="/sapphire/events?limit=100&offset=0">Events</Link><br />
+      <Link to="/sapphire/accounts/oasis1qpupfu7e2n6pkezeaw0yhj8mcem8anj64ytrayne">Accounts</Link><br />
+      <Link to="/sapphire/tokens?limit=100&offset=0">Tokens</Link><br />
 
       <h2>Cipher status</h2>
       <DisplayData result={useGetRuntimeStatus('cipher')}></DisplayData>
