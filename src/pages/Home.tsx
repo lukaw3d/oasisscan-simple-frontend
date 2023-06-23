@@ -14,6 +14,7 @@ export function Home() {
       <Link to="/emerald/transactions?limit=100&offset=0">Transactions</Link><br />
       <Link to="/emerald/events?limit=100&offset=0">Events</Link><br />
       <Link to="/emerald/accounts/oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t">Accounts</Link><br />
+      <Link to="/emerald/tokens?limit=100&offset=0">Tokens</Link><br />
 
       <h2>Sapphire status</h2>
       <DisplayData result={useGetRuntimeStatus('sapphire')}></DisplayData>
