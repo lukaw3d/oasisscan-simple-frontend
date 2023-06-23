@@ -33,6 +33,7 @@ export function Transactions({ paratime = 'emerald' as Runtime }) {
             return <Link to={`/${paratime}/transactions/${value}`}>{value}</Link>
           },
           'transactions[*].eth_hash': ({ value }) => {
+            if (!value) return null
             return <span>0x{value}</span>
           },
           'transactions[*].sender_0': ({ value }) => {

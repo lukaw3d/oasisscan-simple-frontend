@@ -38,6 +38,7 @@ export function TransactionsHash({ paratime = 'emerald' as Runtime }) {
             </span>
           },
           'transactions[*].eth_hash': ({ value }) => {
+            if (!value) return null
             return <span>0x{value}</span>
           },
           'transactions[*].sender_0': ({ value }) => {
