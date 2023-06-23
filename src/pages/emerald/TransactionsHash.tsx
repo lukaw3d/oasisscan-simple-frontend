@@ -1,9 +1,9 @@
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { CustomDisplayContext, DisplayData } from '../../DisplayData'
-import { useGetRuntimeTransactionsTxHash } from '../../oasis-indexer/generated/api'
+import { useGetRuntimeTransactionsTxHash, Runtime } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
 
-export function TransactionsHash() {
+export function TransactionsHash({ paratime = 'emerald' as Runtime }) {
   const txHash = useParams().txHash!
   const searchParams = Object.fromEntries(useSearchParams()[0])
   return (
@@ -19,7 +19,7 @@ export function TransactionsHash() {
         },
         fieldDisplay: {
           'transactions[*].round': ({ value }) => {
-            return <Link to={`/emerald/blocks?limit=1&to=${value}`}>{value}</Link>
+            return <Link to={`/${paratime}/blocks?limit=1&to=${value}`}>{value}</Link>
           },
           'transactions[*].amount': ({ value }) => {
             return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
@@ -32,23 +32,23 @@ export function TransactionsHash() {
           },
           'transactions[*].hash': ({ value }) => {
             return <span>
-              <Link to={`/emerald/transactions/${value}`}>{value}</Link>
+              <Link to={`/${paratime}/transactions/${value}`}>{value}</Link>
               &nbsp;
-              <Link to={`/emerald/events?offset=0&limit=100&tx_hash=${value}`}>events</Link>
+              <Link to={`/${paratime}/events?offset=0&limit=100&tx_hash=${value}`}>events</Link>
             </span>
           },
           'transactions[*].eth_hash': ({ value }) => {
             return <span>0x{value}</span>
           },
           'transactions[*].sender_0': ({ value }) => {
-            return <Link to={`/emerald/accounts/${value}`}>{value}</Link>
+            return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
           },
           'transactions[*].to': ({ value }) => {
-            return <Link to={`/emerald/accounts/${value}`}>{value}</Link>
+            return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
           },
         },
       }}>
-        <DisplayData result={useGetRuntimeTransactionsTxHash('emerald', txHash, { ...searchParams })}></DisplayData>
+        <DisplayData result={useGetRuntimeTransactionsTxHash(paratime, txHash, { ...searchParams })}></DisplayData>
       </CustomDisplayContext.Provider>
     </>
   )

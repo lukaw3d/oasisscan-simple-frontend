@@ -1,9 +1,9 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayContext, DisplayData } from '../../DisplayData'
-import { useGetRuntimeTransactions } from '../../oasis-indexer/generated/api'
+import { useGetRuntimeTransactions, Runtime } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
 
-export function Transactions() {
+export function Transactions({ paratime = 'emerald' as Runtime }) {
   const searchParams = Object.fromEntries(useSearchParams()[0])
   return (
     <>
@@ -18,7 +18,7 @@ export function Transactions() {
         },
         fieldDisplay: {
           'transactions[*].round': ({ value }) => {
-            return <Link to={`/emerald/blocks?limit=1&to=${value}`}>{value}</Link>
+            return <Link to={`/${paratime}/blocks?limit=1&to=${value}`}>{value}</Link>
           },
           'transactions[*].amount': ({ value }) => {
             return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
@@ -30,20 +30,20 @@ export function Transactions() {
             return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
           },
           'transactions[*].hash': ({ value }) => {
-            return <Link to={`/emerald/transactions/${value}`}>{value}</Link>
+            return <Link to={`/${paratime}/transactions/${value}`}>{value}</Link>
           },
           'transactions[*].eth_hash': ({ value }) => {
             return <span>0x{value}</span>
           },
           'transactions[*].sender_0': ({ value }) => {
-            return <Link to={`/emerald/accounts/${value}`}>{value}</Link>
+            return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
           },
           'transactions[*].to': ({ value }) => {
-            return <Link to={`/emerald/accounts/${value}`}>{value}</Link>
+            return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
           },
         },
       }}>
-        <DisplayData result={useGetRuntimeTransactions('emerald', { ...searchParams })}></DisplayData>
+        <DisplayData result={useGetRuntimeTransactions(paratime, { ...searchParams })}></DisplayData>
       </CustomDisplayContext.Provider>
     </>
   )

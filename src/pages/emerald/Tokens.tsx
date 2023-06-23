@@ -1,9 +1,9 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayContext, DisplayData } from '../../DisplayData'
-import { EvmTokenList, useGetRuntimeEvmTokens } from '../../oasis-indexer/generated/api'
+import { EvmTokenList, Runtime, useGetRuntimeEvmTokens } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
 
-export function Tokens() {
+export function Tokens({ paratime = 'emerald' as Runtime }) {
   const searchParams = Object.fromEntries(useSearchParams()[0])
   return (
     <>
@@ -19,7 +19,7 @@ export function Tokens() {
         },
         fieldDisplay: {
           'evm_tokens[*].contract_addr': ({ value }) => {
-            return <Link to={`/emerald/accounts/${value}`}>{value}</Link>
+            return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
           },
           'evm_tokens[*].evm_contract_addr': ({ value }) => {
             return <span>0x{value}</span>
@@ -29,7 +29,7 @@ export function Tokens() {
           },
         },
       }}>
-        <DisplayData result={useGetRuntimeEvmTokens('emerald', { ...searchParams })}></DisplayData>
+        <DisplayData result={useGetRuntimeEvmTokens(paratime, { ...searchParams })}></DisplayData>
       </CustomDisplayContext.Provider>
     </>
   )
