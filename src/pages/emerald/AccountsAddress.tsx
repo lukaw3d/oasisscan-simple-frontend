@@ -38,6 +38,12 @@ export function AccountsAddress() {
           'evm_balances[*].token_contract_addr': ({ value }) => {
             return <Link to={`/emerald/accounts/${value}`}>{value}</Link>
           },
+          'stats.total_received': ({ value }) => {
+            return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
+          },
+          'stats.total_sent': ({ value }) => {
+            return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
+          },
         },
       }}>
         <DisplayData result={useGetRuntimeAccountsAddress('emerald', address, { ...searchParams })}></DisplayData>
