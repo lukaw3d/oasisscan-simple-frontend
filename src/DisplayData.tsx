@@ -88,6 +88,7 @@ export function RecursiveValue({ value, path, parentValue }: {
   }
 
   if (Array.isArray(value)) {
+    if (value.length === 0) return <>[]</>
     return (
       <div>
         {
@@ -105,6 +106,7 @@ export function RecursiveValue({ value, path, parentValue }: {
     )
   }
 
+  if (Object.keys(value).length === 0) return <>{'{}'}</>
   return (
     <div>
       {
