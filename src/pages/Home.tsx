@@ -23,9 +23,7 @@ export function Home() {
       <DisplayData result={useGetRuntimeStatus('cipher')}></DisplayData>
 
       <br />
-      <br />
-      <br />
-      <br />
+      <h2>Misc</h2>
       <Link to="/converter">Converter</Link>
     </>
   )
