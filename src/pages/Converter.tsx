@@ -35,38 +35,44 @@ export function Converter() {
 
   return (
     <div>
-      <section>
-        <h2>Convert EVM account to oasis1 (using addressToBech32(fromData(fromHex(evmAddress))))</h2>
-        <input type="text" value={fromEvmAccount} onChange={e => setFromEvmAccount(e.target.value)} size={80} />
+      <details>
+        <summary>
+          I understand a lot of the internals of paratimes and I will not lose tokens by sending them to converted addresses
+        </summary>
+
+        <section>
+          <h2>Convert EVM account to oasis1 (using addressToBech32(fromData(fromHex(evmAddress))))</h2>
+          <input type="text" value={fromEvmAccount} onChange={e => setFromEvmAccount(e.target.value)} size={80} />
+          <br />
+          Result: {fromEvmAccountResult} (this is not a Consensus address. Do not send tokens to this)
+        </section>
         <br />
-        Result: {fromEvmAccountResult}
-      </section>
-      <br />
-      <br />
-      <section>
-        <h2>Convert oasis1 account to EVM (using https://index.oasislabs.com/v1/emerald/accounts/oasis1.. address_preimage)</h2>
-        <input type="text" value={fromOasisAccount} onChange={e => setFromOasisAccount(e.target.value)} size={80} />
         <br />
-        Result: {fromOasisAccountResult}
-      </section>
-      <br />
-      <br />
-      <section>
-        <h2>Convert EVM transaction hash to oasis (using https://index.oasislabs.com/v1/emerald/transaction/.. hash)</h2>
-        <input type="text" value={fromEvmTx} onChange={e => setFromEvmTx(e.target.value)} size={80} />
+        <section>
+          <h2>Convert oasis1 account to EVM (using https://index.oasislabs.com/v1/emerald/accounts/oasis1.. address_preimage)</h2>
+          <input type="text" value={fromOasisAccount} onChange={e => setFromOasisAccount(e.target.value)} size={80} />
+          <br />
+          Result: {fromOasisAccountResult}
+        </section>
         <br />
-        Result: {fromEvmTxResult}
-      </section>
-      <br />
-      <br />
-      <section>
-        <h2>Convert oasis transaction hash to EVM (using https://index.oasislabs.com/v1/emerald/transaction/.. eth_hash)</h2>
-        <input type="text" value={fromOasisTx} onChange={e => setFromOasisTx(e.target.value)} size={80} />
         <br />
-        Result: {fromOasisTxResult}
-      </section>
-      <br />
-      <br />
+        <section>
+          <h2>Convert EVM transaction hash to oasis (using https://index.oasislabs.com/v1/emerald/transaction/.. hash)</h2>
+          <input type="text" value={fromEvmTx} onChange={e => setFromEvmTx(e.target.value)} size={80} />
+          <br />
+          Result: {fromEvmTxResult}
+        </section>
+        <br />
+        <br />
+        <section>
+          <h2>Convert oasis transaction hash to EVM (using https://index.oasislabs.com/v1/emerald/transaction/.. eth_hash)</h2>
+          <input type="text" value={fromOasisTx} onChange={e => setFromOasisTx(e.target.value)} size={80} />
+          <br />
+          Result: {fromOasisTxResult}
+        </section>
+        <br />
+        <br />
+      </details>
     </div>
   )
 }
