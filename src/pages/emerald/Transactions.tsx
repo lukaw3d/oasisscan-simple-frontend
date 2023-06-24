@@ -20,6 +20,9 @@ export function Transactions({ paratime = 'emerald' as Runtime }) {
           'transactions[*].round': ({ value }) => {
             return <Link to={`/${paratime}/blocks?limit=1&to=${value}`}>{value}</Link>
           },
+          'transactions[*].success': ({ value }) => {
+            return <span style={!value ? {color: 'red'} : {}}>{value.toString()}</span>
+          },
           'transactions[*].amount': ({ value }) => {
             return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
           },

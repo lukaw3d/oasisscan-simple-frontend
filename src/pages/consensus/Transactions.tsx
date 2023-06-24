@@ -19,6 +19,9 @@ export function Transactions() {
           'transactions[*].block': ({ value }) => {
             return <Link to={`/consensus/blocks?limit=1&to=${value}`}>{value}</Link>
           },
+          'transactions[*].success': ({ value }) => {
+            return <span style={!value ? {color: 'red'} : {}}>{value.toString()}</span>
+          },
           'transactions[*].method': ({ value }) => {
             return <Link to={`/consensus/transactions?limit=100&offset=0&method=${value}`}>{value}</Link>
           },
