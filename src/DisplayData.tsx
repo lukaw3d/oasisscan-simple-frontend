@@ -28,11 +28,11 @@ type FieldPriority<T extends object> = {
 }
 
 export function typeTest() {
-  const testPaths: Paths<{a: {b: [{c: { d: 5 }}]}}> = 'a.b.0.c.d'
+  const testPaths: Paths<{a: {b: {c: { d: 5 }}[]}}> = 'a.b.0.c.d'
   console.log(testPaths)
   const testPop: tb.List.Pop<tb.String.Split<'a.b.0.c.d', '.'>> = ['a', 'b', '0', 'c']
   console.log(testPop)
-  const testFieldDisplay: FieldDisplay<{a: {b: [{c: { d: 5 }}]}}> = {
+  const testFieldDisplay: FieldDisplay<{a: {b: {c: { d: 5 }}[]}}> = {
     'a.b.0.c.d': ({path, value, parentValue}) => {
       const testPath: 'a.b.0.c.d' = path
       // @ts-expect-error Test
