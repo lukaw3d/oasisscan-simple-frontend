@@ -2,11 +2,67 @@ import { UseQueryResult } from '@tanstack/react-query'
 import { AxiosResponse } from 'axios'
 import isPlainObject from 'is-plain-obj';
 import { createContext, useContext } from 'react';
+import tb from 'ts-toolbelt';
 
-export const CustomDisplayContext = createContext({
-  fieldDisplay: {} as Record<string, React.FC<{ path: string, value: any, parentValue: any }>>,
-  fieldPriority: {} as Record<string, number>,
+// Adjusted from https://dev.to/pffigueiredo/typescript-utility-keyof-nested-object-2pa3
+type Paths<ObjectType extends object> =
+  ObjectType extends Array<any>
+  ? `0.${Paths<ObjectType[0]>}`
+  : {[Key in keyof ObjectType & (string | number)]:
+      ObjectType[Key] extends object
+        ? `${Key}` | `${Key}.${Paths<ObjectType[Key]>}`
+        : `${Key}`
+    }[keyof ObjectType & (string | number)];
+
+
+type FieldDisplay<T extends object> = {
+  [K in Paths<T>]?: React.FC<{
+    path: K,
+    value: tb.Object.Path<T, tb.String.Split<K, '.'>>,
+    parentValue: tb.Object.Path<T, tb.List.Pop<tb.String.Split<K, '.'>>>,
+  }>
+}
+
+type FieldPriority<T extends object> = {
+  [K in Paths<T>]?: number
+}
+
+export function typeTest() {
+  const testPaths: Paths<{a: {b: [{c: { d: 5 }}]}}> = 'a.b.0.c.d'
+  console.log(testPaths)
+  const testPop: tb.List.Pop<tb.String.Split<'a.b.0.c.d', '.'>> = ['a', 'b', '0', 'c']
+  console.log(testPop)
+  const testFieldDisplay: FieldDisplay<{a: {b: [{c: { d: 5 }}]}}> = {
+    'a.b.0.c.d': ({path, value, parentValue}) => {
+      const testPath: 'a.b.0.c.d' = path
+      // @ts-expect-error Test
+      const testPathErr: 'a.b.0.c.d.2' = path
+      const testValue: 5 = value
+      // @ts-expect-error Test
+      const testValueErr: 6 = value
+      const testParentValue: { d: 5 } = parentValue
+      // @ts-expect-error Test
+      const testParentValueErr: { a: 5 } = parentValue
+      console.log(testPath, testPathErr, testValue, testValueErr, testParentValue, testParentValueErr)
+      return <div></div>
+    },
+  }
+  console.log(testFieldDisplay)
+}
+
+export interface TypedCustomDisplay<T extends object> {
+  fieldDisplay: FieldDisplay<T>
+  fieldPriority: FieldPriority<T>
+}
+
+const CustomDisplayContext = createContext<TypedCustomDisplay<any>>({
+  fieldDisplay: {},
+  fieldPriority: {},
 })
+
+export const CustomDisplayProvider = <T extends object,>({value, children}: {value: TypedCustomDisplay<T>, children: React.ReactNode}) => {
+  return <CustomDisplayContext.Provider value={value}>{children}</CustomDisplayContext.Provider>
+}
 
 export function DisplayData({ result }: { result: UseQueryResult<AxiosResponse<any> | undefined> }) {
   if (result.isLoading) return <div>Loading...</div>
