@@ -1,5 +1,5 @@
 import { Link, useParams, useSearchParams } from 'react-router-dom'
-import { CustomDisplayContext, DisplayData } from '../../DisplayData'
+import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
 import { useGetRuntimeAccountsAddress, Runtime, RuntimeAccount } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
 import { getEthAccountAddress } from '../../utils/getEthAccountAddress'
@@ -10,7 +10,7 @@ export function AccountsAddress({ paratime = 'emerald' as Runtime }) {
   return (
     <>
       <h2>Accounts</h2>
-      <CustomDisplayContext.Provider value={{
+      <CustomDisplayProvider<RuntimeAccount> value={{
         fieldPriority: {
         },
         fieldDisplay: {
@@ -29,13 +29,13 @@ export function AccountsAddress({ paratime = 'emerald' as Runtime }) {
               <Link to={`/${paratime}/events?offset=0&limit=100&rel=${value}`}>events</Link>
             </span>
           },
-          'balances[*].balance': ({ value, parentValue }: { value: string, parentValue: RuntimeAccount['balances'][number] }) => {
+          'balances.0.balance': ({ value, parentValue }) => {
             return <span>{new BigNumber(value).shiftedBy(-parentValue.token_decimals).toFixed()}</span>
           },
-          'evm_balances[*].balance': ({ value, parentValue }: { value: string, parentValue: RuntimeAccount['evm_balances'][number] }) => {
+          'evm_balances.0.balance': ({ value, parentValue }) => {
             return <span>{new BigNumber(value).shiftedBy(-parentValue.token_decimals).toFixed()}</span>
           },
-          'evm_balances[*].token_contract_addr': ({ value }) => {
+          'evm_balances.0.token_contract_addr': ({ value }) => {
             return <Link to={`/${paratime}/accounts/${value}`}>{value}</Link>
           },
           'stats.total_received': ({ value }) => {
@@ -47,7 +47,7 @@ export function AccountsAddress({ paratime = 'emerald' as Runtime }) {
         },
       }}>
         <DisplayData result={useGetRuntimeAccountsAddress(paratime, address, { ...searchParams })}></DisplayData>
-      </CustomDisplayContext.Provider>
+      </CustomDisplayProvider>
     </>
   )
 }

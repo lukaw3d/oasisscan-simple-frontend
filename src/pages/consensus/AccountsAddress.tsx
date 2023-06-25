@@ -1,6 +1,6 @@
 import { Link, useParams, useSearchParams } from 'react-router-dom'
-import { CustomDisplayContext, DisplayData } from '../../DisplayData'
-import { useGetConsensusAccountsAddress } from '../../oasis-indexer/generated/api'
+import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
+import { useGetConsensusAccountsAddress, Account } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
 
 export function AccountsAddress() {
@@ -9,7 +9,7 @@ export function AccountsAddress() {
   return (
     <>
       <h2>Accounts</h2>
-      <CustomDisplayContext.Provider value={{
+      <CustomDisplayProvider<Account> value={{
         fieldPriority: {
         },
         fieldDisplay: {
@@ -40,7 +40,7 @@ export function AccountsAddress() {
         },
       }}>
         <DisplayData result={useGetConsensusAccountsAddress(address, { ...searchParams })}></DisplayData>
-      </CustomDisplayContext.Provider>
+      </CustomDisplayProvider>
     </>
   )
 }

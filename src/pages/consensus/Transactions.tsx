@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from 'react-router-dom'
-import { CustomDisplayContext, DisplayData } from '../../DisplayData'
-import { useGetConsensusTransactions } from '../../oasis-indexer/generated/api'
+import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
+import { useGetConsensusTransactions, TransactionList } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
 
 export function Transactions() {
@@ -8,36 +8,36 @@ export function Transactions() {
   return (
     <>
       <h2>Transactions</h2>
-      <CustomDisplayContext.Provider value={{
+      <CustomDisplayProvider<TransactionList> value={{
         fieldPriority: {
-          'transactions[*].block': -4,
-          'transactions[*].success': -3,
-          'transactions[*].method': -2,
-          'transactions[*].body': 100,
+          'transactions.0.block': -4,
+          'transactions.0.success': -3,
+          'transactions.0.method': -2,
+          'transactions.0.body': 100,
         },
         fieldDisplay: {
-          'transactions[*].block': ({ value }) => {
+          'transactions.0.block': ({ value }) => {
             return <Link to={`/consensus/blocks?limit=1&to=${value}`}>{value}</Link>
           },
-          'transactions[*].success': ({ value }) => {
+          'transactions.0.success': ({ value }) => {
             return <span style={!value ? {color: 'red'} : {}}>{value.toString()}</span>
           },
-          'transactions[*].method': ({ value }) => {
+          'transactions.0.method': ({ value }) => {
             return <Link to={`/consensus/transactions?limit=100&offset=0&method=${value}`}>{value}</Link>
           },
-          'transactions[*].fee': ({ value }) => {
+          'transactions.0.fee': ({ value }) => {
             return <span>{new BigNumber(value).shiftedBy(-9).toFixed()}</span>
           },
-          'transactions[*].hash': ({ value }) => {
+          'transactions.0.hash': ({ value }) => {
             return <Link to={`/consensus/transactions/${value}`}>{value}</Link>
           },
-          'transactions[*].sender': ({ value }) => {
+          'transactions.0.sender': ({ value }) => {
             return <Link to={`/consensus/accounts/${value}`}>{value}</Link>
           },
         },
       }}>
         <DisplayData result={useGetConsensusTransactions({ ...searchParams })}></DisplayData>
-      </CustomDisplayContext.Provider>
+      </CustomDisplayProvider>
     </>
   )
 }

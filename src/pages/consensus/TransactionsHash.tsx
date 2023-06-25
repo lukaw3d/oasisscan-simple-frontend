@@ -1,6 +1,6 @@
 import { Link, useParams, useSearchParams } from 'react-router-dom'
-import { CustomDisplayContext, DisplayData } from '../../DisplayData'
-import { useGetConsensusTransactionsTxHash } from '../../oasis-indexer/generated/api'
+import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
+import { useGetConsensusTransactionsTxHash, Transaction } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
 
 export function TransactionsHash() {
@@ -9,7 +9,7 @@ export function TransactionsHash() {
   return (
     <>
       <h2>Transactions</h2>
-      <CustomDisplayContext.Provider value={{
+      <CustomDisplayProvider<Transaction> value={{
         fieldPriority: {
           'block': -4,
           'success': -3,
@@ -38,7 +38,7 @@ export function TransactionsHash() {
         },
       }}>
         <DisplayData result={useGetConsensusTransactionsTxHash(txHash, { ...searchParams })}></DisplayData>
-      </CustomDisplayContext.Provider>
+      </CustomDisplayProvider>
     </>
   )
 }

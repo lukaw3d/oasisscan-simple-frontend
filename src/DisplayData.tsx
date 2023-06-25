@@ -115,8 +115,8 @@ export function RecursiveValue({ value, path, parentValue }: {
   if (Array.isArray(value) && value.length > 2 && value.every(a => isPlainObject(a))) {
     const fields = [...new Set(value.flatMap(a => Object.keys(a)))]
       .sort((a, b) =>
-        (customDisplay.fieldPriority[path ? path + '[*].' + a : a] ?? 0) -
-        (customDisplay.fieldPriority[path ? path + '[*].' + b : b] ?? 0)
+        (customDisplay.fieldPriority[path ? path + '.0.' + a : a] ?? 0) -
+        (customDisplay.fieldPriority[path ? path + '.0.' + b : b] ?? 0)
       )
 
     return  (
@@ -124,7 +124,7 @@ export function RecursiveValue({ value, path, parentValue }: {
         <table>
           <thead>
           <tr>
-            {fields.map((field) => <th key={field} title={path ? path + '[*].' + field : field}>{field}</th>)}
+            {fields.map((field) => <th key={field} title={path ? path + '.0.' + field : field}>{field}</th>)}
           </tr>
           </thead>
           <tbody>
@@ -132,7 +132,7 @@ export function RecursiveValue({ value, path, parentValue }: {
             <tr key={index}>
               {fields.map((field) =>
                 <td key={field + index}>
-                  <RecursiveValue value={value[field]} path={path ? path + '[*].' + field : field} parentValue={value} />
+                  <RecursiveValue value={value[field]} path={path ? path + '.0.' + field : field} parentValue={value} />
                 </td>
               )}
             </tr>
@@ -153,7 +153,7 @@ export function RecursiveValue({ value, path, parentValue }: {
               key={field}
               field={field + ''}
               value={value[field]}
-              path={path ? path + '[*]' : '[*]'}
+              path={path ? path + '.0' : '.0'}
               parentValue={value}
             />
           ))

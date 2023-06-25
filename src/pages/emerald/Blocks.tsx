@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from 'react-router-dom'
-import { CustomDisplayContext, DisplayData } from '../../DisplayData'
+import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
 import { useGetRuntimeBlocks, Runtime, RuntimeBlockList } from '../../oasis-indexer/generated/api'
 
 export function Blocks({ paratime = 'emerald' as Runtime }) {
@@ -7,22 +7,22 @@ export function Blocks({ paratime = 'emerald' as Runtime }) {
   return (
     <>
       <h2>Blocks</h2>
-      <CustomDisplayContext.Provider value={{
+      <CustomDisplayProvider<RuntimeBlockList> value={{
         fieldPriority: {
-          'blocks[*].round': -4,
+          'blocks.0.round': -4,
         },
         fieldDisplay: {
-          'blocks[*].round': ({ value }) => {
+          'blocks.0.round': ({ value }) => {
             return <span>
               <Link to={`/${paratime}/blocks?limit=1&to=${value}`}>{value}</Link>
               ,&nbsp;
               <Link to={`/${paratime}/events?offset=0&limit=100&block=${value}`}>events</Link>
             </span>
           },
-          'blocks[*].num_transactions': ({ value, parentValue }: { value: number, parentValue: RuntimeBlockList['blocks'][number] }) => {
+          'blocks.0.num_transactions': ({ value, parentValue }) => {
             return <Link to={`/${paratime}/transactions/?offset=0&limit=100&block=${parentValue.round}`}>{value}</Link>
           },
-          'blocks[*].timestamp': ({ value }) => {
+          'blocks.0.timestamp': ({ value }) => {
             return <span>
               {value}
               &nbsp;
@@ -32,7 +32,7 @@ export function Blocks({ paratime = 'emerald' as Runtime }) {
         },
       }}>
         <DisplayData result={useGetRuntimeBlocks(paratime, { ...searchParams })}></DisplayData>
-      </CustomDisplayContext.Provider>
+      </CustomDisplayProvider>
     </>
   )
 }
