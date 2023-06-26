@@ -6,7 +6,7 @@ export function Home() {
   return (
     <>
       <h2>Consensus</h2>
-      <Link to="/consensus/blocks?limit=100&offset=0">Blocks</Link>, <Link to="/consensus/blocks?limit=1000&to=10000000">Blocks&lt;10000000</Link><br />
+      <Link to="/consensus/blocks?limit=100&offset=0">Blocks</Link>, <Link to="/consensus/blocks?limit=5000&to=10000000">Blocks&lt;10000000</Link><br />
       <Link to="/consensus/transactions?limit=100&offset=0">Transactions</Link><br />
       <Link to="/consensus/events?limit=100&offset=0">Events</Link><br />
       <Link to="/consensus/accounts/oasis1qzp86dykm9nfqr83es07c324u64f6dgsdvk0fapj">Accounts</Link><br />
@@ -16,7 +16,7 @@ export function Home() {
       </div>
 
       <h2>Emerald</h2>
-      <Link to="/emerald/blocks?limit=100&offset=0">Blocks</Link>, <Link to="/emerald/blocks?limit=1000&to=1000">Blocks&lt;1000</Link><br />
+      <Link to="/emerald/blocks?limit=100&offset=0">Blocks</Link>, <Link to="/emerald/blocks?limit=5000&to=5000">Blocks&lt;5000</Link><br />
       <Link to="/emerald/transactions?limit=100&offset=0">Transactions</Link><br />
       <Link to="/emerald/events?limit=100&offset=0">Events</Link><br />
       <Link to="/emerald/accounts/oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t">Accounts</Link><br />
@@ -27,7 +27,7 @@ export function Home() {
       </div>
 
       <h2>Sapphire</h2>
-      <Link to="/sapphire/blocks?limit=100&offset=0">Blocks</Link>, <Link to="/sapphire/blocks?limit=1000&to=1000">Blocks&lt;1000</Link><br />
+      <Link to="/sapphire/blocks?limit=100&offset=0">Blocks</Link>, <Link to="/sapphire/blocks?limit=5000&to=5000">Blocks&lt;5000</Link><br />
       <Link to="/sapphire/transactions?limit=100&offset=0">Transactions</Link><br />
       <Link to="/sapphire/events?limit=100&offset=0">Events</Link><br />
       <Link to="/sapphire/accounts/oasis1qpupfu7e2n6pkezeaw0yhj8mcem8anj64ytrayne">Accounts</Link><br />
