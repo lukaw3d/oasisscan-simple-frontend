@@ -5,8 +5,8 @@ import { createContext, useContext } from 'react';
 
 // Adjusted from https://dev.to/pffigueiredo/typescript-utility-keyof-nested-object-2pa3
 type Paths<ObjectType extends object> =
-  ObjectType extends Array<any>
-  ? `0.${Paths<ObjectType[0]>}`
+  ObjectType extends Array<infer T>
+  ? `0.${Paths<T & object>}`
   : {[Key in keyof ObjectType & (string | number)]:
       ObjectType[Key] extends object
         ? `${Key}` | `${Key}.${Paths<ObjectType[Key]>}`

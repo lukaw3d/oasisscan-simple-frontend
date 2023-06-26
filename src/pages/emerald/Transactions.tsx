@@ -21,12 +21,15 @@ export function Transactions({ paratime = 'emerald' as Runtime }) {
             return <Link to={`/${paratime}/blocks?limit=1&to=${value}`}>{value}</Link>
           },
           'transactions.0.success': ({ value }) => {
+            if (value == null) return <span style={{color: 'red'}}>unknown</span>
             return <span style={!value ? {color: 'red'} : {}}>{value.toString()}</span>
           },
           'transactions.0.amount': ({ value }) => {
+            if (value == null) return null
             return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
           },
           'transactions.0.charged_fee': ({ value }) => {
+            if (value == null) return null
             return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
           },
           'transactions.0.fee': ({ value }) => {

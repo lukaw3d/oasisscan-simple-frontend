@@ -26,6 +26,7 @@ export function Tokens({ paratime = 'emerald' as Runtime }) {
             return <span>0x{value}</span>
           },
           'evm_tokens.0.total_supply': ({ value, parentValue }) => {
+            if (value == null) return null
             return <span>{new BigNumber(value).shiftedBy(-(parentValue.decimals ?? 0)).toFixed()}</span>
           },
         },

@@ -29,9 +29,11 @@ export function AccountsAddress() {
             return <span>{new BigNumber(value).shiftedBy(-9).toFixed()}</span>
           },
           'debonding_delegations_balance': ({ value }) => {
+            if (value == null) return null
             return <span>{new BigNumber(value).shiftedBy(-9).toFixed()}</span>
           },
           'delegations_balance': ({ value }) => {
+            if (value == null) return null
             return <span>{new BigNumber(value).shiftedBy(-9).toFixed()}</span>
           },
           'escrow': ({ value }) => {
