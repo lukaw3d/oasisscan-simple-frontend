@@ -2,7 +2,6 @@ import { UseQueryResult } from '@tanstack/react-query'
 import { AxiosResponse } from 'axios'
 import isPlainObject from 'is-plain-obj';
 import { createContext, useContext } from 'react';
-import tb from 'ts-toolbelt';
 
 // Adjusted from https://dev.to/pffigueiredo/typescript-utility-keyof-nested-object-2pa3
 type Paths<ObjectType extends object> =
@@ -14,12 +13,16 @@ type Paths<ObjectType extends object> =
         : `${Key}`
     }[keyof ObjectType & (string | number)];
 
+type GetPath<T extends object, Path extends string> = Path extends `${infer Key}.${infer PathRest}` ? GetPath<T[Key & keyof T] & object, PathRest> : T[Path & keyof T]
+type PopPath<Path extends string> = Path extends `${infer Key}.${infer PathRest}`
+  ? (PopPath<PathRest> extends '' ? `${Key}` : `${Key}.${PopPath<PathRest>}`)
+  : ''
 
 type FieldDisplay<T extends object> = {
   [K in Paths<T>]?: React.FC<{
     path: K,
-    value: tb.Object.Path<T, tb.String.Split<K, '.'>>,
-    parentValue: tb.Object.Path<T, tb.List.Pop<tb.String.Split<K, '.'>>>,
+    value: GetPath<T, K>,
+    parentValue: GetPath<T, PopPath<K>>,
   }>
 }
 
@@ -30,7 +33,7 @@ type FieldPriority<T extends object> = {
 export function typeTest() {
   const testPaths: Paths<{a: {b: {c: { d: 5 }}[]}}> = 'a.b.0.c.d'
   console.log(testPaths)
-  const testPop: tb.List.Pop<tb.String.Split<'a.b.0.c.d', '.'>> = ['a', 'b', '0', 'c']
+  const testPop: PopPath<'a.b.0.c.d'> = 'a.b.0.c'
   console.log(testPop)
   const testFieldDisplay: FieldDisplay<{a: {b: {c: { d: 5 }}[]}}> = {
     'a.b.0.c.d': ({path, value, parentValue}) => {
