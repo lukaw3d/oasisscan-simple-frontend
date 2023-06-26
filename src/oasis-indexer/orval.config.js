@@ -11,6 +11,9 @@ module.exports = {
       target: './generated/api.ts',
       client: 'react-query',
       mode: 'single',
+      override: {
+        mutator: './largePages.ts',
+      },
     },
   },
 }

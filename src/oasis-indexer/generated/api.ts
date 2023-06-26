@@ -5,12 +5,6 @@
  * An API for accessing indexed data from the Oasis Network.
  * OpenAPI spec version: 0.1.0
  */
-import * as axios from 'axios';
-import type {
-  AxiosRequestConfig,
-  AxiosResponse,
-  AxiosError
-} from 'axios'
 import {
   useQuery
 } from '@tanstack/react-query'
@@ -20,6 +14,38 @@ import type {
   UseQueryResult,
   QueryKey
 } from '@tanstack/react-query'
+import getStatusMutator from '../largePages';
+import getConsensusBlocksMutator from '../largePages';
+import getConsensusBlocksHeightMutator from '../largePages';
+import getConsensusTransactionsMutator from '../largePages';
+import getConsensusTransactionsTxHashMutator from '../largePages';
+import getConsensusEventsMutator from '../largePages';
+import getConsensusEntitiesMutator from '../largePages';
+import getConsensusEntitiesEntityIdMutator from '../largePages';
+import getConsensusEntitiesEntityIdNodesMutator from '../largePages';
+import getConsensusEntitiesEntityIdNodesNodeIdMutator from '../largePages';
+import getConsensusValidatorsMutator from '../largePages';
+import getConsensusValidatorsEntityIdMutator from '../largePages';
+import getConsensusAccountsMutator from '../largePages';
+import getConsensusAccountsAddressMutator from '../largePages';
+import getConsensusAccountsAddressDelegationsMutator from '../largePages';
+import getConsensusAccountsAddressDelegationsToMutator from '../largePages';
+import getConsensusAccountsAddressDebondingDelegationsMutator from '../largePages';
+import getConsensusAccountsAddressDebondingDelegationsToMutator from '../largePages';
+import getConsensusEpochsMutator from '../largePages';
+import getConsensusEpochsEpochMutator from '../largePages';
+import getConsensusProposalsMutator from '../largePages';
+import getConsensusProposalsProposalIdMutator from '../largePages';
+import getConsensusProposalsProposalIdVotesMutator from '../largePages';
+import getRuntimeBlocksMutator from '../largePages';
+import getRuntimeTransactionsMutator from '../largePages';
+import getRuntimeTransactionsTxHashMutator from '../largePages';
+import getRuntimeEventsMutator from '../largePages';
+import getRuntimeEvmTokensMutator from '../largePages';
+import getRuntimeAccountsAddressMutator from '../largePages';
+import getRuntimeStatusMutator from '../largePages';
+import getLayerStatsTxVolumeMutator from '../largePages';
+import getLayerStatsActiveAccountsMutator from '../largePages';
 export type GetLayerStatsActiveAccountsWindowStepSeconds = typeof GetLayerStatsActiveAccountsWindowStepSeconds[keyof typeof GetLayerStatsActiveAccountsWindowStepSeconds];
 
 
@@ -1484,44 +1510,54 @@ type AwaitedInput<T> = PromiseLike<T> | T;
       type Awaited<O> = O extends AwaitedInput<infer T> ? T : never;
 
 
+// eslint-disable-next-line
+  type SecondParameter<T extends (...args: any) => any> = T extends (
+  config: any,
+  args: infer P,
+) => any
+  ? P
+  : never;
+
 /**
  * @summary Returns the indexer status.
  */
 export const getStatus = (
-     options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Status>> => {
-    return axios.default.get(
-      `/`,options
-    );
-  }
-
+    
+ options?: SecondParameter<typeof getStatusMutator>,signal?: AbortSignal
+) => {
+      return getStatusMutator<Status>(
+      {url: `/`, method: 'get', signal
+    },
+      options);
+    }
+  
 
 export const getGetStatusQueryKey = () => [`/`] as const;
   
 
     
-export const getGetStatusQueryOptions = <TData = Awaited<ReturnType<typeof getStatus>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getStatus>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetStatusQueryOptions = <TData = Awaited<ReturnType<typeof getStatus>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getStatus>>, TError, TData>, request?: SecondParameter<typeof getStatusMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getStatus>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetStatusQueryKey();
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getStatus>>> = ({ signal }) => getStatus({ signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getStatus>>> = ({ signal }) => getStatus(requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetStatusQueryResult = NonNullable<Awaited<ReturnType<typeof getStatus>>>
-export type GetStatusQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetStatusQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns the indexer status.
  */
-export const useGetStatus = <TData = Awaited<ReturnType<typeof getStatus>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
-  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getStatus>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetStatus = <TData = Awaited<ReturnType<typeof getStatus>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getStatus>>, TError, TData>, request?: SecondParameter<typeof getStatusMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -1539,42 +1575,43 @@ export const useGetStatus = <TData = Awaited<ReturnType<typeof getStatus>>, TErr
  * @summary Returns a list of consensus blocks, sorted from most to least recent.
  */
 export const getConsensusBlocks = (
-    params?: GetConsensusBlocksParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<BlockList>> => {
-    return axios.default.get(
-      `/consensus/blocks`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetConsensusBlocksParams,
+ options?: SecondParameter<typeof getConsensusBlocksMutator>,signal?: AbortSignal
+) => {
+      return getConsensusBlocksMutator<BlockList>(
+      {url: `/consensus/blocks`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusBlocksQueryKey = (params?: GetConsensusBlocksParams,) => [`/consensus/blocks`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetConsensusBlocksQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusBlocks>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(params?: GetConsensusBlocksParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusBlocks>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusBlocksQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusBlocks>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(params?: GetConsensusBlocksParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusBlocks>>, TError, TData>, request?: SecondParameter<typeof getConsensusBlocksMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusBlocks>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusBlocksQueryKey(params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusBlocks>>> = ({ signal }) => getConsensusBlocks(params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusBlocks>>> = ({ signal }) => getConsensusBlocks(params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetConsensusBlocksQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusBlocks>>>
-export type GetConsensusBlocksQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusBlocksQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a list of consensus blocks, sorted from most to least recent.
  */
-export const useGetConsensusBlocks = <TData = Awaited<ReturnType<typeof getConsensusBlocks>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- params?: GetConsensusBlocksParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusBlocks>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetConsensusBlocks = <TData = Awaited<ReturnType<typeof getConsensusBlocks>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ params?: GetConsensusBlocksParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusBlocks>>, TError, TData>, request?: SecondParameter<typeof getConsensusBlocksMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -1592,40 +1629,42 @@ export const useGetConsensusBlocks = <TData = Awaited<ReturnType<typeof getConse
  * @summary Returns a consensus block.
  */
 export const getConsensusBlocksHeight = (
-    height: number, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Block>> => {
-    return axios.default.get(
-      `/consensus/blocks/${height}`,options
-    );
-  }
-
+    height: number,
+ options?: SecondParameter<typeof getConsensusBlocksHeightMutator>,signal?: AbortSignal
+) => {
+      return getConsensusBlocksHeightMutator<Block>(
+      {url: `/consensus/blocks/${height}`, method: 'get', signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusBlocksHeightQueryKey = (height: number,) => [`/consensus/blocks/${height}`] as const;
   
 
     
-export const getGetConsensusBlocksHeightQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusBlocksHeight>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(height: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusBlocksHeight>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusBlocksHeightQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusBlocksHeight>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(height: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusBlocksHeight>>, TError, TData>, request?: SecondParameter<typeof getConsensusBlocksHeightMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusBlocksHeight>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusBlocksHeightQueryKey(height);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusBlocksHeight>>> = ({ signal }) => getConsensusBlocksHeight(height, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusBlocksHeight>>> = ({ signal }) => getConsensusBlocksHeight(height, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(height), ...queryOptions}}
 
 export type GetConsensusBlocksHeightQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusBlocksHeight>>>
-export type GetConsensusBlocksHeightQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusBlocksHeightQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a consensus block.
  */
-export const useGetConsensusBlocksHeight = <TData = Awaited<ReturnType<typeof getConsensusBlocksHeight>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- height: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusBlocksHeight>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetConsensusBlocksHeight = <TData = Awaited<ReturnType<typeof getConsensusBlocksHeight>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ height: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusBlocksHeight>>, TError, TData>, request?: SecondParameter<typeof getConsensusBlocksHeightMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -1643,42 +1682,43 @@ export const useGetConsensusBlocksHeight = <TData = Awaited<ReturnType<typeof ge
  * @summary Returns a list of consensus transactions.
  */
 export const getConsensusTransactions = (
-    params?: GetConsensusTransactionsParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<TransactionList>> => {
-    return axios.default.get(
-      `/consensus/transactions`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetConsensusTransactionsParams,
+ options?: SecondParameter<typeof getConsensusTransactionsMutator>,signal?: AbortSignal
+) => {
+      return getConsensusTransactionsMutator<TransactionList>(
+      {url: `/consensus/transactions`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusTransactionsQueryKey = (params?: GetConsensusTransactionsParams,) => [`/consensus/transactions`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetConsensusTransactionsQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusTransactions>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(params?: GetConsensusTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusTransactions>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusTransactionsQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(params?: GetConsensusTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusTransactions>>, TError, TData>, request?: SecondParameter<typeof getConsensusTransactionsMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusTransactions>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusTransactionsQueryKey(params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusTransactions>>> = ({ signal }) => getConsensusTransactions(params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusTransactions>>> = ({ signal }) => getConsensusTransactions(params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetConsensusTransactionsQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusTransactions>>>
-export type GetConsensusTransactionsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusTransactionsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a list of consensus transactions.
  */
-export const useGetConsensusTransactions = <TData = Awaited<ReturnType<typeof getConsensusTransactions>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- params?: GetConsensusTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusTransactions>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetConsensusTransactions = <TData = Awaited<ReturnType<typeof getConsensusTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ params?: GetConsensusTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusTransactions>>, TError, TData>, request?: SecondParameter<typeof getConsensusTransactionsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -1696,40 +1736,42 @@ export const useGetConsensusTransactions = <TData = Awaited<ReturnType<typeof ge
  * @summary Returns a consensus transaction.
  */
 export const getConsensusTransactionsTxHash = (
-    txHash: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Transaction>> => {
-    return axios.default.get(
-      `/consensus/transactions/${txHash}`,options
-    );
-  }
-
+    txHash: string,
+ options?: SecondParameter<typeof getConsensusTransactionsTxHashMutator>,signal?: AbortSignal
+) => {
+      return getConsensusTransactionsTxHashMutator<Transaction>(
+      {url: `/consensus/transactions/${txHash}`, method: 'get', signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusTransactionsTxHashQueryKey = (txHash: string,) => [`/consensus/transactions/${txHash}`] as const;
   
 
     
-export const getGetConsensusTransactionsTxHashQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(txHash: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusTransactionsTxHashQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(txHash: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>, TError, TData>, request?: SecondParameter<typeof getConsensusTransactionsTxHashMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusTransactionsTxHashQueryKey(txHash);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>> = ({ signal }) => getConsensusTransactionsTxHash(txHash, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>> = ({ signal }) => getConsensusTransactionsTxHash(txHash, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(txHash), ...queryOptions}}
 
 export type GetConsensusTransactionsTxHashQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>>
-export type GetConsensusTransactionsTxHashQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusTransactionsTxHashQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a consensus transaction.
  */
-export const useGetConsensusTransactionsTxHash = <TData = Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- txHash: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetConsensusTransactionsTxHash = <TData = Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ txHash: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusTransactionsTxHash>>, TError, TData>, request?: SecondParameter<typeof getConsensusTransactionsTxHashMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -1747,42 +1789,43 @@ export const useGetConsensusTransactionsTxHash = <TData = Awaited<ReturnType<typ
  * @summary Returns a list of consensus events.
  */
 export const getConsensusEvents = (
-    params?: GetConsensusEventsParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<ConsensusEventList>> => {
-    return axios.default.get(
-      `/consensus/events`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetConsensusEventsParams,
+ options?: SecondParameter<typeof getConsensusEventsMutator>,signal?: AbortSignal
+) => {
+      return getConsensusEventsMutator<ConsensusEventList>(
+      {url: `/consensus/events`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusEventsQueryKey = (params?: GetConsensusEventsParams,) => [`/consensus/events`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetConsensusEventsQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEvents>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(params?: GetConsensusEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEvents>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusEventsQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEvents>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(params?: GetConsensusEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEvents>>, TError, TData>, request?: SecondParameter<typeof getConsensusEventsMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusEvents>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusEventsQueryKey(params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEvents>>> = ({ signal }) => getConsensusEvents(params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEvents>>> = ({ signal }) => getConsensusEvents(params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetConsensusEventsQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEvents>>>
-export type GetConsensusEventsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusEventsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a list of consensus events.
  */
-export const useGetConsensusEvents = <TData = Awaited<ReturnType<typeof getConsensusEvents>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- params?: GetConsensusEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEvents>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetConsensusEvents = <TData = Awaited<ReturnType<typeof getConsensusEvents>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ params?: GetConsensusEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEvents>>, TError, TData>, request?: SecondParameter<typeof getConsensusEventsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -1800,42 +1843,43 @@ export const useGetConsensusEvents = <TData = Awaited<ReturnType<typeof getConse
  * @summary Returns a list of entities registered at the consensus layer.
  */
 export const getConsensusEntities = (
-    params?: GetConsensusEntitiesParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<EntityList>> => {
-    return axios.default.get(
-      `/consensus/entities`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetConsensusEntitiesParams,
+ options?: SecondParameter<typeof getConsensusEntitiesMutator>,signal?: AbortSignal
+) => {
+      return getConsensusEntitiesMutator<EntityList>(
+      {url: `/consensus/entities`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusEntitiesQueryKey = (params?: GetConsensusEntitiesParams,) => [`/consensus/entities`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetConsensusEntitiesQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEntities>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(params?: GetConsensusEntitiesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntities>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusEntitiesQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEntities>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(params?: GetConsensusEntitiesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntities>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntities>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusEntitiesQueryKey(params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEntities>>> = ({ signal }) => getConsensusEntities(params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEntities>>> = ({ signal }) => getConsensusEntities(params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetConsensusEntitiesQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEntities>>>
-export type GetConsensusEntitiesQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusEntitiesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a list of entities registered at the consensus layer.
  */
-export const useGetConsensusEntities = <TData = Awaited<ReturnType<typeof getConsensusEntities>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- params?: GetConsensusEntitiesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntities>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetConsensusEntities = <TData = Awaited<ReturnType<typeof getConsensusEntities>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ params?: GetConsensusEntitiesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntities>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -1853,40 +1897,42 @@ export const useGetConsensusEntities = <TData = Awaited<ReturnType<typeof getCon
  * @summary Returns an entity registered at the consensus layer.
  */
 export const getConsensusEntitiesEntityId = (
-    entityId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Entity>> => {
-    return axios.default.get(
-      `/consensus/entities/${entityId}`,options
-    );
-  }
-
+    entityId: string,
+ options?: SecondParameter<typeof getConsensusEntitiesEntityIdMutator>,signal?: AbortSignal
+) => {
+      return getConsensusEntitiesEntityIdMutator<Entity>(
+      {url: `/consensus/entities/${entityId}`, method: 'get', signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusEntitiesEntityIdQueryKey = (entityId: string,) => [`/consensus/entities/${entityId}`] as const;
   
 
     
-export const getGetConsensusEntitiesEntityIdQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(entityId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusEntitiesEntityIdQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(entityId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesEntityIdMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusEntitiesEntityIdQueryKey(entityId);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>> = ({ signal }) => getConsensusEntitiesEntityId(entityId, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>> = ({ signal }) => getConsensusEntitiesEntityId(entityId, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(entityId), ...queryOptions}}
 
 export type GetConsensusEntitiesEntityIdQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>>
-export type GetConsensusEntitiesEntityIdQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusEntitiesEntityIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns an entity registered at the consensus layer.
  */
-export const useGetConsensusEntitiesEntityId = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- entityId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetConsensusEntitiesEntityId = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ entityId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityId>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesEntityIdMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -1905,45 +1951,46 @@ export const useGetConsensusEntitiesEntityId = <TData = Awaited<ReturnType<typeo
  */
 export const getConsensusEntitiesEntityIdNodes = (
     entityId: string,
-    params?: GetConsensusEntitiesEntityIdNodesParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<NodeList>> => {
-    return axios.default.get(
-      `/consensus/entities/${entityId}/nodes`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetConsensusEntitiesEntityIdNodesParams,
+ options?: SecondParameter<typeof getConsensusEntitiesEntityIdNodesMutator>,signal?: AbortSignal
+) => {
+      return getConsensusEntitiesEntityIdNodesMutator<NodeList>(
+      {url: `/consensus/entities/${entityId}/nodes`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusEntitiesEntityIdNodesQueryKey = (entityId: string,
     params?: GetConsensusEntitiesEntityIdNodesParams,) => [`/consensus/entities/${entityId}/nodes`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetConsensusEntitiesEntityIdNodesQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(entityId: string,
-    params?: GetConsensusEntitiesEntityIdNodesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusEntitiesEntityIdNodesQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(entityId: string,
+    params?: GetConsensusEntitiesEntityIdNodesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesEntityIdNodesMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusEntitiesEntityIdNodesQueryKey(entityId,params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>> = ({ signal }) => getConsensusEntitiesEntityIdNodes(entityId,params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>> = ({ signal }) => getConsensusEntitiesEntityIdNodes(entityId,params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(entityId), ...queryOptions}}
 
 export type GetConsensusEntitiesEntityIdNodesQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>>
-export type GetConsensusEntitiesEntityIdNodesQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusEntitiesEntityIdNodesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a list of nodes registered at the consensus layer.
  */
-export const useGetConsensusEntitiesEntityIdNodes = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+export const useGetConsensusEntitiesEntityIdNodes = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  entityId: string,
-    params?: GetConsensusEntitiesEntityIdNodesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>, TError, TData>, axios?: AxiosRequestConfig}
+    params?: GetConsensusEntitiesEntityIdNodesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodes>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesEntityIdNodesMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -1962,43 +2009,45 @@ export const useGetConsensusEntitiesEntityIdNodes = <TData = Awaited<ReturnType<
  */
 export const getConsensusEntitiesEntityIdNodesNodeId = (
     entityId: string,
-    nodeId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Node>> => {
-    return axios.default.get(
-      `/consensus/entities/${entityId}/nodes/${nodeId}`,options
-    );
-  }
-
+    nodeId: string,
+ options?: SecondParameter<typeof getConsensusEntitiesEntityIdNodesNodeIdMutator>,signal?: AbortSignal
+) => {
+      return getConsensusEntitiesEntityIdNodesNodeIdMutator<Node>(
+      {url: `/consensus/entities/${entityId}/nodes/${nodeId}`, method: 'get', signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusEntitiesEntityIdNodesNodeIdQueryKey = (entityId: string,
     nodeId: string,) => [`/consensus/entities/${entityId}/nodes/${nodeId}`] as const;
   
 
     
-export const getGetConsensusEntitiesEntityIdNodesNodeIdQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(entityId: string,
-    nodeId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusEntitiesEntityIdNodesNodeIdQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(entityId: string,
+    nodeId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesEntityIdNodesNodeIdMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusEntitiesEntityIdNodesNodeIdQueryKey(entityId,nodeId);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>> = ({ signal }) => getConsensusEntitiesEntityIdNodesNodeId(entityId,nodeId, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>> = ({ signal }) => getConsensusEntitiesEntityIdNodesNodeId(entityId,nodeId, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(entityId && nodeId), ...queryOptions}}
 
 export type GetConsensusEntitiesEntityIdNodesNodeIdQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>>
-export type GetConsensusEntitiesEntityIdNodesNodeIdQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusEntitiesEntityIdNodesNodeIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a node registered at the consensus layer.
  */
-export const useGetConsensusEntitiesEntityIdNodesNodeId = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+export const useGetConsensusEntitiesEntityIdNodesNodeId = <TData = Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  entityId: string,
-    nodeId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>, TError, TData>, axios?: AxiosRequestConfig}
+    nodeId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEntitiesEntityIdNodesNodeId>>, TError, TData>, request?: SecondParameter<typeof getConsensusEntitiesEntityIdNodesNodeIdMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2016,42 +2065,43 @@ export const useGetConsensusEntitiesEntityIdNodesNodeId = <TData = Awaited<Retur
  * @summary Returns a list of validators registered at the consensus layer.
  */
 export const getConsensusValidators = (
-    params?: GetConsensusValidatorsParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<ValidatorList>> => {
-    return axios.default.get(
-      `/consensus/validators`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetConsensusValidatorsParams,
+ options?: SecondParameter<typeof getConsensusValidatorsMutator>,signal?: AbortSignal
+) => {
+      return getConsensusValidatorsMutator<ValidatorList>(
+      {url: `/consensus/validators`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusValidatorsQueryKey = (params?: GetConsensusValidatorsParams,) => [`/consensus/validators`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetConsensusValidatorsQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusValidators>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(params?: GetConsensusValidatorsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidators>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusValidatorsQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusValidators>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(params?: GetConsensusValidatorsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidators>>, TError, TData>, request?: SecondParameter<typeof getConsensusValidatorsMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidators>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusValidatorsQueryKey(params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusValidators>>> = ({ signal }) => getConsensusValidators(params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusValidators>>> = ({ signal }) => getConsensusValidators(params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetConsensusValidatorsQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusValidators>>>
-export type GetConsensusValidatorsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusValidatorsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a list of validators registered at the consensus layer.
  */
-export const useGetConsensusValidators = <TData = Awaited<ReturnType<typeof getConsensusValidators>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- params?: GetConsensusValidatorsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidators>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetConsensusValidators = <TData = Awaited<ReturnType<typeof getConsensusValidators>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ params?: GetConsensusValidatorsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidators>>, TError, TData>, request?: SecondParameter<typeof getConsensusValidatorsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2069,40 +2119,42 @@ export const useGetConsensusValidators = <TData = Awaited<ReturnType<typeof getC
  * @summary Returns a validator registered at the consensus layer.
  */
 export const getConsensusValidatorsEntityId = (
-    entityId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Validator>> => {
-    return axios.default.get(
-      `/consensus/validators/${entityId}`,options
-    );
-  }
-
+    entityId: string,
+ options?: SecondParameter<typeof getConsensusValidatorsEntityIdMutator>,signal?: AbortSignal
+) => {
+      return getConsensusValidatorsEntityIdMutator<Validator>(
+      {url: `/consensus/validators/${entityId}`, method: 'get', signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusValidatorsEntityIdQueryKey = (entityId: string,) => [`/consensus/validators/${entityId}`] as const;
   
 
     
-export const getGetConsensusValidatorsEntityIdQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(entityId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusValidatorsEntityIdQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(entityId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>, TError, TData>, request?: SecondParameter<typeof getConsensusValidatorsEntityIdMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusValidatorsEntityIdQueryKey(entityId);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>> = ({ signal }) => getConsensusValidatorsEntityId(entityId, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>> = ({ signal }) => getConsensusValidatorsEntityId(entityId, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(entityId), ...queryOptions}}
 
 export type GetConsensusValidatorsEntityIdQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>>
-export type GetConsensusValidatorsEntityIdQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusValidatorsEntityIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a validator registered at the consensus layer.
  */
-export const useGetConsensusValidatorsEntityId = <TData = Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- entityId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetConsensusValidatorsEntityId = <TData = Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ entityId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusValidatorsEntityId>>, TError, TData>, request?: SecondParameter<typeof getConsensusValidatorsEntityIdMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2120,42 +2172,43 @@ export const useGetConsensusValidatorsEntityId = <TData = Awaited<ReturnType<typ
  * @summary Returns a list of consensus layer accounts.
  */
 export const getConsensusAccounts = (
-    params?: GetConsensusAccountsParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<AccountList>> => {
-    return axios.default.get(
-      `/consensus/accounts`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetConsensusAccountsParams,
+ options?: SecondParameter<typeof getConsensusAccountsMutator>,signal?: AbortSignal
+) => {
+      return getConsensusAccountsMutator<AccountList>(
+      {url: `/consensus/accounts`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusAccountsQueryKey = (params?: GetConsensusAccountsParams,) => [`/consensus/accounts`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetConsensusAccountsQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusAccounts>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(params?: GetConsensusAccountsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccounts>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusAccountsQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusAccounts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(params?: GetConsensusAccountsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccounts>>, TError, TData>, request?: SecondParameter<typeof getConsensusAccountsMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccounts>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusAccountsQueryKey(params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccounts>>> = ({ signal }) => getConsensusAccounts(params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccounts>>> = ({ signal }) => getConsensusAccounts(params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetConsensusAccountsQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusAccounts>>>
-export type GetConsensusAccountsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusAccountsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a list of consensus layer accounts.
  */
-export const useGetConsensusAccounts = <TData = Awaited<ReturnType<typeof getConsensusAccounts>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- params?: GetConsensusAccountsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccounts>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetConsensusAccounts = <TData = Awaited<ReturnType<typeof getConsensusAccounts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ params?: GetConsensusAccountsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccounts>>, TError, TData>, request?: SecondParameter<typeof getConsensusAccountsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2173,40 +2226,42 @@ export const useGetConsensusAccounts = <TData = Awaited<ReturnType<typeof getCon
  * @summary Returns a consensus layer account.
  */
 export const getConsensusAccountsAddress = (
-    address: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Account>> => {
-    return axios.default.get(
-      `/consensus/accounts/${address}`,options
-    );
-  }
-
+    address: string,
+ options?: SecondParameter<typeof getConsensusAccountsAddressMutator>,signal?: AbortSignal
+) => {
+      return getConsensusAccountsAddressMutator<Account>(
+      {url: `/consensus/accounts/${address}`, method: 'get', signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusAccountsAddressQueryKey = (address: string,) => [`/consensus/accounts/${address}`] as const;
   
 
     
-export const getGetConsensusAccountsAddressQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddress>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddress>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusAccountsAddressQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof getConsensusAccountsAddressMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddress>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusAccountsAddressQueryKey(address);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccountsAddress>>> = ({ signal }) => getConsensusAccountsAddress(address, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccountsAddress>>> = ({ signal }) => getConsensusAccountsAddress(address, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(address), ...queryOptions}}
 
 export type GetConsensusAccountsAddressQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusAccountsAddress>>>
-export type GetConsensusAccountsAddressQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusAccountsAddressQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a consensus layer account.
  */
-export const useGetConsensusAccountsAddress = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddress>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddress>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetConsensusAccountsAddress = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof getConsensusAccountsAddressMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2225,45 +2280,46 @@ export const useGetConsensusAccountsAddress = <TData = Awaited<ReturnType<typeof
  */
 export const getConsensusAccountsAddressDelegations = (
     address: string,
-    params?: GetConsensusAccountsAddressDelegationsParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<DelegationList>> => {
-    return axios.default.get(
-      `/consensus/accounts/${address}/delegations`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetConsensusAccountsAddressDelegationsParams,
+ options?: SecondParameter<typeof getConsensusAccountsAddressDelegationsMutator>,signal?: AbortSignal
+) => {
+      return getConsensusAccountsAddressDelegationsMutator<DelegationList>(
+      {url: `/consensus/accounts/${address}/delegations`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusAccountsAddressDelegationsQueryKey = (address: string,
     params?: GetConsensusAccountsAddressDelegationsParams,) => [`/consensus/accounts/${address}/delegations`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetConsensusAccountsAddressDelegationsQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(address: string,
-    params?: GetConsensusAccountsAddressDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusAccountsAddressDelegationsQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(address: string,
+    params?: GetConsensusAccountsAddressDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>, TError, TData>, request?: SecondParameter<typeof getConsensusAccountsAddressDelegationsMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusAccountsAddressDelegationsQueryKey(address,params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>> = ({ signal }) => getConsensusAccountsAddressDelegations(address,params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>> = ({ signal }) => getConsensusAccountsAddressDelegations(address,params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(address), ...queryOptions}}
 
 export type GetConsensusAccountsAddressDelegationsQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>>
-export type GetConsensusAccountsAddressDelegationsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusAccountsAddressDelegationsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns an account's delegations.
  */
-export const useGetConsensusAccountsAddressDelegations = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+export const useGetConsensusAccountsAddressDelegations = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  address: string,
-    params?: GetConsensusAccountsAddressDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>, TError, TData>, axios?: AxiosRequestConfig}
+    params?: GetConsensusAccountsAddressDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegations>>, TError, TData>, request?: SecondParameter<typeof getConsensusAccountsAddressDelegationsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2282,45 +2338,46 @@ export const useGetConsensusAccountsAddressDelegations = <TData = Awaited<Return
  */
 export const getConsensusAccountsAddressDelegationsTo = (
     address: string,
-    params?: GetConsensusAccountsAddressDelegationsToParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<DelegationList>> => {
-    return axios.default.get(
-      `/consensus/accounts/${address}/delegations_to`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetConsensusAccountsAddressDelegationsToParams,
+ options?: SecondParameter<typeof getConsensusAccountsAddressDelegationsToMutator>,signal?: AbortSignal
+) => {
+      return getConsensusAccountsAddressDelegationsToMutator<DelegationList>(
+      {url: `/consensus/accounts/${address}/delegations_to`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusAccountsAddressDelegationsToQueryKey = (address: string,
     params?: GetConsensusAccountsAddressDelegationsToParams,) => [`/consensus/accounts/${address}/delegations_to`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetConsensusAccountsAddressDelegationsToQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(address: string,
-    params?: GetConsensusAccountsAddressDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusAccountsAddressDelegationsToQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(address: string,
+    params?: GetConsensusAccountsAddressDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>, TError, TData>, request?: SecondParameter<typeof getConsensusAccountsAddressDelegationsToMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusAccountsAddressDelegationsToQueryKey(address,params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>> = ({ signal }) => getConsensusAccountsAddressDelegationsTo(address,params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>> = ({ signal }) => getConsensusAccountsAddressDelegationsTo(address,params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(address), ...queryOptions}}
 
 export type GetConsensusAccountsAddressDelegationsToQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>>
-export type GetConsensusAccountsAddressDelegationsToQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusAccountsAddressDelegationsToQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a list of delegations to an account.
  */
-export const useGetConsensusAccountsAddressDelegationsTo = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+export const useGetConsensusAccountsAddressDelegationsTo = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  address: string,
-    params?: GetConsensusAccountsAddressDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>, TError, TData>, axios?: AxiosRequestConfig}
+    params?: GetConsensusAccountsAddressDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDelegationsTo>>, TError, TData>, request?: SecondParameter<typeof getConsensusAccountsAddressDelegationsToMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2339,45 +2396,46 @@ export const useGetConsensusAccountsAddressDelegationsTo = <TData = Awaited<Retu
  */
 export const getConsensusAccountsAddressDebondingDelegations = (
     address: string,
-    params?: GetConsensusAccountsAddressDebondingDelegationsParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<DebondingDelegationList>> => {
-    return axios.default.get(
-      `/consensus/accounts/${address}/debonding_delegations`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetConsensusAccountsAddressDebondingDelegationsParams,
+ options?: SecondParameter<typeof getConsensusAccountsAddressDebondingDelegationsMutator>,signal?: AbortSignal
+) => {
+      return getConsensusAccountsAddressDebondingDelegationsMutator<DebondingDelegationList>(
+      {url: `/consensus/accounts/${address}/debonding_delegations`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusAccountsAddressDebondingDelegationsQueryKey = (address: string,
     params?: GetConsensusAccountsAddressDebondingDelegationsParams,) => [`/consensus/accounts/${address}/debonding_delegations`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetConsensusAccountsAddressDebondingDelegationsQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(address: string,
-    params?: GetConsensusAccountsAddressDebondingDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusAccountsAddressDebondingDelegationsQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(address: string,
+    params?: GetConsensusAccountsAddressDebondingDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>, TError, TData>, request?: SecondParameter<typeof getConsensusAccountsAddressDebondingDelegationsMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusAccountsAddressDebondingDelegationsQueryKey(address,params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>> = ({ signal }) => getConsensusAccountsAddressDebondingDelegations(address,params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>> = ({ signal }) => getConsensusAccountsAddressDebondingDelegations(address,params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(address), ...queryOptions}}
 
 export type GetConsensusAccountsAddressDebondingDelegationsQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>>
-export type GetConsensusAccountsAddressDebondingDelegationsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusAccountsAddressDebondingDelegationsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns an account's debonding delegations.
  */
-export const useGetConsensusAccountsAddressDebondingDelegations = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+export const useGetConsensusAccountsAddressDebondingDelegations = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  address: string,
-    params?: GetConsensusAccountsAddressDebondingDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>, TError, TData>, axios?: AxiosRequestConfig}
+    params?: GetConsensusAccountsAddressDebondingDelegationsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegations>>, TError, TData>, request?: SecondParameter<typeof getConsensusAccountsAddressDebondingDelegationsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2396,45 +2454,46 @@ export const useGetConsensusAccountsAddressDebondingDelegations = <TData = Await
  */
 export const getConsensusAccountsAddressDebondingDelegationsTo = (
     address: string,
-    params?: GetConsensusAccountsAddressDebondingDelegationsToParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<DebondingDelegationList>> => {
-    return axios.default.get(
-      `/consensus/accounts/${address}/debonding_delegations_to`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetConsensusAccountsAddressDebondingDelegationsToParams,
+ options?: SecondParameter<typeof getConsensusAccountsAddressDebondingDelegationsToMutator>,signal?: AbortSignal
+) => {
+      return getConsensusAccountsAddressDebondingDelegationsToMutator<DebondingDelegationList>(
+      {url: `/consensus/accounts/${address}/debonding_delegations_to`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusAccountsAddressDebondingDelegationsToQueryKey = (address: string,
     params?: GetConsensusAccountsAddressDebondingDelegationsToParams,) => [`/consensus/accounts/${address}/debonding_delegations_to`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetConsensusAccountsAddressDebondingDelegationsToQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(address: string,
-    params?: GetConsensusAccountsAddressDebondingDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusAccountsAddressDebondingDelegationsToQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(address: string,
+    params?: GetConsensusAccountsAddressDebondingDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>, TError, TData>, request?: SecondParameter<typeof getConsensusAccountsAddressDebondingDelegationsToMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusAccountsAddressDebondingDelegationsToQueryKey(address,params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>> = ({ signal }) => getConsensusAccountsAddressDebondingDelegationsTo(address,params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>> = ({ signal }) => getConsensusAccountsAddressDebondingDelegationsTo(address,params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(address), ...queryOptions}}
 
 export type GetConsensusAccountsAddressDebondingDelegationsToQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>>
-export type GetConsensusAccountsAddressDebondingDelegationsToQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusAccountsAddressDebondingDelegationsToQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a list of debonding delegations to an account.
  */
-export const useGetConsensusAccountsAddressDebondingDelegationsTo = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+export const useGetConsensusAccountsAddressDebondingDelegationsTo = <TData = Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  address: string,
-    params?: GetConsensusAccountsAddressDebondingDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>, TError, TData>, axios?: AxiosRequestConfig}
+    params?: GetConsensusAccountsAddressDebondingDelegationsToParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusAccountsAddressDebondingDelegationsTo>>, TError, TData>, request?: SecondParameter<typeof getConsensusAccountsAddressDebondingDelegationsToMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2452,42 +2511,43 @@ export const useGetConsensusAccountsAddressDebondingDelegationsTo = <TData = Awa
  * @summary Returns a list of consensus epochs.
  */
 export const getConsensusEpochs = (
-    params?: GetConsensusEpochsParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<EpochList>> => {
-    return axios.default.get(
-      `/consensus/epochs`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetConsensusEpochsParams,
+ options?: SecondParameter<typeof getConsensusEpochsMutator>,signal?: AbortSignal
+) => {
+      return getConsensusEpochsMutator<EpochList>(
+      {url: `/consensus/epochs`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusEpochsQueryKey = (params?: GetConsensusEpochsParams,) => [`/consensus/epochs`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetConsensusEpochsQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEpochs>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(params?: GetConsensusEpochsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEpochs>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusEpochsQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEpochs>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(params?: GetConsensusEpochsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEpochs>>, TError, TData>, request?: SecondParameter<typeof getConsensusEpochsMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusEpochs>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusEpochsQueryKey(params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEpochs>>> = ({ signal }) => getConsensusEpochs(params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEpochs>>> = ({ signal }) => getConsensusEpochs(params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetConsensusEpochsQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEpochs>>>
-export type GetConsensusEpochsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusEpochsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a list of consensus epochs.
  */
-export const useGetConsensusEpochs = <TData = Awaited<ReturnType<typeof getConsensusEpochs>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- params?: GetConsensusEpochsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEpochs>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetConsensusEpochs = <TData = Awaited<ReturnType<typeof getConsensusEpochs>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ params?: GetConsensusEpochsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEpochs>>, TError, TData>, request?: SecondParameter<typeof getConsensusEpochsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2505,40 +2565,42 @@ export const useGetConsensusEpochs = <TData = Awaited<ReturnType<typeof getConse
  * @summary Returns a consensus epoch.
  */
 export const getConsensusEpochsEpoch = (
-    epoch: number, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Epoch>> => {
-    return axios.default.get(
-      `/consensus/epochs/${epoch}`,options
-    );
-  }
-
+    epoch: number,
+ options?: SecondParameter<typeof getConsensusEpochsEpochMutator>,signal?: AbortSignal
+) => {
+      return getConsensusEpochsEpochMutator<Epoch>(
+      {url: `/consensus/epochs/${epoch}`, method: 'get', signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusEpochsEpochQueryKey = (epoch: number,) => [`/consensus/epochs/${epoch}`] as const;
   
 
     
-export const getGetConsensusEpochsEpochQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEpochsEpoch>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(epoch: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEpochsEpoch>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusEpochsEpochQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusEpochsEpoch>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(epoch: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEpochsEpoch>>, TError, TData>, request?: SecondParameter<typeof getConsensusEpochsEpochMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusEpochsEpoch>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusEpochsEpochQueryKey(epoch);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEpochsEpoch>>> = ({ signal }) => getConsensusEpochsEpoch(epoch, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusEpochsEpoch>>> = ({ signal }) => getConsensusEpochsEpoch(epoch, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(epoch), ...queryOptions}}
 
 export type GetConsensusEpochsEpochQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusEpochsEpoch>>>
-export type GetConsensusEpochsEpochQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusEpochsEpochQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a consensus epoch.
  */
-export const useGetConsensusEpochsEpoch = <TData = Awaited<ReturnType<typeof getConsensusEpochsEpoch>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- epoch: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEpochsEpoch>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetConsensusEpochsEpoch = <TData = Awaited<ReturnType<typeof getConsensusEpochsEpoch>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ epoch: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusEpochsEpoch>>, TError, TData>, request?: SecondParameter<typeof getConsensusEpochsEpochMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2556,42 +2618,43 @@ export const useGetConsensusEpochsEpoch = <TData = Awaited<ReturnType<typeof get
  * @summary Returns a list of governance proposals.
  */
 export const getConsensusProposals = (
-    params?: GetConsensusProposalsParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<ProposalList>> => {
-    return axios.default.get(
-      `/consensus/proposals`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetConsensusProposalsParams,
+ options?: SecondParameter<typeof getConsensusProposalsMutator>,signal?: AbortSignal
+) => {
+      return getConsensusProposalsMutator<ProposalList>(
+      {url: `/consensus/proposals`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusProposalsQueryKey = (params?: GetConsensusProposalsParams,) => [`/consensus/proposals`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetConsensusProposalsQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusProposals>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(params?: GetConsensusProposalsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusProposals>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusProposalsQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusProposals>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(params?: GetConsensusProposalsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusProposals>>, TError, TData>, request?: SecondParameter<typeof getConsensusProposalsMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusProposals>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusProposalsQueryKey(params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusProposals>>> = ({ signal }) => getConsensusProposals(params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusProposals>>> = ({ signal }) => getConsensusProposals(params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetConsensusProposalsQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusProposals>>>
-export type GetConsensusProposalsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusProposalsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a list of governance proposals.
  */
-export const useGetConsensusProposals = <TData = Awaited<ReturnType<typeof getConsensusProposals>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- params?: GetConsensusProposalsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusProposals>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetConsensusProposals = <TData = Awaited<ReturnType<typeof getConsensusProposals>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ params?: GetConsensusProposalsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusProposals>>, TError, TData>, request?: SecondParameter<typeof getConsensusProposalsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2609,40 +2672,42 @@ export const useGetConsensusProposals = <TData = Awaited<ReturnType<typeof getCo
  * @summary Returns a governance proposal.
  */
 export const getConsensusProposalsProposalId = (
-    proposalId: number, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Proposal>> => {
-    return axios.default.get(
-      `/consensus/proposals/${proposalId}`,options
-    );
-  }
-
+    proposalId: number,
+ options?: SecondParameter<typeof getConsensusProposalsProposalIdMutator>,signal?: AbortSignal
+) => {
+      return getConsensusProposalsProposalIdMutator<Proposal>(
+      {url: `/consensus/proposals/${proposalId}`, method: 'get', signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusProposalsProposalIdQueryKey = (proposalId: number,) => [`/consensus/proposals/${proposalId}`] as const;
   
 
     
-export const getGetConsensusProposalsProposalIdQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusProposalsProposalId>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(proposalId: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusProposalsProposalId>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusProposalsProposalIdQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusProposalsProposalId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(proposalId: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusProposalsProposalId>>, TError, TData>, request?: SecondParameter<typeof getConsensusProposalsProposalIdMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusProposalsProposalId>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusProposalsProposalIdQueryKey(proposalId);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusProposalsProposalId>>> = ({ signal }) => getConsensusProposalsProposalId(proposalId, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusProposalsProposalId>>> = ({ signal }) => getConsensusProposalsProposalId(proposalId, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(proposalId), ...queryOptions}}
 
 export type GetConsensusProposalsProposalIdQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusProposalsProposalId>>>
-export type GetConsensusProposalsProposalIdQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusProposalsProposalIdQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a governance proposal.
  */
-export const useGetConsensusProposalsProposalId = <TData = Awaited<ReturnType<typeof getConsensusProposalsProposalId>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- proposalId: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusProposalsProposalId>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetConsensusProposalsProposalId = <TData = Awaited<ReturnType<typeof getConsensusProposalsProposalId>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ proposalId: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusProposalsProposalId>>, TError, TData>, request?: SecondParameter<typeof getConsensusProposalsProposalIdMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2661,45 +2726,46 @@ export const useGetConsensusProposalsProposalId = <TData = Awaited<ReturnType<ty
  */
 export const getConsensusProposalsProposalIdVotes = (
     proposalId: number,
-    params?: GetConsensusProposalsProposalIdVotesParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<ProposalVotes>> => {
-    return axios.default.get(
-      `/consensus/proposals/${proposalId}/votes`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetConsensusProposalsProposalIdVotesParams,
+ options?: SecondParameter<typeof getConsensusProposalsProposalIdVotesMutator>,signal?: AbortSignal
+) => {
+      return getConsensusProposalsProposalIdVotesMutator<ProposalVotes>(
+      {url: `/consensus/proposals/${proposalId}/votes`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetConsensusProposalsProposalIdVotesQueryKey = (proposalId: number,
     params?: GetConsensusProposalsProposalIdVotesParams,) => [`/consensus/proposals/${proposalId}/votes`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetConsensusProposalsProposalIdVotesQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusProposalsProposalIdVotes>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(proposalId: number,
-    params?: GetConsensusProposalsProposalIdVotesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusProposalsProposalIdVotes>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetConsensusProposalsProposalIdVotesQueryOptions = <TData = Awaited<ReturnType<typeof getConsensusProposalsProposalIdVotes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(proposalId: number,
+    params?: GetConsensusProposalsProposalIdVotesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusProposalsProposalIdVotes>>, TError, TData>, request?: SecondParameter<typeof getConsensusProposalsProposalIdVotesMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getConsensusProposalsProposalIdVotes>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetConsensusProposalsProposalIdVotesQueryKey(proposalId,params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusProposalsProposalIdVotes>>> = ({ signal }) => getConsensusProposalsProposalIdVotes(proposalId,params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConsensusProposalsProposalIdVotes>>> = ({ signal }) => getConsensusProposalsProposalIdVotes(proposalId,params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(proposalId), ...queryOptions}}
 
 export type GetConsensusProposalsProposalIdVotesQueryResult = NonNullable<Awaited<ReturnType<typeof getConsensusProposalsProposalIdVotes>>>
-export type GetConsensusProposalsProposalIdVotesQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetConsensusProposalsProposalIdVotesQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a list of votes for a governance proposal.
  */
-export const useGetConsensusProposalsProposalIdVotes = <TData = Awaited<ReturnType<typeof getConsensusProposalsProposalIdVotes>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+export const useGetConsensusProposalsProposalIdVotes = <TData = Awaited<ReturnType<typeof getConsensusProposalsProposalIdVotes>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  proposalId: number,
-    params?: GetConsensusProposalsProposalIdVotesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusProposalsProposalIdVotes>>, TError, TData>, axios?: AxiosRequestConfig}
+    params?: GetConsensusProposalsProposalIdVotesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getConsensusProposalsProposalIdVotes>>, TError, TData>, request?: SecondParameter<typeof getConsensusProposalsProposalIdVotesMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2718,45 +2784,46 @@ export const useGetConsensusProposalsProposalIdVotes = <TData = Awaited<ReturnTy
  */
 export const getRuntimeBlocks = (
     runtime: Runtime,
-    params?: GetRuntimeBlocksParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<RuntimeBlockList>> => {
-    return axios.default.get(
-      `/${runtime}/blocks`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetRuntimeBlocksParams,
+ options?: SecondParameter<typeof getRuntimeBlocksMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeBlocksMutator<RuntimeBlockList>(
+      {url: `/${runtime}/blocks`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetRuntimeBlocksQueryKey = (runtime: Runtime,
     params?: GetRuntimeBlocksParams,) => [`/${runtime}/blocks`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetRuntimeBlocksQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeBlocks>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(runtime: Runtime,
-    params?: GetRuntimeBlocksParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeBlocks>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetRuntimeBlocksQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeBlocks>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
+    params?: GetRuntimeBlocksParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeBlocks>>, TError, TData>, request?: SecondParameter<typeof getRuntimeBlocksMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeBlocks>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetRuntimeBlocksQueryKey(runtime,params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeBlocks>>> = ({ signal }) => getRuntimeBlocks(runtime,params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeBlocks>>> = ({ signal }) => getRuntimeBlocks(runtime,params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(runtime), ...queryOptions}}
 
 export type GetRuntimeBlocksQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeBlocks>>>
-export type GetRuntimeBlocksQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetRuntimeBlocksQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a list of Emerald blocks.
  */
-export const useGetRuntimeBlocks = <TData = Awaited<ReturnType<typeof getRuntimeBlocks>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+export const useGetRuntimeBlocks = <TData = Awaited<ReturnType<typeof getRuntimeBlocks>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  runtime: Runtime,
-    params?: GetRuntimeBlocksParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeBlocks>>, TError, TData>, axios?: AxiosRequestConfig}
+    params?: GetRuntimeBlocksParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeBlocks>>, TError, TData>, request?: SecondParameter<typeof getRuntimeBlocksMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2775,45 +2842,46 @@ export const useGetRuntimeBlocks = <TData = Awaited<ReturnType<typeof getRuntime
  */
 export const getRuntimeTransactions = (
     runtime: Runtime,
-    params?: GetRuntimeTransactionsParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<RuntimeTransactionList>> => {
-    return axios.default.get(
-      `/${runtime}/transactions`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetRuntimeTransactionsParams,
+ options?: SecondParameter<typeof getRuntimeTransactionsMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeTransactionsMutator<RuntimeTransactionList>(
+      {url: `/${runtime}/transactions`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetRuntimeTransactionsQueryKey = (runtime: Runtime,
     params?: GetRuntimeTransactionsParams,) => [`/${runtime}/transactions`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetRuntimeTransactionsQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeTransactions>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(runtime: Runtime,
-    params?: GetRuntimeTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeTransactions>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetRuntimeTransactionsQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
+    params?: GetRuntimeTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeTransactions>>, TError, TData>, request?: SecondParameter<typeof getRuntimeTransactionsMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeTransactions>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetRuntimeTransactionsQueryKey(runtime,params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeTransactions>>> = ({ signal }) => getRuntimeTransactions(runtime,params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeTransactions>>> = ({ signal }) => getRuntimeTransactions(runtime,params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(runtime), ...queryOptions}}
 
 export type GetRuntimeTransactionsQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeTransactions>>>
-export type GetRuntimeTransactionsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetRuntimeTransactionsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a list of Emerald transactions.
  */
-export const useGetRuntimeTransactions = <TData = Awaited<ReturnType<typeof getRuntimeTransactions>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+export const useGetRuntimeTransactions = <TData = Awaited<ReturnType<typeof getRuntimeTransactions>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  runtime: Runtime,
-    params?: GetRuntimeTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeTransactions>>, TError, TData>, axios?: AxiosRequestConfig}
+    params?: GetRuntimeTransactionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeTransactions>>, TError, TData>, request?: SecondParameter<typeof getRuntimeTransactionsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2832,43 +2900,45 @@ export const useGetRuntimeTransactions = <TData = Awaited<ReturnType<typeof getR
  */
 export const getRuntimeTransactionsTxHash = (
     runtime: Runtime,
-    txHash: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<RuntimeTransactionList>> => {
-    return axios.default.get(
-      `/${runtime}/transactions/${txHash}`,options
-    );
-  }
-
+    txHash: string,
+ options?: SecondParameter<typeof getRuntimeTransactionsTxHashMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeTransactionsTxHashMutator<RuntimeTransactionList>(
+      {url: `/${runtime}/transactions/${txHash}`, method: 'get', signal
+    },
+      options);
+    }
+  
 
 export const getGetRuntimeTransactionsTxHashQueryKey = (runtime: Runtime,
     txHash: string,) => [`/${runtime}/transactions/${txHash}`] as const;
   
 
     
-export const getGetRuntimeTransactionsTxHashQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeTransactionsTxHash>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(runtime: Runtime,
-    txHash: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeTransactionsTxHash>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetRuntimeTransactionsTxHashQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeTransactionsTxHash>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
+    txHash: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeTransactionsTxHash>>, TError, TData>, request?: SecondParameter<typeof getRuntimeTransactionsTxHashMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeTransactionsTxHash>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetRuntimeTransactionsTxHashQueryKey(runtime,txHash);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeTransactionsTxHash>>> = ({ signal }) => getRuntimeTransactionsTxHash(runtime,txHash, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeTransactionsTxHash>>> = ({ signal }) => getRuntimeTransactionsTxHash(runtime,txHash, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(runtime && txHash), ...queryOptions}}
 
 export type GetRuntimeTransactionsTxHashQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeTransactionsTxHash>>>
-export type GetRuntimeTransactionsTxHashQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetRuntimeTransactionsTxHashQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns runtime transactions with the given transaction hash.
  */
-export const useGetRuntimeTransactionsTxHash = <TData = Awaited<ReturnType<typeof getRuntimeTransactionsTxHash>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+export const useGetRuntimeTransactionsTxHash = <TData = Awaited<ReturnType<typeof getRuntimeTransactionsTxHash>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  runtime: Runtime,
-    txHash: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeTransactionsTxHash>>, TError, TData>, axios?: AxiosRequestConfig}
+    txHash: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeTransactionsTxHash>>, TError, TData>, request?: SecondParameter<typeof getRuntimeTransactionsTxHashMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2887,45 +2957,46 @@ export const useGetRuntimeTransactionsTxHash = <TData = Awaited<ReturnType<typeo
  */
 export const getRuntimeEvents = (
     runtime: Runtime,
-    params?: GetRuntimeEventsParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<RuntimeEventList>> => {
-    return axios.default.get(
-      `/${runtime}/events`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetRuntimeEventsParams,
+ options?: SecondParameter<typeof getRuntimeEventsMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeEventsMutator<RuntimeEventList>(
+      {url: `/${runtime}/events`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetRuntimeEventsQueryKey = (runtime: Runtime,
     params?: GetRuntimeEventsParams,) => [`/${runtime}/events`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetRuntimeEventsQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeEvents>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(runtime: Runtime,
-    params?: GetRuntimeEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvents>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetRuntimeEventsQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeEvents>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
+    params?: GetRuntimeEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvents>>, TError, TData>, request?: SecondParameter<typeof getRuntimeEventsMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvents>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetRuntimeEventsQueryKey(runtime,params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeEvents>>> = ({ signal }) => getRuntimeEvents(runtime,params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeEvents>>> = ({ signal }) => getRuntimeEvents(runtime,params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(runtime), ...queryOptions}}
 
 export type GetRuntimeEventsQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeEvents>>>
-export type GetRuntimeEventsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetRuntimeEventsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a list of runtime events.
  */
-export const useGetRuntimeEvents = <TData = Awaited<ReturnType<typeof getRuntimeEvents>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+export const useGetRuntimeEvents = <TData = Awaited<ReturnType<typeof getRuntimeEvents>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  runtime: Runtime,
-    params?: GetRuntimeEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvents>>, TError, TData>, axios?: AxiosRequestConfig}
+    params?: GetRuntimeEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvents>>, TError, TData>, request?: SecondParameter<typeof getRuntimeEventsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -2944,45 +3015,46 @@ export const useGetRuntimeEvents = <TData = Awaited<ReturnType<typeof getRuntime
  */
 export const getRuntimeEvmTokens = (
     runtime: Runtime,
-    params?: GetRuntimeEvmTokensParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<EvmTokenList>> => {
-    return axios.default.get(
-      `/${runtime}/evm_tokens`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetRuntimeEvmTokensParams,
+ options?: SecondParameter<typeof getRuntimeEvmTokensMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeEvmTokensMutator<EvmTokenList>(
+      {url: `/${runtime}/evm_tokens`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetRuntimeEvmTokensQueryKey = (runtime: Runtime,
     params?: GetRuntimeEvmTokensParams,) => [`/${runtime}/evm_tokens`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetRuntimeEvmTokensQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeEvmTokens>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(runtime: Runtime,
-    params?: GetRuntimeEvmTokensParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokens>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetRuntimeEvmTokensQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeEvmTokens>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
+    params?: GetRuntimeEvmTokensParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokens>>, TError, TData>, request?: SecondParameter<typeof getRuntimeEvmTokensMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokens>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetRuntimeEvmTokensQueryKey(runtime,params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeEvmTokens>>> = ({ signal }) => getRuntimeEvmTokens(runtime,params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeEvmTokens>>> = ({ signal }) => getRuntimeEvmTokens(runtime,params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(runtime), ...queryOptions}}
 
 export type GetRuntimeEvmTokensQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeEvmTokens>>>
-export type GetRuntimeEvmTokensQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetRuntimeEvmTokensQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a list of EVM (ERC-20, ...) tokens on Emerald.
  */
-export const useGetRuntimeEvmTokens = <TData = Awaited<ReturnType<typeof getRuntimeEvmTokens>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+export const useGetRuntimeEvmTokens = <TData = Awaited<ReturnType<typeof getRuntimeEvmTokens>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  runtime: Runtime,
-    params?: GetRuntimeEvmTokensParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokens>>, TError, TData>, axios?: AxiosRequestConfig}
+    params?: GetRuntimeEvmTokensParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokens>>, TError, TData>, request?: SecondParameter<typeof getRuntimeEvmTokensMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -3001,43 +3073,45 @@ export const useGetRuntimeEvmTokens = <TData = Awaited<ReturnType<typeof getRunt
  */
 export const getRuntimeAccountsAddress = (
     runtime: Runtime,
-    address: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<RuntimeAccount>> => {
-    return axios.default.get(
-      `/${runtime}/accounts/${address}`,options
-    );
-  }
-
+    address: string,
+ options?: SecondParameter<typeof getRuntimeAccountsAddressMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeAccountsAddressMutator<RuntimeAccount>(
+      {url: `/${runtime}/accounts/${address}`, method: 'get', signal
+    },
+      options);
+    }
+  
 
 export const getGetRuntimeAccountsAddressQueryKey = (runtime: Runtime,
     address: string,) => [`/${runtime}/accounts/${address}`] as const;
   
 
     
-export const getGetRuntimeAccountsAddressQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(runtime: Runtime,
-    address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetRuntimeAccountsAddressQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
+    address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof getRuntimeAccountsAddressMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetRuntimeAccountsAddressQueryKey(runtime,address);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeAccountsAddress>>> = ({ signal }) => getRuntimeAccountsAddress(runtime,address, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeAccountsAddress>>> = ({ signal }) => getRuntimeAccountsAddress(runtime,address, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(runtime && address), ...queryOptions}}
 
 export type GetRuntimeAccountsAddressQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeAccountsAddress>>>
-export type GetRuntimeAccountsAddressQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetRuntimeAccountsAddressQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a runtime account.
  */
-export const useGetRuntimeAccountsAddress = <TData = Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+export const useGetRuntimeAccountsAddress = <TData = Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  runtime: Runtime,
-    address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError, TData>, axios?: AxiosRequestConfig}
+    address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeAccountsAddress>>, TError, TData>, request?: SecondParameter<typeof getRuntimeAccountsAddressMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -3055,40 +3129,42 @@ export const useGetRuntimeAccountsAddress = <TData = Awaited<ReturnType<typeof g
  * @summary Returns the runtime status.
  */
 export const getRuntimeStatus = (
-    runtime: Runtime, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<RuntimeStatus>> => {
-    return axios.default.get(
-      `/${runtime}/status`,options
-    );
-  }
-
+    runtime: Runtime,
+ options?: SecondParameter<typeof getRuntimeStatusMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeStatusMutator<RuntimeStatus>(
+      {url: `/${runtime}/status`, method: 'get', signal
+    },
+      options);
+    }
+  
 
 export const getGetRuntimeStatusQueryKey = (runtime: Runtime,) => [`/${runtime}/status`] as const;
   
 
     
-export const getGetRuntimeStatusQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeStatus>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(runtime: Runtime, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeStatus>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetRuntimeStatusQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeStatus>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeStatus>>, TError, TData>, request?: SecondParameter<typeof getRuntimeStatusMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeStatus>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetRuntimeStatusQueryKey(runtime);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeStatus>>> = ({ signal }) => getRuntimeStatus(runtime, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeStatus>>> = ({ signal }) => getRuntimeStatus(runtime, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(runtime), ...queryOptions}}
 
 export type GetRuntimeStatusQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeStatus>>>
-export type GetRuntimeStatusQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetRuntimeStatusQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns the runtime status.
  */
-export const useGetRuntimeStatus = <TData = Awaited<ReturnType<typeof getRuntimeStatus>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
- runtime: Runtime, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeStatus>>, TError, TData>, axios?: AxiosRequestConfig}
+export const useGetRuntimeStatus = <TData = Awaited<ReturnType<typeof getRuntimeStatus>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ runtime: Runtime, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeStatus>>, TError, TData>, request?: SecondParameter<typeof getRuntimeStatusMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -3109,47 +3185,48 @@ for either consensus or one of the paratimes.
  */
 export const getLayerStatsTxVolume = (
     layer: Layer,
-    params?: GetLayerStatsTxVolumeParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<TxVolumeList>> => {
-    return axios.default.get(
-      `/${layer}/stats/tx_volume`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetLayerStatsTxVolumeParams,
+ options?: SecondParameter<typeof getLayerStatsTxVolumeMutator>,signal?: AbortSignal
+) => {
+      return getLayerStatsTxVolumeMutator<TxVolumeList>(
+      {url: `/${layer}/stats/tx_volume`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetLayerStatsTxVolumeQueryKey = (layer: Layer,
     params?: GetLayerStatsTxVolumeParams,) => [`/${layer}/stats/tx_volume`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetLayerStatsTxVolumeQueryOptions = <TData = Awaited<ReturnType<typeof getLayerStatsTxVolume>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(layer: Layer,
-    params?: GetLayerStatsTxVolumeParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getLayerStatsTxVolume>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetLayerStatsTxVolumeQueryOptions = <TData = Awaited<ReturnType<typeof getLayerStatsTxVolume>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(layer: Layer,
+    params?: GetLayerStatsTxVolumeParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getLayerStatsTxVolume>>, TError, TData>, request?: SecondParameter<typeof getLayerStatsTxVolumeMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getLayerStatsTxVolume>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetLayerStatsTxVolumeQueryKey(layer,params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getLayerStatsTxVolume>>> = ({ signal }) => getLayerStatsTxVolume(layer,params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getLayerStatsTxVolume>>> = ({ signal }) => getLayerStatsTxVolume(layer,params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(layer), ...queryOptions}}
 
 export type GetLayerStatsTxVolumeQueryResult = NonNullable<Awaited<ReturnType<typeof getLayerStatsTxVolume>>>
-export type GetLayerStatsTxVolumeQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetLayerStatsTxVolumeQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a timeline of the transaction volume at the chosen granularity,
 for either consensus or one of the paratimes.
 
  */
-export const useGetLayerStatsTxVolume = <TData = Awaited<ReturnType<typeof getLayerStatsTxVolume>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+export const useGetLayerStatsTxVolume = <TData = Awaited<ReturnType<typeof getLayerStatsTxVolume>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  layer: Layer,
-    params?: GetLayerStatsTxVolumeParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getLayerStatsTxVolume>>, TError, TData>, axios?: AxiosRequestConfig}
+    params?: GetLayerStatsTxVolumeParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getLayerStatsTxVolume>>, TError, TData>, request?: SecondParameter<typeof getLayerStatsTxVolumeMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -3170,47 +3247,48 @@ either consensus or one of the paratimes.
  */
 export const getLayerStatsActiveAccounts = (
     layer: Layer,
-    params?: GetLayerStatsActiveAccountsParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<ActiveAccountsList>> => {
-    return axios.default.get(
-      `/${layer}/stats/active_accounts`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+    params?: GetLayerStatsActiveAccountsParams,
+ options?: SecondParameter<typeof getLayerStatsActiveAccountsMutator>,signal?: AbortSignal
+) => {
+      return getLayerStatsActiveAccountsMutator<ActiveAccountsList>(
+      {url: `/${layer}/stats/active_accounts`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
 
 export const getGetLayerStatsActiveAccountsQueryKey = (layer: Layer,
     params?: GetLayerStatsActiveAccountsParams,) => [`/${layer}/stats/active_accounts`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetLayerStatsActiveAccountsQueryOptions = <TData = Awaited<ReturnType<typeof getLayerStatsActiveAccounts>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(layer: Layer,
-    params?: GetLayerStatsActiveAccountsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getLayerStatsActiveAccounts>>, TError, TData>, axios?: AxiosRequestConfig}
+export const getGetLayerStatsActiveAccountsQueryOptions = <TData = Awaited<ReturnType<typeof getLayerStatsActiveAccounts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(layer: Layer,
+    params?: GetLayerStatsActiveAccountsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getLayerStatsActiveAccounts>>, TError, TData>, request?: SecondParameter<typeof getLayerStatsActiveAccountsMutator>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getLayerStatsActiveAccounts>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, axios: axiosOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetLayerStatsActiveAccountsQueryKey(layer,params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getLayerStatsActiveAccounts>>> = ({ signal }) => getLayerStatsActiveAccounts(layer,params, { signal, ...axiosOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getLayerStatsActiveAccounts>>> = ({ signal }) => getLayerStatsActiveAccounts(layer,params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, enabled: !!(layer), ...queryOptions}}
 
 export type GetLayerStatsActiveAccountsQueryResult = NonNullable<Awaited<ReturnType<typeof getLayerStatsActiveAccounts>>>
-export type GetLayerStatsActiveAccountsQueryError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>
+export type GetLayerStatsActiveAccountsQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
  * @summary Returns a (sliding) timeline of the recorded daily unique active accounts for
 either consensus or one of the paratimes.
 
  */
-export const useGetLayerStatsActiveAccounts = <TData = Awaited<ReturnType<typeof getLayerStatsActiveAccounts>>, TError = AxiosError<HumanReadableErrorResponse | NotFoundErrorResponse>>(
+export const useGetLayerStatsActiveAccounts = <TData = Awaited<ReturnType<typeof getLayerStatsActiveAccounts>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  layer: Layer,
-    params?: GetLayerStatsActiveAccountsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getLayerStatsActiveAccounts>>, TError, TData>, axios?: AxiosRequestConfig}
+    params?: GetLayerStatsActiveAccountsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getLayerStatsActiveAccounts>>, TError, TData>, request?: SecondParameter<typeof getLayerStatsActiveAccountsMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
