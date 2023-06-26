@@ -5,7 +5,7 @@
  * An API for accessing indexed data from the Oasis Network.
  * OpenAPI spec version: 0.1.0
  */
-import axios from 'axios'
+import * as axios from 'axios';
 import type {
   AxiosRequestConfig,
   AxiosResponse,
@@ -577,9 +577,6 @@ export type EvmTokenType = typeof EvmTokenType[keyof typeof EvmTokenType];
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const EvmTokenType = {
   ERC20: 'ERC20',
-  ERC721: 'ERC721',
-  ERC1155: 'ERC1155',
-  OasisSdk: 'OasisSdk',
 } as const;
 
 export interface EvmToken {
@@ -1036,7 +1033,7 @@ export interface RuntimeEvmBalance {
   token_symbol?: string;
   /** The name of the token. Not guaranteed to be unique across distinct EVM tokens. */
   token_name?: string;
-  token_type?: EvmTokenType;
+  token_type: EvmTokenType;
   /** The number of decimals of precision for this token. */
   token_decimals: number;
 }
@@ -1493,7 +1490,7 @@ type AwaitedInput<T> = PromiseLike<T> | T;
 export const getStatus = (
      options?: AxiosRequestConfig
  ): Promise<AxiosResponse<Status>> => {
-    return axios.get(
+    return axios.default.get(
       `/`,options
     );
   }
@@ -1544,7 +1541,7 @@ export const useGetStatus = <TData = Awaited<ReturnType<typeof getStatus>>, TErr
 export const getConsensusBlocks = (
     params?: GetConsensusBlocksParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<BlockList>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/blocks`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -1597,7 +1594,7 @@ export const useGetConsensusBlocks = <TData = Awaited<ReturnType<typeof getConse
 export const getConsensusBlocksHeight = (
     height: number, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<Block>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/blocks/${height}`,options
     );
   }
@@ -1648,7 +1645,7 @@ export const useGetConsensusBlocksHeight = <TData = Awaited<ReturnType<typeof ge
 export const getConsensusTransactions = (
     params?: GetConsensusTransactionsParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<TransactionList>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/transactions`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -1701,7 +1698,7 @@ export const useGetConsensusTransactions = <TData = Awaited<ReturnType<typeof ge
 export const getConsensusTransactionsTxHash = (
     txHash: string, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<Transaction>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/transactions/${txHash}`,options
     );
   }
@@ -1752,7 +1749,7 @@ export const useGetConsensusTransactionsTxHash = <TData = Awaited<ReturnType<typ
 export const getConsensusEvents = (
     params?: GetConsensusEventsParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<ConsensusEventList>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/events`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -1805,7 +1802,7 @@ export const useGetConsensusEvents = <TData = Awaited<ReturnType<typeof getConse
 export const getConsensusEntities = (
     params?: GetConsensusEntitiesParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<EntityList>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/entities`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -1858,7 +1855,7 @@ export const useGetConsensusEntities = <TData = Awaited<ReturnType<typeof getCon
 export const getConsensusEntitiesEntityId = (
     entityId: string, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<Entity>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/entities/${entityId}`,options
     );
   }
@@ -1910,7 +1907,7 @@ export const getConsensusEntitiesEntityIdNodes = (
     entityId: string,
     params?: GetConsensusEntitiesEntityIdNodesParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<NodeList>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/entities/${entityId}/nodes`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -1967,7 +1964,7 @@ export const getConsensusEntitiesEntityIdNodesNodeId = (
     entityId: string,
     nodeId: string, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<Node>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/entities/${entityId}/nodes/${nodeId}`,options
     );
   }
@@ -2021,7 +2018,7 @@ export const useGetConsensusEntitiesEntityIdNodesNodeId = <TData = Awaited<Retur
 export const getConsensusValidators = (
     params?: GetConsensusValidatorsParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<ValidatorList>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/validators`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -2074,7 +2071,7 @@ export const useGetConsensusValidators = <TData = Awaited<ReturnType<typeof getC
 export const getConsensusValidatorsEntityId = (
     entityId: string, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<Validator>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/validators/${entityId}`,options
     );
   }
@@ -2125,7 +2122,7 @@ export const useGetConsensusValidatorsEntityId = <TData = Awaited<ReturnType<typ
 export const getConsensusAccounts = (
     params?: GetConsensusAccountsParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<AccountList>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/accounts`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -2178,7 +2175,7 @@ export const useGetConsensusAccounts = <TData = Awaited<ReturnType<typeof getCon
 export const getConsensusAccountsAddress = (
     address: string, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<Account>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/accounts/${address}`,options
     );
   }
@@ -2230,7 +2227,7 @@ export const getConsensusAccountsAddressDelegations = (
     address: string,
     params?: GetConsensusAccountsAddressDelegationsParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<DelegationList>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/accounts/${address}/delegations`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -2287,7 +2284,7 @@ export const getConsensusAccountsAddressDelegationsTo = (
     address: string,
     params?: GetConsensusAccountsAddressDelegationsToParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<DelegationList>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/accounts/${address}/delegations_to`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -2344,7 +2341,7 @@ export const getConsensusAccountsAddressDebondingDelegations = (
     address: string,
     params?: GetConsensusAccountsAddressDebondingDelegationsParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<DebondingDelegationList>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/accounts/${address}/debonding_delegations`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -2401,7 +2398,7 @@ export const getConsensusAccountsAddressDebondingDelegationsTo = (
     address: string,
     params?: GetConsensusAccountsAddressDebondingDelegationsToParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<DebondingDelegationList>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/accounts/${address}/debonding_delegations_to`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -2457,7 +2454,7 @@ export const useGetConsensusAccountsAddressDebondingDelegationsTo = <TData = Awa
 export const getConsensusEpochs = (
     params?: GetConsensusEpochsParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<EpochList>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/epochs`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -2510,7 +2507,7 @@ export const useGetConsensusEpochs = <TData = Awaited<ReturnType<typeof getConse
 export const getConsensusEpochsEpoch = (
     epoch: number, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<Epoch>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/epochs/${epoch}`,options
     );
   }
@@ -2561,7 +2558,7 @@ export const useGetConsensusEpochsEpoch = <TData = Awaited<ReturnType<typeof get
 export const getConsensusProposals = (
     params?: GetConsensusProposalsParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<ProposalList>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/proposals`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -2614,7 +2611,7 @@ export const useGetConsensusProposals = <TData = Awaited<ReturnType<typeof getCo
 export const getConsensusProposalsProposalId = (
     proposalId: number, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<Proposal>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/proposals/${proposalId}`,options
     );
   }
@@ -2666,7 +2663,7 @@ export const getConsensusProposalsProposalIdVotes = (
     proposalId: number,
     params?: GetConsensusProposalsProposalIdVotesParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<ProposalVotes>> => {
-    return axios.get(
+    return axios.default.get(
       `/consensus/proposals/${proposalId}/votes`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -2723,7 +2720,7 @@ export const getRuntimeBlocks = (
     runtime: Runtime,
     params?: GetRuntimeBlocksParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<RuntimeBlockList>> => {
-    return axios.get(
+    return axios.default.get(
       `/${runtime}/blocks`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -2780,7 +2777,7 @@ export const getRuntimeTransactions = (
     runtime: Runtime,
     params?: GetRuntimeTransactionsParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<RuntimeTransactionList>> => {
-    return axios.get(
+    return axios.default.get(
       `/${runtime}/transactions`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -2837,7 +2834,7 @@ export const getRuntimeTransactionsTxHash = (
     runtime: Runtime,
     txHash: string, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<RuntimeTransactionList>> => {
-    return axios.get(
+    return axios.default.get(
       `/${runtime}/transactions/${txHash}`,options
     );
   }
@@ -2892,7 +2889,7 @@ export const getRuntimeEvents = (
     runtime: Runtime,
     params?: GetRuntimeEventsParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<RuntimeEventList>> => {
-    return axios.get(
+    return axios.default.get(
       `/${runtime}/events`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -2949,7 +2946,7 @@ export const getRuntimeEvmTokens = (
     runtime: Runtime,
     params?: GetRuntimeEvmTokensParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<EvmTokenList>> => {
-    return axios.get(
+    return axios.default.get(
       `/${runtime}/evm_tokens`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -3006,7 +3003,7 @@ export const getRuntimeAccountsAddress = (
     runtime: Runtime,
     address: string, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<RuntimeAccount>> => {
-    return axios.get(
+    return axios.default.get(
       `/${runtime}/accounts/${address}`,options
     );
   }
@@ -3060,7 +3057,7 @@ export const useGetRuntimeAccountsAddress = <TData = Awaited<ReturnType<typeof g
 export const getRuntimeStatus = (
     runtime: Runtime, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<RuntimeStatus>> => {
-    return axios.get(
+    return axios.default.get(
       `/${runtime}/status`,options
     );
   }
@@ -3114,7 +3111,7 @@ export const getLayerStatsTxVolume = (
     layer: Layer,
     params?: GetLayerStatsTxVolumeParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<TxVolumeList>> => {
-    return axios.get(
+    return axios.default.get(
       `/${layer}/stats/tx_volume`,{
     ...options,
         params: {...params, ...options?.params},}
@@ -3175,7 +3172,7 @@ export const getLayerStatsActiveAccounts = (
     layer: Layer,
     params?: GetLayerStatsActiveAccountsParams, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<ActiveAccountsList>> => {
-    return axios.get(
+    return axios.default.get(
       `/${layer}/stats/active_accounts`,{
     ...options,
         params: {...params, ...options?.params},}
