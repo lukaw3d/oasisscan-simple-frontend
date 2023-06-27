@@ -14,7 +14,7 @@ export function AccountsAddress({ paratime = 'emerald' as Runtime }) {
         fieldPriority: {
         },
         fieldDisplay: {
-          'address': ({ value, parentValue }: { value: string, parentValue: RuntimeAccount }) => {
+          'address': ({ value, parentValue }) => {
             return <span>
               {getEthAccountAddress(parentValue.address_preimage)
                 ? <>

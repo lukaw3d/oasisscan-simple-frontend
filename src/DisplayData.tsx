@@ -13,7 +13,7 @@ type Paths<ObjectType extends object> =
         : `${Key}`
     }[keyof ObjectType & (string | number)];
 
-type GetPath<T extends object, Path extends string> = Path extends `${infer Key}.${infer PathRest}` ? GetPath<T[Key & keyof T] & object, PathRest> : T[Path & keyof T]
+type GetPath<T extends object, Path extends string> = Path extends `${infer Key}.${infer PathRest}` ? GetPath<T[Key & keyof T] & object, PathRest> : Path extends '' ? T : T[Path & keyof T]
 type PopPath<Path extends string> = Path extends `${infer Key}.${infer PathRest}`
   ? (PopPath<PathRest> extends '' ? `${Key}` : `${Key}.${PopPath<PathRest>}`)
   : ''
