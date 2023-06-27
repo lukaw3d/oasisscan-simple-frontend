@@ -7,7 +7,7 @@ import { RouterProvider, createHashRouter } from 'react-router-dom';
 import { routes } from './pages/routes'
 import './utils/polyfill'
 
-axios.defaults.baseURL = 'https://index.oasislabs.com/v1/'
+axios.defaults.baseURL = import.meta.env.VITE_APP_INDEXER_API
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
