@@ -42,6 +42,8 @@ import getRuntimeTransactionsMutator from '../largePages';
 import getRuntimeTransactionsTxHashMutator from '../largePages';
 import getRuntimeEventsMutator from '../largePages';
 import getRuntimeEvmTokensMutator from '../largePages';
+import getRuntimeEvmTokensAddressMutator from '../largePages';
+import getRuntimeEvmTokensAddressHoldersMutator from '../largePages';
 import getRuntimeAccountsAddressMutator from '../largePages';
 import getRuntimeStatusMutator from '../largePages';
 import getLayerStatsTxVolumeMutator from '../largePages';
@@ -93,6 +95,19 @@ The backend supports a limited number of bucket sizes: 300 (5 minutes) and
 
  */
 bucket_size_seconds?: number;
+};
+
+export type GetRuntimeEvmTokensAddressHoldersParams = {
+/**
+ * The maximum numbers of items to return.
+
+ */
+limit?: number;
+/**
+ * The number of items to skip before starting to collect the result set.
+
+ */
+offset?: number;
 };
 
 export type GetRuntimeEvmTokensParams = {
@@ -583,6 +598,33 @@ export interface AccountStats {
   num_txns: number;
 }
 
+export interface EvmToken {
+  /** The Oasis address of this token's contract. */
+  contract_addr: string;
+  /** The Ethereum address of this token's contract. */
+  eth_contract_addr?: string;
+  /** Name of the token, as provided by token contract's `name()` method. */
+  name?: string;
+  /** Symbol of the token, as provided by token contract's `symbol()` method. */
+  symbol?: string;
+  /** The number of least significant digits in base units that should be displayed as
+decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
+Affects display only. Often equals 18, to match ETH.
+ */
+  decimals?: number;
+  /** The heuristically determined interface that the token contract implements.
+A less specialized variant of the token might be detected; for example, an
+ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
+detected or is not supported, this field will be null/absent.
+ */
+  type: EvmTokenType;
+  /** The total number of base units available. */
+  total_supply?: string;
+  /** The number of addresses that have a nonzero balance of this token.
+ */
+  num_holders: number;
+}
+
 /**
  * A list of tokens in a runtime.
  */
@@ -605,39 +647,13 @@ export const EvmTokenType = {
   ERC20: 'ERC20',
 } as const;
 
-export interface EvmToken {
-  /** The Oasis address of this token's contract. */
-  contract_addr: string;
-  /** The EVM address of this token's contract. Encoded as a lowercase hex string. */
-  evm_contract_addr: string;
-  /** Name of the token, as provided by token contract's `name()` method. */
-  name?: string;
-  /** Symbol of the token, as provided by token contract's `symbol()` method. */
-  symbol?: string;
-  /** The number of least significant digits in base units that should be displayed as
-decimals when displaying tokens. `tokens = base_units / (10**decimals)`.
-Affects display only. Often equals 18, to match ETH.
- */
-  decimals?: number;
-  /** The heuristically determined interface that the token contract implements.
-A less specialized variant of the token might be detected; for example, an
-ERC-1363 token might be labeled as ERC-20 here. If the type cannot be
-detected or is not supported, this field will be null/absent.
- */
-  type: EvmTokenType;
-  /** The total number of base units available. */
-  total_supply?: string;
-  /** The number of addresses that have a nonzero balance of this token,
-as calculated from Transfer events.
- */
-  num_holders: number;
-}
-
 export interface RuntimeStatus {
   /** The number of compute nodes that are registered and can run the runtime. */
   active_nodes: number;
   /** The height of the most recent indexed block (also sometimes referred to as "round") for this runtime. Query a synced Oasis node for the latest block produced. */
   latest_block: number;
+  /** The RFC 3339 formatted consensus time of when the latest indexed block for this runtime was produced. */
+  latest_block_time: string;
   /** The RFC 3339 formatted time when the Indexer processed the latest block for this runtime. Compare with current time for approximate indexing progress with the Oasis Network. */
   latest_update: string;
 }
@@ -781,21 +797,48 @@ export type RuntimeTransactionListAllOf = {
 
 export type RuntimeTransactionList = List & RuntimeTransactionListAllOf;
 
-export interface RuntimeEvmContractVerification { [key: string]: any }
+export type RuntimeEvmContractVerificationSourceFilesItem = { [key: string]: any };
+
+/**
+ * The smart contract's [metadata.json](https://docs.soliditylang.org/en/latest/metadata.html) file in JSON format as defined by Solidity.
+Includes the smart contract's [ABI](https://docs.soliditylang.org/en/develop/abi-spec.html).
+
+ */
+export type RuntimeEvmContractVerificationCompilationMetadata = { [key: string]: any };
+
+export interface RuntimeEvmContractVerification {
+  /** The smart contract's [metadata.json](https://docs.soliditylang.org/en/latest/metadata.html) file in JSON format as defined by Solidity.
+Includes the smart contract's [ABI](https://docs.soliditylang.org/en/develop/abi-spec.html).
+ */
+  compilation_metadata?: RuntimeEvmContractVerificationCompilationMetadata;
+  /** Array of all contract source files, in JSON format as returned by [Sourcify](https://sourcify.dev/server/api-docs/#/Repository/get_files_any__chain___address_).
+ */
+  source_files?: RuntimeEvmContractVerificationSourceFilesItem[];
+}
 
 export interface RuntimeEvmContract {
   /** The Oasis cryptographic hash of the transaction that created the smart contract.
- Can be omitted for contracts that were created by another contract, as opposed 
- to a direct `Create` call.
+Can be omitted for contracts that were created by another contract, as opposed
+to a direct `Create` call.
  */
   creation_tx?: string;
+  /** The Ethereum transaction hash of the transaction in `creation_tx`.
+Encoded as a lowercase hex string.
+ */
+  eth_creation_tx?: string;
   /** The creation bytecode of the smart contract. This includes the constructor logic
 and the constructor parameters. When run, this code generates the runtime bytecode.
-Can be omitted for contracts that were created by another contract, as opposed 
+Can be omitted for contracts that were created by another contract, as opposed
 to a direct `Create` call.
  */
   creation_bytecode?: string;
-  /** Additional information obtained from contract verification. Only available for smart 
+  /** The runtime bytecode of the smart contract. This is the code stored on-chain that
+descibes a smart contract. Every contract has this info, but the indexer fetches
+it separately, so the field may be missing for very fresh contracts (or if the fetching
+process is stalled).
+ */
+  runtime_bytecode?: string;
+  /** Additional information obtained from contract verification. Only available for smart
 contracts that have been verified successfully by Sourcify.
  */
   verification?: RuntimeEvmContractVerification;
@@ -1046,6 +1089,29 @@ For efficiency, this field is omitted when listing multiple-accounts.
   /** The allowances made by this account. */
   allowances: Allowance[];
 }
+
+/**
+ * Balance of an account for a specific (implied) runtime and token.
+
+ */
+export interface BareTokenHolder {
+  /** The oasis address of the account holder. */
+  holder_address: string;
+  /** The Ethereum address of the same account holder, if meaningfully defined. */
+  eth_holder_address?: string;
+  /** Number of tokens held, in base units. */
+  balance: string;
+}
+
+/**
+ * A list of token holders for a specific (implied) runtime and token.
+
+ */
+export type TokenHolderListAllOf = {
+  holders: BareTokenHolder[];
+};
+
+export type TokenHolderList = List & TokenHolderListAllOf;
 
 /**
  * Balance of an account for a specific runtime and EVM token.
@@ -1463,6 +1529,8 @@ export type BlockListAllOf = {
 export interface Status {
   /** The height of the most recent indexed block. Query a synced Oasis node for the latest block produced. */
   latest_block: number;
+  /** The RFC 3339 formatted consensus time of when the most recent block was produced. */
+  latest_block_time: string;
   /** The RFC 3339 formatted time when the Indexer processed the latest block. Compare with current time for approximate indexing progress with the Oasis Network. */
   latest_update: string;
 }
@@ -3011,7 +3079,7 @@ export const useGetRuntimeEvents = <TData = Awaited<ReturnType<typeof getRuntime
 
 
 /**
- * @summary Returns a list of EVM (ERC-20, ...) tokens on Emerald.
+ * @summary Returns a list of EVM (ERC-20, ...) tokens on the runtime.
  */
 export const getRuntimeEvmTokens = (
     runtime: Runtime,
@@ -3050,7 +3118,7 @@ export type GetRuntimeEvmTokensQueryResult = NonNullable<Awaited<ReturnType<type
 export type GetRuntimeEvmTokensQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
 
 /**
- * @summary Returns a list of EVM (ERC-20, ...) tokens on Emerald.
+ * @summary Returns a list of EVM (ERC-20, ...) tokens on the runtime.
  */
 export const useGetRuntimeEvmTokens = <TData = Awaited<ReturnType<typeof getRuntimeEvmTokens>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
  runtime: Runtime,
@@ -3059,6 +3127,129 @@ export const useGetRuntimeEvmTokens = <TData = Awaited<ReturnType<typeof getRunt
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getGetRuntimeEvmTokensQueryOptions(runtime,params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns info on an EVM (ERC-20, ...) token on the runtime.
+ */
+export const getRuntimeEvmTokensAddress = (
+    runtime: Runtime,
+    address: string,
+ options?: SecondParameter<typeof getRuntimeEvmTokensAddressMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeEvmTokensAddressMutator<EvmToken>(
+      {url: `/${runtime}/evm_tokens/${address}`, method: 'get', signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeEvmTokensAddressQueryKey = (runtime: Runtime,
+    address: string,) => [`/${runtime}/evm_tokens/${address}`] as const;
+  
+
+    
+export const getGetRuntimeEvmTokensAddressQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeEvmTokensAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
+    address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddress>>, TError, TData>, request?: SecondParameter<typeof getRuntimeEvmTokensAddressMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddress>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeEvmTokensAddressQueryKey(runtime,address);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeEvmTokensAddress>>> = ({ signal }) => getRuntimeEvmTokensAddress(runtime,address, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(runtime && address), ...queryOptions}}
+
+export type GetRuntimeEvmTokensAddressQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeEvmTokensAddress>>>
+export type GetRuntimeEvmTokensAddressQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns info on an EVM (ERC-20, ...) token on the runtime.
+ */
+export const useGetRuntimeEvmTokensAddress = <TData = Awaited<ReturnType<typeof getRuntimeEvmTokensAddress>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ runtime: Runtime,
+    address: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddress>>, TError, TData>, request?: SecondParameter<typeof getRuntimeEvmTokensAddressMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeEvmTokensAddressQueryOptions(runtime,address,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary Returns the list of holders of an EVM (ERC-20, ...) token. 
+This endpoint does not verify that `address` is actually an EVM token; if it is not, it will simply return an empty list.
+
+ */
+export const getRuntimeEvmTokensAddressHolders = (
+    runtime: Runtime,
+    address: string,
+    params?: GetRuntimeEvmTokensAddressHoldersParams,
+ options?: SecondParameter<typeof getRuntimeEvmTokensAddressHoldersMutator>,signal?: AbortSignal
+) => {
+      return getRuntimeEvmTokensAddressHoldersMutator<TokenHolderList>(
+      {url: `/${runtime}/evm_tokens/${address}/holders`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRuntimeEvmTokensAddressHoldersQueryKey = (runtime: Runtime,
+    address: string,
+    params?: GetRuntimeEvmTokensAddressHoldersParams,) => [`/${runtime}/evm_tokens/${address}/holders`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetRuntimeEvmTokensAddressHoldersQueryOptions = <TData = Awaited<ReturnType<typeof getRuntimeEvmTokensAddressHolders>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(runtime: Runtime,
+    address: string,
+    params?: GetRuntimeEvmTokensAddressHoldersParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddressHolders>>, TError, TData>, request?: SecondParameter<typeof getRuntimeEvmTokensAddressHoldersMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddressHolders>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRuntimeEvmTokensAddressHoldersQueryKey(runtime,address,params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRuntimeEvmTokensAddressHolders>>> = ({ signal }) => getRuntimeEvmTokensAddressHolders(runtime,address,params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, enabled: !!(runtime && address), ...queryOptions}}
+
+export type GetRuntimeEvmTokensAddressHoldersQueryResult = NonNullable<Awaited<ReturnType<typeof getRuntimeEvmTokensAddressHolders>>>
+export type GetRuntimeEvmTokensAddressHoldersQueryError = HumanReadableErrorResponse | NotFoundErrorResponse
+
+/**
+ * @summary Returns the list of holders of an EVM (ERC-20, ...) token. 
+This endpoint does not verify that `address` is actually an EVM token; if it is not, it will simply return an empty list.
+
+ */
+export const useGetRuntimeEvmTokensAddressHolders = <TData = Awaited<ReturnType<typeof getRuntimeEvmTokensAddressHolders>>, TError = HumanReadableErrorResponse | NotFoundErrorResponse>(
+ runtime: Runtime,
+    address: string,
+    params?: GetRuntimeEvmTokensAddressHoldersParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRuntimeEvmTokensAddressHolders>>, TError, TData>, request?: SecondParameter<typeof getRuntimeEvmTokensAddressHoldersMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRuntimeEvmTokensAddressHoldersQueryOptions(runtime,address,params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

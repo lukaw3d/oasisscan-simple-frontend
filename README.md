@@ -30,6 +30,8 @@ Endpoints used
 - :white_check_mark: useGetRuntimeTransactionsTxHash
 - :white_check_mark: useGetRuntimeEvents
 - :white_check_mark: useGetRuntimeEvmTokens
+- :white_large_square: useGetRuntimeEvmTokensAddress
+- :white_large_square: useGetRuntimeEvmTokensAddressHolders
 - :white_check_mark: useGetRuntimeAccountsAddress
 - :white_check_mark: useGetRuntimeStatus
 - :white_large_square: useGetLayerStatsTxVolume
