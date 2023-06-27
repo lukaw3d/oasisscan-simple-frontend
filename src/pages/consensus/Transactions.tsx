@@ -10,6 +10,7 @@ export function Transactions() {
       <h2>Transactions</h2>
       <CustomDisplayProvider<TransactionList> value={{
         fieldPriority: {
+          'transactions.0.hash': -5,
           'transactions.0.block': -4,
           'transactions.0.success': -3,
           'transactions.0.method': -2,

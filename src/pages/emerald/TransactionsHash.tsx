@@ -11,6 +11,7 @@ export function TransactionsHash({ paratime = 'emerald' as Runtime }) {
       <h2>Transactions</h2>
       <CustomDisplayProvider<RuntimeTransactionList> value={{
         fieldPriority: {
+          'transactions.0.hash': -5,
           'transactions.0.round': -4,
           'transactions.0.success': -3,
           'transactions.0.method': -2,

@@ -11,6 +11,7 @@ export function TransactionsHash() {
       <h2>Transactions</h2>
       <CustomDisplayProvider<Transaction> value={{
         fieldPriority: {
+          'hash': -5,
           'block': -4,
           'success': -3,
           'method': -2,
