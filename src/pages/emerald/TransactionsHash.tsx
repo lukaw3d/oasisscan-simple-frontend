@@ -30,6 +30,20 @@ export function TransactionsHash({ paratime = 'emerald' as Runtime }) {
             if (value === 'evm.Call' && !parentValue.body?.data && parentValue.amount !== "0") {
               return <span>{value} (transfer?)</span>
             }
+            if (value === 'consensus.Withdraw') {
+              return <span>
+                {value}
+                ,&nbsp;
+                <Link to={`/${paratime}/events?offset=0&limit=100&block=${parentValue.round + 1}&rel=${parentValue.sender_0}`}>event in next block</Link>
+              </span>
+            }
+            if (value === 'consensus.Deposit') {
+              return <span>
+                {value}
+                ,&nbsp;
+                <Link to={`/${paratime}/events?offset=0&limit=100&block=${parentValue.round + 1}&rel=${parentValue.to}`}>event in next block</Link>
+              </span>
+            }
             return <span>{value}</span>
           },
           'transactions.0.amount': ({ value }) => {
