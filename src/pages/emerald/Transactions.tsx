@@ -2,12 +2,31 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
 import { useGetRuntimeTransactions, Runtime, RuntimeTransactionList } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
+import { useState } from 'react'
 
 export function Transactions({ paratime = 'emerald' as Runtime }) {
+  const [removeSpam, setRemoveSpam] = useState(false)
   const searchParams = Object.fromEntries(useSearchParams()[0])
+  const originalResult = useGetRuntimeTransactions(paratime, { ...searchParams })
+
+  let result = originalResult
+  if (removeSpam && originalResult.data?.data.transactions) {
+    result = {
+      ...originalResult,
+      data: {
+        ...originalResult.data,
+        data: {
+          ...originalResult.data.data,
+          transactions: originalResult.data.data.transactions.filter(a => a.nonce_0 <= 1000)
+        }
+      }
+    }
+  }
+
   return (
     <>
       <h2>Transactions</h2>
+      <label><input type="checkbox" checked={removeSpam} onChange={(e) => setRemoveSpam(e.target.checked)} /> remove spam (nonce&gt;1000)</label>
       <CustomDisplayProvider<RuntimeTransactionList> value={{
         fieldPriority: {
           'transactions.0.hash': -5,
@@ -51,7 +70,7 @@ export function Transactions({ paratime = 'emerald' as Runtime }) {
           },
         },
       }}>
-        <DisplayData result={useGetRuntimeTransactions(paratime, { ...searchParams })}></DisplayData>
+        <DisplayData result={result}></DisplayData>
       </CustomDisplayProvider>
     </>
   )

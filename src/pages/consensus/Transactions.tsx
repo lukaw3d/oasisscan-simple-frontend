@@ -2,12 +2,31 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
 import { useGetConsensusTransactions, TransactionList } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
+import { useState } from 'react'
 
 export function Transactions() {
+  const [removeSpam, setRemoveSpam] = useState(false)
   const searchParams = Object.fromEntries(useSearchParams()[0])
+  const originalResult = useGetConsensusTransactions({ ...searchParams })
+
+  let result = originalResult
+  if (removeSpam && originalResult.data?.data.transactions) {
+    result = {
+      ...originalResult,
+      data: {
+        ...originalResult.data,
+        data: {
+          ...originalResult.data.data,
+          transactions: originalResult.data.data.transactions.filter(a => a.nonce <= 1000)
+        }
+      }
+    }
+  }
+
   return (
     <>
       <h2>Transactions</h2>
+      <label><input type="checkbox" checked={removeSpam} onChange={(e) => setRemoveSpam(e.target.checked)} /> remove spam (nonce&gt;1000)</label>
       <CustomDisplayProvider<TransactionList> value={{
         fieldPriority: {
           'transactions.0.hash': -5,
@@ -37,7 +56,7 @@ export function Transactions() {
           },
         },
       }}>
-        <DisplayData result={useGetConsensusTransactions({ ...searchParams })}></DisplayData>
+        <DisplayData result={result}></DisplayData>
       </CustomDisplayProvider>
     </>
   )
