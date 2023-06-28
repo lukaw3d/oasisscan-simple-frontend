@@ -26,6 +26,12 @@ export function TransactionsHash({ paratime = 'emerald' as Runtime }) {
             if (value == null) return <span style={{color: 'red'}}>unknown</span>
             return <span style={!value ? {color: 'red'} : {}}>{value.toString()}</span>
           },
+          'transactions.0.method': ({ value, parentValue }) => {
+            if (value === 'evm.Call' && !parentValue.body?.data && parentValue.amount !== "0") {
+              return <span>{value} (transfer?)</span>
+            }
+            return <span>{value}</span>
+          },
           'transactions.0.amount': ({ value }) => {
             if (value == null) return null
             return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
