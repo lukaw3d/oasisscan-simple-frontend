@@ -87,7 +87,7 @@ export function Recursive({ field, value, path, parentValue }: {
   }
   return (
     <div style={{ marginLeft: '2ex' }}>
-      <strong>{field}: </strong>
+      <strong style={field === 'error' ? { color: 'red'} : {}}>{field}: </strong>
       <RecursiveValue value={value} path={path} parentValue={parentValue} />
     </div>
   )
