@@ -1,4 +1,4 @@
-https://index.oasislabs.com/v1/spec/v1.html
+https://nexus.oasis.io/v1/spec/v1.html
 
 Endpoints used
 

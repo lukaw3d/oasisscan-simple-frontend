@@ -36,10 +36,10 @@ jobs:
 
       # - name: Build
       #   run: yarn build --base=/oasis-indexer-simple-frontend/
-      - run: VITE_APP_INDEXER_API=https://testnet-index-staging.oasislabs.com/v1/  yarn build --outDir dist/stg-testnet/ --base=/oasis-indexer-simple-frontend/stg-testnet/
-      - run: VITE_APP_INDEXER_API=https://index-staging.oasislabs.com/v1/  yarn build --outDir dist/stg-mainnet/ --base=/oasis-indexer-simple-frontend/stg-mainnet/
-      - run: VITE_APP_INDEXER_API=https://testnet-index.oasislabs.com/v1/  yarn build --outDir dist/prod-testnet/ --base=/oasis-indexer-simple-frontend/prod-testnet/
-      - run: VITE_APP_INDEXER_API=https://index.oasislabs.com/v1/  yarn build --outDir dist/prod-mainnet/ --base=/oasis-indexer-simple-frontend/prod-mainnet/
+      - run: VITE_APP_INDEXER_API=https://testnet.nexus.stg.oasis.io/v1/  yarn build --outDir dist/stg-testnet/ --base=/oasis-indexer-simple-frontend/stg-testnet/
+      - run: VITE_APP_INDEXER_API=https://nexus.stg.oasis.io/v1/  yarn build --outDir dist/stg-mainnet/ --base=/oasis-indexer-simple-frontend/stg-mainnet/
+      - run: VITE_APP_INDEXER_API=https://testnet.nexus.oasis.io/v1/  yarn build --outDir dist/prod-testnet/ --base=/oasis-indexer-simple-frontend/prod-testnet/
+      - run: VITE_APP_INDEXER_API=https://nexus.oasis.io/v1/  yarn build --outDir dist/prod-mainnet/ --base=/oasis-indexer-simple-frontend/prod-mainnet/
       - run: echo '' > dist/index.html
       - run: echo '<a href="stg-testnet">stg-testnet</a><br/>' >> dist/index.html
       - run: echo '<a href="stg-mainnet">stg-mainnet</a><br/>' >> dist/index.html

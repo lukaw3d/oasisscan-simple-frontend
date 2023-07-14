@@ -49,7 +49,7 @@ export function Converter() {
         <br />
         <br />
         <section>
-          <h2>Convert oasis1 account to EVM (using https://index.oasislabs.com/v1/emerald/accounts/oasis1.. address_preimage)</h2>
+          <h2>Convert oasis1 account to EVM (using {import.meta.env.VITE_APP_INDEXER_API}emerald/accounts/oasis1.. address_preimage)</h2>
           <input type="text" value={fromOasisAccount} onChange={e => setFromOasisAccount(e.target.value)} size={80} />
           <br />
           Result: {fromOasisAccountResult}
@@ -57,7 +57,7 @@ export function Converter() {
         <br />
         <br />
         <section>
-          <h2>Convert EVM transaction hash to oasis (using https://index.oasislabs.com/v1/emerald/transaction/.. hash)</h2>
+          <h2>Convert EVM transaction hash to oasis (using {import.meta.env.VITE_APP_INDEXER_API}emerald/transaction/.. hash)</h2>
           <input type="text" value={fromEvmTx} onChange={e => setFromEvmTx(e.target.value)} size={80} />
           <br />
           Result: {fromEvmTxResult}
@@ -65,7 +65,7 @@ export function Converter() {
         <br />
         <br />
         <section>
-          <h2>Convert oasis transaction hash to EVM (using https://index.oasislabs.com/v1/emerald/transaction/.. eth_hash)</h2>
+          <h2>Convert oasis transaction hash to EVM (using {import.meta.env.VITE_APP_INDEXER_API}emerald/transaction/.. eth_hash)</h2>
           <input type="text" value={fromOasisTx} onChange={e => setFromOasisTx(e.target.value)} size={80} />
           <br />
           Result: {fromOasisTxResult}
