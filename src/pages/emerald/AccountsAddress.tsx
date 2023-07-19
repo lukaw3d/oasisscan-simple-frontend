@@ -1,9 +1,11 @@
 import { Link, useParams, useSearchParams } from 'react-router-dom'
-import { CustomDisplayProvider, DisplayData, RecursiveValue } from '../../DisplayData'
+import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
 import { useGetRuntimeAccountsAddress, Runtime, RuntimeAccount } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
-import {Interface} from 'ethers'
 import { getEthAccountAddress } from '../../utils/getEthAccountAddress'
+import React, { Suspense } from 'react'
+
+const LazyAbiDisplay = React.lazy(() => import('../../utils/AbiDisplay'));
 
 export function AccountsAddress({ paratime = 'emerald' as Runtime }) {
   const address = useParams().address!
@@ -46,7 +48,11 @@ export function AccountsAddress({ paratime = 'emerald' as Runtime }) {
             return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
           },
           'evm_contract.verification.compilation_metadata.output.abi':  ({ value }) => {
-            return <RecursiveValue value={Interface.from(value).format()} path='' parentValue={{}} />
+            return (
+              <Suspense fallback={<pre>{JSON.stringify(value, null, 2)}</pre>}>
+                <LazyAbiDisplay abi={value} />
+              </Suspense>
+            )
           },
         },
       }}>
