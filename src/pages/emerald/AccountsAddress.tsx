@@ -1,7 +1,8 @@
 import { Link, useParams, useSearchParams } from 'react-router-dom'
-import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
+import { CustomDisplayProvider, DisplayData, RecursiveValue } from '../../DisplayData'
 import { useGetRuntimeAccountsAddress, Runtime, RuntimeAccount } from '../../oasis-indexer/generated/api'
 import BigNumber from 'bignumber.js'
+import {Interface} from 'ethers'
 import { getEthAccountAddress } from '../../utils/getEthAccountAddress'
 
 export function AccountsAddress({ paratime = 'emerald' as Runtime }) {
@@ -43,6 +44,9 @@ export function AccountsAddress({ paratime = 'emerald' as Runtime }) {
           },
           'stats.total_sent': ({ value }) => {
             return <span>{new BigNumber(value).shiftedBy(-18).toFixed()}</span>
+          },
+          'evm_contract.verification.compilation_metadata.output.abi':  ({ value }) => {
+            return <RecursiveValue value={Interface.from(value).format()} path='' parentValue={{}} />
           },
         },
       }}>
