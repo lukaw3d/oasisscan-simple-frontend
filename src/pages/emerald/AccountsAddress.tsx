@@ -30,6 +30,10 @@ export function AccountsAddress({ paratime = 'emerald' as Runtime }) {
               <Link to={`/${paratime}/transactions?offset=0&limit=100&rel=${value}`}>transactions</Link>
               ,&nbsp;
               <Link to={`/${paratime}/events?offset=0&limit=100&rel=${value}`}>events</Link>
+              {getEthAccountAddress(parentValue.address_preimage) && parentValue.evm_contract && <>
+                ,&nbsp;
+                <Link to={`https://sourcify.dev/#/lookup/${getEthAccountAddress(parentValue.address_preimage)}`}>Sourcify</Link>
+              </>}
             </span>
           },
           'balances.0.balance': ({ value, parentValue }) => {
