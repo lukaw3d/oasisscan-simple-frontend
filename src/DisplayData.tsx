@@ -13,7 +13,7 @@ type Paths<ObjectType extends object> =
         : `${Key}`
     }[keyof ObjectType & (string | number)];
 
-type GetPath<T extends object, Path extends string> = Path extends `${infer Key}.${infer PathRest}` ? GetPath<T[Key & keyof T] & object, PathRest> : Path extends '' ? T : T[Path & keyof T]
+type GetByPath<T extends object, Path extends string> = Path extends `${infer Key}.${infer PathRest}` ? GetByPath<T[Key & keyof T] & object, PathRest> : Path extends '' ? T : T[Path & keyof T]
 type PopPath<Path extends string> = Path extends `${infer Key}.${infer PathRest}`
   ? (PopPath<PathRest> extends '' ? `${Key}` : `${Key}.${PopPath<PathRest>}`)
   : ''
@@ -21,8 +21,8 @@ type PopPath<Path extends string> = Path extends `${infer Key}.${infer PathRest}
 type FieldDisplay<T extends object> = {
   [K in Paths<T>]?: React.FC<{
     path: K,
-    value: GetPath<T, K>,
-    parentValue: GetPath<T, PopPath<K>>,
+    value: GetByPath<T, K>,
+    parentValue: GetByPath<T, PopPath<K>>,
   }>
 }
 
