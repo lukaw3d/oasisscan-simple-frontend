@@ -8,8 +8,8 @@ type Paths<ObjectType extends object> =
   ObjectType extends Array<infer T>
   ? `0.${Paths<T & object>}`
   : {[Key in keyof ObjectType & (string | number)]:
-      ObjectType[Key] extends object
-        ? `${Key}` | `${Key}.${Paths<ObjectType[Key]>}`
+      ObjectType[Key] extends object | undefined
+        ? `${Key}` | `${Key}.${Paths<NonNullable<ObjectType[Key]>>}`
         : `${Key}`
     }[keyof ObjectType & (string | number)];
 
@@ -51,6 +51,11 @@ export function typeTest() {
     },
   }
   console.log(testFieldDisplay)
+
+  const testPaths2: Paths<{a: {b: {c: { d: 5 }} | undefined}}> = 'a.b.c.d'
+  console.log(testPaths2)
+  const testPaths3: GetByPath<{a: {b: {c: { d: 5 }} | undefined}}, 'a.b.c.d'> = 5
+  console.log(testPaths3)
 }
 
 export interface TypedCustomDisplay<T extends object> {
