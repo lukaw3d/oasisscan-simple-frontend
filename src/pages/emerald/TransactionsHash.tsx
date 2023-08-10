@@ -27,7 +27,7 @@ export function TransactionsHash({ paratime = 'emerald' as Runtime }) {
             return <span style={!value ? {color: 'red'} : {}}>{value.toString()}</span>
           },
           'transactions.0.method': ({ value, parentValue }) => {
-            if (value === 'evm.Call' && !parentValue.body?.data && parentValue.amount !== "0") {
+            if (parentValue.is_likely_native_token_transfer) {
               return <span>{value} (transfer?)</span>
             }
             if (value === 'consensus.Withdraw') {
