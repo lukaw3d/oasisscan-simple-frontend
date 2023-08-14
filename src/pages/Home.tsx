@@ -21,6 +21,8 @@ export function Home() {
       <Link to="/consensus/validators?limit=100&offset=0">Validators</Link><br />
       <Link to="/consensus/epochs?limit=100&offset=0">Epochs</Link><br />
       <Link to="/consensus/proposals?limit=100&offset=0">Proposals</Link><br />
+      <Link to="/consensus/stats-tx-volume?limit=100&offset=0">StatsTxVolume</Link><br />
+      <Link to="/consensus/stats-active-accounts?limit=100&offset=0">StatsActiveAccounts</Link><br />
       Status:
       <div style={{minHeight: '5em'}}>
         <DisplayData result={useGetStatus()}></DisplayData>
@@ -32,6 +34,8 @@ export function Home() {
       <Link to="/emerald/events?limit=100&offset=0">Events</Link><br />
       <Link to="/emerald/accounts/oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t">Accounts</Link><br />
       <Link to="/emerald/tokens?limit=100&offset=0">Tokens</Link><br />
+      <Link to="/emerald/stats-tx-volume?limit=100&offset=0">StatsTxVolume</Link><br />
+      <Link to="/emerald/stats-active-accounts?limit=100&offset=0">StatsActiveAccounts</Link><br />
       Status:
       <div style={{minHeight: '5em'}}>
         <DisplayData result={useGetRuntimeStatus('emerald')}></DisplayData>
@@ -43,6 +47,8 @@ export function Home() {
       <Link to="/sapphire/events?limit=100&offset=0">Events</Link><br />
       <Link to="/sapphire/accounts/oasis1qpupfu7e2n6pkezeaw0yhj8mcem8anj64ytrayne">Accounts</Link><br />
       <Link to="/sapphire/tokens?limit=100&offset=0">Tokens</Link><br />
+      <Link to="/sapphire/stats-tx-volume?limit=100&offset=0">StatsTxVolume</Link><br />
+      <Link to="/sapphire/stats-active-accounts?limit=100&offset=0">StatsActiveAccounts</Link><br />
       Status:
       <div style={{minHeight: '5em'}}>
         <DisplayData result={useGetRuntimeStatus('sapphire')}></DisplayData>

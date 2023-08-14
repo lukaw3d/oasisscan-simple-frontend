@@ -10,6 +10,8 @@ import { Entities } from './Entities.tsx'
 import { Validators } from './Validators.tsx'
 import { Epochs } from './Epochs.tsx'
 import { Proposals } from './Proposals.tsx'
+import { StatsActiveAccounts } from '../emerald/StatsActiveAccounts.tsx'
+import { StatsTxVolume } from '../emerald/StatsTxVolume.tsx'
 
 export const routes: RouteObject[] = [
   { path: 'blocks', element: <Blocks /> },
@@ -23,4 +25,6 @@ export const routes: RouteObject[] = [
   { path: 'validators', element: <Validators /> },
   { path: 'epochs', element: <Epochs /> },
   { path: 'proposals', element: <Proposals /> },
+  { path: 'stats-tx-volume', element: <StatsTxVolume layer='consensus' /> },
+  { path: 'stats-active-accounts', element: <StatsActiveAccounts layer='consensus' /> },
 ]

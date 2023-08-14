@@ -34,5 +34,5 @@ Endpoints used
 - :white_large_square: useGetRuntimeEvmTokensAddressHolders
 - :white_check_mark: useGetRuntimeAccountsAddress
 - :white_check_mark: useGetRuntimeStatus
-- :white_large_square: useGetLayerStatsTxVolume
-- :white_large_square: useGetLayerStatsActiveAccounts
+- :white_check_mark: useGetLayerStatsTxVolume
+- :white_check_mark: useGetLayerStatsActiveAccounts
