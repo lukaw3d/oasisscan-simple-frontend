@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
-import { DisplayData } from '../DisplayData'
-import { useGetRuntimeStatus, useGetStatus } from '../oasis-indexer/generated/api'
+import { StatusDisplay } from '../utils/StatusDisplay'
 
 export function Home() {
   return (
@@ -24,9 +23,7 @@ export function Home() {
       <Link to="/consensus/stats-tx-volume?limit=100&offset=0">StatsTxVolume</Link><br />
       <Link to="/consensus/stats-active-accounts?limit=100&offset=0">StatsActiveAccounts</Link><br />
       Status:
-      <div style={{minHeight: '5em'}}>
-        <DisplayData result={useGetStatus()}></DisplayData>
-      </div>
+      <StatusDisplay layer='consensus'/>
 
       <h2>Emerald</h2>
       <Link to="/emerald/blocks?limit=100&offset=0">Blocks</Link>, <Link to="/emerald/blocks?limit=5000&to=5000">Blocks&lt;5000</Link><br />
@@ -37,9 +34,7 @@ export function Home() {
       <Link to="/emerald/stats-tx-volume?limit=100&offset=0">StatsTxVolume</Link><br />
       <Link to="/emerald/stats-active-accounts?limit=100&offset=0">StatsActiveAccounts</Link><br />
       Status:
-      <div style={{minHeight: '5em'}}>
-        <DisplayData result={useGetRuntimeStatus('emerald')}></DisplayData>
-      </div>
+      <StatusDisplay layer='emerald'/>
 
       <h2>Sapphire</h2>
       <Link to="/sapphire/blocks?limit=100&offset=0">Blocks</Link>, <Link to="/sapphire/blocks?limit=5000&to=5000">Blocks&lt;5000</Link><br />
@@ -50,15 +45,11 @@ export function Home() {
       <Link to="/sapphire/stats-tx-volume?limit=100&offset=0">StatsTxVolume</Link><br />
       <Link to="/sapphire/stats-active-accounts?limit=100&offset=0">StatsActiveAccounts</Link><br />
       Status:
-      <div style={{minHeight: '5em'}}>
-        <DisplayData result={useGetRuntimeStatus('sapphire')}></DisplayData>
-      </div>
+      <StatusDisplay layer='sapphire'/>
 
       <h2>Cipher</h2>
       Status:
-      <div style={{minHeight: '5em'}}>
-        <DisplayData result={useGetRuntimeStatus('cipher')}></DisplayData>
-      </div>
+      <StatusDisplay layer='cipher'/>
 
       <br />
       <h2>Misc</h2>
