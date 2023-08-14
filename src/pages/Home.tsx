@@ -5,6 +5,11 @@ import { useGetRuntimeStatus, useGetStatus } from '../oasis-indexer/generated/ap
 export function Home() {
   return (
     <>
+      <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/staging-testnet/">staging-testnet</a><br/>
+      <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/staging-mainnet/">staging-mainnet</a><br/>
+      <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/production-testnet/">production-testnet</a><br/>
+      <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/production-mainnet/">production-mainnet</a><br/>
+
       <h2>Consensus</h2>
       <Link to="/consensus/blocks?limit=100&offset=0">Blocks</Link>, <Link to="/consensus/blocks?limit=5000&to=10000000">Blocks&lt;10000000</Link><br />
       <Link to="/consensus/transactions?limit=100&offset=0">Transactions</Link><br />
