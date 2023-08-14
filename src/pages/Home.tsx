@@ -15,6 +15,12 @@ export function Home() {
       <Link to="/consensus/transactions?limit=100&offset=0">Transactions</Link><br />
       <Link to="/consensus/events?limit=100&offset=0">Events</Link><br />
       <Link to="/consensus/accounts/oasis1qzp86dykm9nfqr83es07c324u64f6dgsdvk0fapj">Accounts</Link><br />
+      <Link to="/consensus/accounts-delegations/oasis1qzp86dykm9nfqr83es07c324u64f6dgsdvk0fapj">Account delegations</Link><br />
+      <Link to="/consensus/accounts-debonding-delegations/oasis1qzp86dykm9nfqr83es07c324u64f6dgsdvk0fapj">Account debonding delegations</Link><br />
+      <Link to="/consensus/entities?limit=100&offset=0">Entities</Link><br />
+      <Link to="/consensus/validators?limit=100&offset=0">Validators</Link><br />
+      <Link to="/consensus/epochs?limit=100&offset=0">Epochs</Link><br />
+      <Link to="/consensus/proposals?limit=100&offset=0">Proposals</Link><br />
       Status:
       <div style={{minHeight: '5em'}}>
         <DisplayData result={useGetStatus()}></DisplayData>
