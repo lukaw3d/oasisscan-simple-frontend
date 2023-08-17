@@ -1,0 +1,1400 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Oasisscan API document",
+    "version": "1.0.0",
+    "title": "Oasisscan API",
+    "contact": {},
+    "license": {}
+  },
+  "host": "api.oasisscan.com/mainnet",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "chain-controller",
+      "description": "Chain Controller"
+    },
+    {
+      "name": "dashboard-controller",
+      "description": "Dashboard Controller"
+    },
+    {
+      "name": "governance-controller",
+      "description": "Governance Controller"
+    },
+    {
+      "name": "market-controller",
+      "description": "Market Controller"
+    },
+    {
+      "name": "runtime-controller",
+      "description": "Runtime Controller"
+    },
+    {
+      "name": "validator-controller",
+      "description": "Validator Controller"
+    }
+  ],
+  "paths": {
+    "/chain/account/debonding": {
+      "get": {
+        "tags": [
+          "chain-controller"
+        ],
+        "summary": "accountDebonding",
+        "operationId": "accountDebondingUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "address",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": false,
+            "type": "integer",
+            "default": 1,
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": false,
+            "type": "integer",
+            "default": 5,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/chain/account/delegations": {
+      "get": {
+        "tags": [
+          "chain-controller"
+        ],
+        "summary": "accountDelegations",
+        "operationId": "accountDelegationsUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "address",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "all",
+            "in": "query",
+            "description": "all",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": false,
+            "type": "integer",
+            "default": 1,
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": false,
+            "type": "integer",
+            "default": 5,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/chain/account/info/{account}": {
+      "get": {
+        "tags": [
+          "chain-controller"
+        ],
+        "summary": "accountInfo",
+        "operationId": "accountInfoUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "account",
+            "in": "path",
+            "description": "account",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/chain/account/list": {
+      "get": {
+        "tags": [
+          "chain-controller"
+        ],
+        "summary": "accountList",
+        "operationId": "accountListUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": false,
+            "type": "integer",
+            "default": 1,
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": false,
+            "type": "integer",
+            "default": 100,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/chain/account/runtime/transactions": {
+      "get": {
+        "tags": [
+          "chain-controller"
+        ],
+        "summary": "accountRuntimeTransactions",
+        "operationId": "accountRuntimeTransactionsUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "address",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": false,
+            "type": "integer",
+            "default": 1,
+            "format": "int32"
+          },
+          {
+            "name": "runtimeId",
+            "in": "query",
+            "description": "runtimeId",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": false,
+            "type": "integer",
+            "default": 10,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/chain/block/{height}": {
+      "get": {
+        "tags": [
+          "chain-controller"
+        ],
+        "summary": "Block by height",
+        "operationId": "blockDetailUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "height",
+            "in": "path",
+            "description": "height",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/chain/blocks": {
+      "get": {
+        "tags": [
+          "chain-controller"
+        ],
+        "summary": "Block list",
+        "operationId": "latestBlocksUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": false,
+            "type": "integer",
+            "default": 1,
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": false,
+            "type": "integer",
+            "default": 10,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/chain/getBlockByProposer": {
+      "get": {
+        "tags": [
+          "chain-controller"
+        ],
+        "summary": "getBlockByProposer",
+        "operationId": "getBlockByProposerUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "address",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": false,
+            "type": "integer",
+            "default": 1,
+            "format": "int32"
+          },
+          {
+            "name": "proposer",
+            "in": "query",
+            "description": "proposer",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": false,
+            "type": "integer",
+            "default": 10,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/chain/methods": {
+      "get": {
+        "tags": [
+          "chain-controller"
+        ],
+        "summary": "transactionMethod",
+        "operationId": "transactionMethodUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/chain/powerevent": {
+      "get": {
+        "tags": [
+          "chain-controller"
+        ],
+        "summary": "latestTransactions",
+        "operationId": "latestTransactionsUsingGET_1",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "address",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": false,
+            "type": "integer",
+            "default": 1,
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": false,
+            "type": "integer",
+            "default": 5,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/chain/search": {
+      "get": {
+        "tags": [
+          "chain-controller"
+        ],
+        "summary": "search",
+        "operationId": "searchUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "key",
+            "in": "query",
+            "description": "key",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/chain/staking/events": {
+      "get": {
+        "tags": [
+          "chain-controller"
+        ],
+        "summary": "stakingEvents",
+        "operationId": "stakingEventsUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "address",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": false,
+            "type": "integer",
+            "default": 1,
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": false,
+            "type": "integer",
+            "default": 10,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/chain/staking/events/info": {
+      "get": {
+        "tags": [
+          "chain-controller"
+        ],
+        "summary": "stakingEvents",
+        "operationId": "stakingEventsUsingGET_1",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/chain/transaction/{hash}": {
+      "get": {
+        "tags": [
+          "chain-controller"
+        ],
+        "summary": "transactionDetail",
+        "operationId": "transactionDetailUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "hash",
+            "in": "path",
+            "description": "hash",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/chain/transactionhistory": {
+      "get": {
+        "tags": [
+          "chain-controller"
+        ],
+        "summary": "transactionhistory",
+        "operationId": "transactionhistoryUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/chain/transactions": {
+      "get": {
+        "tags": [
+          "chain-controller"
+        ],
+        "summary": "Transaction list",
+        "operationId": "latestTransactionsUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "address",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "height",
+            "in": "query",
+            "description": "height",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "method",
+            "in": "query",
+            "description": "method",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": false,
+            "type": "integer",
+            "default": 1,
+            "format": "int32"
+          },
+          {
+            "name": "runtime",
+            "in": "query",
+            "description": "runtime",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": false,
+            "type": "integer",
+            "default": 10,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/dashboard/network": {
+      "get": {
+        "tags": [
+          "dashboard-controller"
+        ],
+        "summary": "network",
+        "operationId": "networkUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/dashboard/trend": {
+      "get": {
+        "tags": [
+          "dashboard-controller"
+        ],
+        "summary": "trendChart",
+        "operationId": "trendChartUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/governance/proposal": {
+      "get": {
+        "tags": [
+          "governance-controller"
+        ],
+        "summary": "proposal",
+        "operationId": "proposalUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/governance/proposallist": {
+      "get": {
+        "tags": [
+          "governance-controller"
+        ],
+        "summary": "proposalList",
+        "operationId": "proposalListUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/governance/proposals": {
+      "get": {
+        "tags": [
+          "governance-controller"
+        ],
+        "summary": "proposals",
+        "operationId": "proposalsUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/governance/proposalwithvotes": {
+      "get": {
+        "tags": [
+          "governance-controller"
+        ],
+        "summary": "proposalWithVotes",
+        "operationId": "proposalWithVotesUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/governance/votes": {
+      "get": {
+        "tags": [
+          "governance-controller"
+        ],
+        "summary": "votes",
+        "operationId": "votesUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/market/chart": {
+      "get": {
+        "tags": [
+          "market-controller"
+        ],
+        "summary": "Market chart",
+        "operationId": "chartUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/market/info": {
+      "get": {
+        "tags": [
+          "market-controller"
+        ],
+        "summary": "Market info",
+        "operationId": "infoUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/runtime/list": {
+      "get": {
+        "tags": [
+          "runtime-controller"
+        ],
+        "summary": "runtimeList",
+        "operationId": "runtimeListUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/runtime/round/info": {
+      "get": {
+        "tags": [
+          "runtime-controller"
+        ],
+        "summary": "roundInfo",
+        "operationId": "roundInfoUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "round",
+            "in": "query",
+            "description": "round",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/runtime/round/list": {
+      "get": {
+        "tags": [
+          "runtime-controller"
+        ],
+        "summary": "roundList",
+        "operationId": "roundListUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": false,
+            "type": "integer",
+            "default": 1,
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": false,
+            "type": "integer",
+            "default": 10,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/runtime/stats": {
+      "get": {
+        "tags": [
+          "runtime-controller"
+        ],
+        "summary": "runtimeStats",
+        "operationId": "runtimeStatsUsingGET_1",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "sort",
+            "required": false,
+            "type": "integer",
+            "default": 0,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/runtime/transaction/info": {
+      "get": {
+        "tags": [
+          "runtime-controller"
+        ],
+        "summary": "runtimeStats",
+        "operationId": "runtimeStatsUsingGET_2",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "hash",
+            "in": "query",
+            "description": "hash",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "round",
+            "in": "query",
+            "description": "round",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/runtime/transaction/list": {
+      "get": {
+        "tags": [
+          "runtime-controller"
+        ],
+        "summary": "runtimeStats",
+        "operationId": "runtimeStatsUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": false,
+            "type": "integer",
+            "default": 1,
+            "format": "int32"
+          },
+          {
+            "name": "round",
+            "in": "query",
+            "description": "round",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": false,
+            "type": "integer",
+            "default": 10,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/validator/delegators": {
+      "get": {
+        "tags": [
+          "validator-controller"
+        ],
+        "summary": "delegators",
+        "operationId": "delegatorsUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "address",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": false,
+            "type": "integer",
+            "default": 1,
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": false,
+            "type": "integer",
+            "default": 5,
+            "format": "int32"
+          },
+          {
+            "name": "validator",
+            "in": "query",
+            "description": "validator",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/validator/escrowstats": {
+      "get": {
+        "tags": [
+          "validator-controller"
+        ],
+        "summary": "escrowStats",
+        "operationId": "escrowStatsUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "address",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/validator/escrowtotalchart": {
+      "get": {
+        "tags": [
+          "validator-controller"
+        ],
+        "summary": "escrowStatsTotal",
+        "operationId": "escrowStatsTotalUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/validator/info": {
+      "get": {
+        "tags": [
+          "validator-controller"
+        ],
+        "summary": "validatorInfo",
+        "operationId": "validatorInfoUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "address",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "entityId",
+            "in": "query",
+            "description": "entityId",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/validator/list": {
+      "get": {
+        "tags": [
+          "validator-controller"
+        ],
+        "summary": "validators",
+        "operationId": "validatorsUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "orderBy",
+            "in": "query",
+            "description": "orderBy",
+            "required": false,
+            "type": "string",
+            "default": "delegators"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": false,
+            "type": "integer",
+            "default": 1,
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "pageSize",
+            "required": false,
+            "type": "integer",
+            "default": 300,
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "sort",
+            "required": false,
+            "type": "string",
+            "default": "desc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/validator/network": {
+      "get": {
+        "tags": [
+          "validator-controller"
+        ],
+        "summary": "network",
+        "operationId": "networkUsingGET_1",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    },
+    "/validator/stats": {
+      "get": {
+        "tags": [
+          "validator-controller"
+        ],
+        "summary": "validatorStat",
+        "operationId": "validatorStatUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "address",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "entityId",
+            "in": "query",
+            "description": "entityId",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResult"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ApiResult": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "type": "object"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "ApiResult"
+    }
+  }
+}

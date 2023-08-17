@@ -2,7 +2,8 @@
 module.exports = {
   indexer: {
     input: {
-      target: 'https://api.oasisscan.com/mainnet/v2/api-docs',
+      // target: 'https://api.oasisscan.com/mainnet/v2/api-docs',
+      target: './api.json',
     },
     output: {
       target: './generated/api.ts',
