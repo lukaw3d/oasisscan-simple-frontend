@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetConsensusProposals, ProposalList } from '../../oasis-indexer/generated/api'
+import { useGetConsensusProposals, ProposalList } from '../../oasisscan/generated/api'
 
 export function Proposals() {
   const searchParams = Object.fromEntries(useSearchParams()[0])

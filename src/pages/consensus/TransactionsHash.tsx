@@ -1,6 +1,6 @@
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetConsensusTransactionsTxHash, Transaction } from '../../oasis-indexer/generated/api'
+import { useGetConsensusTransactionsTxHash, Transaction } from '../../oasisscan/generated/api'
 import BigNumber from 'bignumber.js'
 
 export function TransactionsHash() {

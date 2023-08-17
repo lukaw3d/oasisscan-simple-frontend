@@ -1,5 +1,5 @@
 import { CustomDisplayProvider, DisplayData } from '../DisplayData'
-import { useGetStatus, useGetRuntimeStatus, Runtime, Layer, Status, RuntimeStatus } from '../oasis-indexer/generated/api'
+import { useGetStatus, useGetRuntimeStatus, Runtime, Layer, Status, RuntimeStatus } from '../oasisscan/generated/api'
 
 export function StatusDisplay({ layer }: { layer: Layer }) {
   const consensusResult = useGetStatus({ query: { enabled: layer === 'consensus' } })

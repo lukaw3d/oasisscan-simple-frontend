@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetRuntimeBlocks, Runtime, RuntimeBlockList } from '../../oasis-indexer/generated/api'
+import { useGetRuntimeBlocks, Runtime, RuntimeBlockList } from '../../oasisscan/generated/api'
 
 export function Blocks({ paratime = 'emerald' as Runtime }) {
   const searchParams = Object.fromEntries(useSearchParams()[0])

@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetConsensusBlocks, BlockList } from '../../oasis-indexer/generated/api'
+import { useGetConsensusBlocks, BlockList } from '../../oasisscan/generated/api'
 
 export function Blocks() {
   const searchParams = Object.fromEntries(useSearchParams()[0])

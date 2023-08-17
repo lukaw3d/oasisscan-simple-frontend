@@ -1,6 +1,6 @@
 import { useParams, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetConsensusAccountsAddressDebondingDelegations, DebondingDelegationList } from '../../oasis-indexer/generated/api'
+import { useGetConsensusAccountsAddressDebondingDelegations, DebondingDelegationList } from '../../oasisscan/generated/api'
 
 export function AccountsAddressDebondingDelegations() {
   const address = useParams().address!

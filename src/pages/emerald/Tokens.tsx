@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { EvmTokenList, Runtime, useGetRuntimeEvmTokens } from '../../oasis-indexer/generated/api'
+import { EvmTokenList, Runtime, useGetRuntimeEvmTokens } from '../../oasisscan/generated/api'
 import BigNumber from 'bignumber.js'
 
 export function Tokens({ paratime = 'emerald' as Runtime }) {

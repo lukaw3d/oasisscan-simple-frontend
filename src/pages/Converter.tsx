@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useGetRuntimeAccountsAddress, useGetRuntimeTransactionsTxHash } from '../oasis-indexer/generated/api'
+import { useGetRuntimeAccountsAddress, useGetRuntimeTransactionsTxHash } from '../oasisscan/generated/api'
 import { getEvmBech32Address } from '../utils/getEvmBech32Address'
 import { getEthAccountAddress } from '../utils/getEthAccountAddress'
 

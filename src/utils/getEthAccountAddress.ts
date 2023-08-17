@@ -1,4 +1,4 @@
-import { AddressPreimage } from '../oasis-indexer/generated/api'
+import { AddressPreimage } from '../oasisscan/generated/api'
 import { getAddress as getChecksumAddress } from 'ethers/address'
 
 export function getEthAccountAddress(preimage: AddressPreimage | undefined): string | undefined {

@@ -1,6 +1,6 @@
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetRuntimeAccountsAddress, Runtime, RuntimeAccount } from '../../oasis-indexer/generated/api'
+import { useGetRuntimeAccountsAddress, Runtime, RuntimeAccount } from '../../oasisscan/generated/api'
 import BigNumber from 'bignumber.js'
 import { getEthAccountAddress } from '../../utils/getEthAccountAddress'
 import React, { Suspense } from 'react'

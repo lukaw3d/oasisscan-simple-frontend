@@ -1,6 +1,6 @@
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetRuntimeTransactionsTxHash, Runtime, RuntimeTransactionList } from '../../oasis-indexer/generated/api'
+import { useGetRuntimeTransactionsTxHash, Runtime, RuntimeTransactionList } from '../../oasisscan/generated/api'
 import BigNumber from 'bignumber.js'
 
 export function TransactionsHash({ paratime = 'emerald' as Runtime }) {

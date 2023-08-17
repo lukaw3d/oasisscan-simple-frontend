@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetConsensusTransactions, TransactionList } from '../../oasis-indexer/generated/api'
+import { useGetConsensusTransactions, TransactionList } from '../../oasisscan/generated/api'
 import BigNumber from 'bignumber.js'
 import { useState } from 'react'
 
