@@ -16,6 +16,7 @@ export const largePages = async <T>(
     if (!aggregateField) return response
 
     for (let i = 1000; i < limit; i += 1000) {
+      config.params.limit = Math.min(1000, limit - i)
       config.params.offset += 1000
       const add = await axios({ ...config, ...requestOverrides })
       // @ts-expect-error Unknown types
