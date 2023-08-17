@@ -4,10 +4,8 @@ import { StatusDisplay } from '../utils/StatusDisplay'
 export function Home() {
   return (
     <>
-      <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/staging-testnet/">staging-testnet</a><br/>
-      <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/staging-mainnet/">staging-mainnet</a><br/>
-      <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/production-testnet/">production-testnet</a><br/>
-      <a href="https://lukaw3d.github.io/oasis-indexer-simple-frontend/production-mainnet/">production-mainnet</a><br/>
+      <a href="https://lukaw3d.github.io/oasisscan-simple-frontend/testnet/">testnet</a><br/>
+      <a href="https://lukaw3d.github.io/oasisscan-simple-frontend/mainnet/">mainnet</a><br/>
 
       <h2>Consensus</h2>
       <Link to="/consensus/blocks?limit=100&offset=0">Blocks</Link>, <Link to="/consensus/blocks?limit=5000&to=10000000">Blocks&lt;10000000</Link><br />
@@ -54,7 +52,7 @@ export function Home() {
       <br />
       <h2>Misc</h2>
       <Link to="/converter">Converter</Link><br />
-      <Link to="https://github.com/lukaw3d/oasis-indexer-simple-frontend">Source code</Link><br />
+      <Link to="https://github.com/lukaw3d/oasisscan-simple-frontend">Source code</Link><br />
     </>
   )
 }

@@ -7,20 +7,19 @@ export const largePages = async <T>(
   await new Promise(r => setTimeout(r, 1))
   if (config.signal?.aborted) throw 'Aborted by React.StrictMode'
 
-  if (Number(config.params?.limit) > 1000) {
-    const limit = Number(config.params.limit)
-    config.params.limit = 1000
-    config.params.offset = Number(config.params.offset ?? '0')
+  if (Number(config.params?.size) > 1000) {
+    const size = Number(config.params.size)
+    config.params.size = 1000
+    config.params.page = Number(config.params.page ?? '1')
     const response = await axios({ ...config, ...requestOverrides })
-    const aggregateField = Object.entries(response.data).find(([, v]) => (v as any[]).length === 1000)
-    if (!aggregateField) return response
+    const aggregate = response.data.data.list
+    if (aggregate.length !== 1000) return response
 
-    for (let i = 1000; i < limit; i += 1000) {
-      config.params.limit = Math.min(1000, limit - i)
-      config.params.offset += 1000
+    for (let i = 1000; i < size; i += 1000) {
+      config.params.size = Math.min(1000, size - i)
+      config.params.page += 1
       const add = await axios({ ...config, ...requestOverrides })
-      // @ts-expect-error Unknown types
-      aggregateField[1].push(...add.data[aggregateField[0]])
+      aggregate.push(...add.data.data.list)
     }
     return response
   }

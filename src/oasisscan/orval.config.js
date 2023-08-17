@@ -2,10 +2,7 @@
 module.exports = {
   indexer: {
     input: {
-      // target: './v1.yaml',
-      // target: 'https://raw.githubusercontent.com/oasisprotocol/nexus/main/api/spec/v1.yaml',
-      // target: 'https://nexus.stg.oasis.io/v1/spec/v1.yaml',
-      target: 'https://nexus.oasis.io/v1/spec/v1.yaml',
+      target: 'https://api.oasisscan.com/mainnet/v2/api-docs',
     },
     output: {
       target: './generated/api.ts',
