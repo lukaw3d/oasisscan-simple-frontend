@@ -7,24 +7,24 @@ export function Home() {
       <a href="https://lukaw3d.github.io/oasisscan-simple-frontend/mainnet/">mainnet</a><br/>
 
       <h2>Consensus</h2>
-      <Link to="/consensus/blocks?limit=100&offset=0">Blocks</Link>, <Link to="/consensus/blocks?limit=5000&to=10000000">Blocks&lt;10000000</Link><br />
-      <Link to="/consensus/transactions?limit=100&offset=0">Transactions</Link><br />
-      <Link to="/consensus/events?limit=100&offset=0">Events</Link><br />
-      <Link to="/consensus/accounts/oasis1qzp86dykm9nfqr83es07c324u64f6dgsdvk0fapj">Accounts</Link><br />
-      <Link to="/consensus/accounts-delegations/oasis1qzp86dykm9nfqr83es07c324u64f6dgsdvk0fapj">Account delegations</Link><br />
-      <Link to="/consensus/accounts-debonding-delegations/oasis1qzp86dykm9nfqr83es07c324u64f6dgsdvk0fapj">Account debonding delegations</Link><br />
-      <Link to="/consensus/validators?limit=100&offset=0">Validators</Link><br />
-      <Link to="/consensus/proposals?limit=100&offset=0">Proposals</Link><br />
+      <Link to="/consensus/blocks?size=100&page=1">Blocks</Link><br />
+      <Link to="/consensus/transactions?size=100&page=1">Transactions</Link><br />
+      <Link to="/consensus/events?address=oasis1qqekv2ymgzmd8j2s2u7g0hhc7e77e654kvwqtjwm&size=100&page=1">Events</Link><br />
+      <Link to="/consensus/accounts/oasis1qqekv2ymgzmd8j2s2u7g0hhc7e77e654kvwqtjwm">Account</Link><br />
+      <Link to="/consensus/accounts-delegations/oasis1qqekv2ymgzmd8j2s2u7g0hhc7e77e654kvwqtjwm">Account delegations</Link><br />
+      <Link to="/consensus/accounts-debonding-delegations/oasis1qqekv2ymgzmd8j2s2u7g0hhc7e77e654kvwqtjwm">Account debonding delegations</Link><br />
+      <Link to="/consensus/validators?size=100&page=1">Validators</Link><br />
+      <Link to="/consensus/proposals?size=100&page=1">Proposals</Link><br />
 
       <h2>Emerald</h2>
-      <Link to="/emerald/blocks?limit=100&offset=0">Blocks</Link>, <Link to="/emerald/blocks?limit=5000&to=5000">Blocks&lt;5000</Link><br />
-      <Link to="/emerald/transactions?limit=100&offset=0">Transactions</Link><br />
-      <Link to="/emerald/accounts/oasis1qrvha284gfztn7wwq6z50c86ceu28jp7csqhpx9t">Accounts</Link><br />
+      <Link to="/emerald/blocks?size=100&page=1">Blocks</Link><br />
+      <Link to="/emerald/transactions?size=100&page=1">Transactions</Link><br />
+      <Link to="/emerald/transactions/0x0c6e8e933834eaf4342c882b7bb52cde945e6eda2611197db671de541d072e2f">Transaction</Link><br />
 
       <h2>Sapphire</h2>
-      <Link to="/sapphire/blocks?limit=100&offset=0">Blocks</Link>, <Link to="/sapphire/blocks?limit=5000&to=5000">Blocks&lt;5000</Link><br />
-      <Link to="/sapphire/transactions?limit=100&offset=0">Transactions</Link><br />
-      <Link to="/sapphire/accounts/oasis1qpupfu7e2n6pkezeaw0yhj8mcem8anj64ytrayne">Accounts</Link><br />
+      <Link to="/sapphire/blocks?size=100&page=1">Blocks</Link><br />
+      <Link to="/sapphire/transactions?size=100&page=1">Transactions</Link><br />
+      <Link to="/sapphire/transactions/0xcdc01786ffede74baf471267f5f058ef4da09cc2f80ae4fd34ba43ffe5080ca1">Transaction</Link><br />
 
       <h2>Cipher</h2>
 
