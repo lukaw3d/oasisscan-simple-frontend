@@ -42,7 +42,6 @@ export function Home() {
 
       <br />
       <h2>Misc</h2>
-      <Link to="/converter">Converter</Link><br />
       <Link to="https://github.com/lukaw3d/oasisscan-simple-frontend">Source code</Link><br />
     </>
   )
