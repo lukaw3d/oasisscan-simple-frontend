@@ -11,7 +11,7 @@ export function Events() {
         fieldPriority: {},
         fieldDisplay: {},
       }}>
-        <DisplayData result={useStakingEventsUsingGET({ ...searchParams })}></DisplayData>
+        <DisplayData result={useStakingEventsUsingGET({ address: '', ...searchParams })}></DisplayData>
       </CustomDisplayProvider>
     </>
   )
