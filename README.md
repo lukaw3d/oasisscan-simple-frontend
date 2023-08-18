@@ -1,4 +1,4 @@
-https://nexus.oasis.io/v1/spec/v1.html
+https://api.oasisscan.com/mainnet/swagger-ui/
 
 Endpoints used
 
