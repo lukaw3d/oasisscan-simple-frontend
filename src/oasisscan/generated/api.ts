@@ -23,10 +23,10 @@ import blockDetailUsingGETMutator from '../largePages';
 import latestBlocksUsingGETMutator from '../largePages';
 import getBlockByProposerUsingGETMutator from '../largePages';
 import transactionMethodUsingGETMutator from '../largePages';
-import latestTransactionsUsingGET1Mutator from '../largePages';
+import powerEventsUsingGETMutator from '../largePages';
 import searchUsingGETMutator from '../largePages';
 import stakingEventsUsingGETMutator from '../largePages';
-import stakingEventsUsingGET1Mutator from '../largePages';
+import stakingEventDetailUsingGETMutator from '../largePages';
 import transactionDetailUsingGETMutator from '../largePages';
 import transactionhistoryUsingGETMutator from '../largePages';
 import latestTransactionsUsingGETMutator from '../largePages';
@@ -42,15 +42,15 @@ import infoUsingGETMutator from '../largePages';
 import runtimeListUsingGETMutator from '../largePages';
 import roundInfoUsingGETMutator from '../largePages';
 import roundListUsingGETMutator from '../largePages';
-import runtimeStatsUsingGET1Mutator from '../largePages';
-import runtimeStatsUsingGET2Mutator from '../largePages';
 import runtimeStatsUsingGETMutator from '../largePages';
+import runtimeTransactionDetailUsingGETMutator from '../largePages';
+import runtimeLatestTransactionsUsingGETMutator from '../largePages';
 import delegatorsUsingGETMutator from '../largePages';
 import escrowStatsUsingGETMutator from '../largePages';
 import escrowStatsTotalUsingGETMutator from '../largePages';
 import validatorInfoUsingGETMutator from '../largePages';
 import validatorsUsingGETMutator from '../largePages';
-import networkUsingGET1Mutator from '../largePages';
+import validatorsOnNetworkUsingGETMutator from '../largePages';
 import validatorStatUsingGETMutator from '../largePages';
 export type ValidatorStatUsingGETParams = {
 /**
@@ -119,7 +119,7 @@ size?: number;
 validator?: string;
 };
 
-export type RuntimeStatsUsingGETParams = {
+export type RuntimeLatestTransactionsUsingGETParams = {
 /**
  * id
  */
@@ -138,7 +138,7 @@ round?: number;
 size?: number;
 };
 
-export type RuntimeStatsUsingGET2Params = {
+export type RuntimeTransactionDetailUsingGETParams = {
 /**
  * hash
  */
@@ -153,7 +153,7 @@ id: string;
 round?: number;
 };
 
-export type RuntimeStatsUsingGET1Params = {
+export type RuntimeStatsUsingGETParams = {
 /**
  * id
  */
@@ -238,7 +238,7 @@ runtime?: boolean;
 size?: number;
 };
 
-export type StakingEventsUsingGET1Params = {
+export type StakingEventDetailUsingGETParams = {
 /**
  * id
  */
@@ -267,7 +267,7 @@ export type SearchUsingGETParams = {
 key: string;
 };
 
-export type LatestTransactionsUsingGET1Params = {
+export type PowerEventsUsingGETParams = {
 /**
  * address
  */
@@ -883,13 +883,13 @@ export const useTransactionMethodUsingGET = <TData = Awaited<ReturnType<typeof t
 
 
 /**
- * @summary latestTransactions
+ * @summary powerEvents
  */
-export const latestTransactionsUsingGET1 = (
-    params?: LatestTransactionsUsingGET1Params,
- options?: SecondParameter<typeof latestTransactionsUsingGET1Mutator>,signal?: AbortSignal
+export const powerEventsUsingGET = (
+    params?: PowerEventsUsingGETParams,
+ options?: SecondParameter<typeof powerEventsUsingGETMutator>,signal?: AbortSignal
 ) => {
-      return latestTransactionsUsingGET1Mutator<ApiResult>(
+      return powerEventsUsingGETMutator<ApiResult>(
       {url: `/chain/powerevent`, method: 'get',
         params, signal
     },
@@ -897,36 +897,36 @@ export const latestTransactionsUsingGET1 = (
     }
   
 
-export const getLatestTransactionsUsingGET1QueryKey = (params?: LatestTransactionsUsingGET1Params,) => [`/chain/powerevent`, ...(params ? [params]: [])] as const;
+export const getPowerEventsUsingGETQueryKey = (params?: PowerEventsUsingGETParams,) => [`/chain/powerevent`, ...(params ? [params]: [])] as const;
   
 
     
-export const getLatestTransactionsUsingGET1QueryOptions = <TData = Awaited<ReturnType<typeof latestTransactionsUsingGET1>>, TError = unknown>(params?: LatestTransactionsUsingGET1Params, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof latestTransactionsUsingGET1>>, TError, TData>, request?: SecondParameter<typeof latestTransactionsUsingGET1Mutator>}
-): UseQueryOptions<Awaited<ReturnType<typeof latestTransactionsUsingGET1>>, TError, TData> & { queryKey: QueryKey } => {
+export const getPowerEventsUsingGETQueryOptions = <TData = Awaited<ReturnType<typeof powerEventsUsingGET>>, TError = unknown>(params?: PowerEventsUsingGETParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof powerEventsUsingGET>>, TError, TData>, request?: SecondParameter<typeof powerEventsUsingGETMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof powerEventsUsingGET>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getLatestTransactionsUsingGET1QueryKey(params);
+  const queryKey =  queryOptions?.queryKey ?? getPowerEventsUsingGETQueryKey(params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof latestTransactionsUsingGET1>>> = ({ signal }) => latestTransactionsUsingGET1(params, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof powerEventsUsingGET>>> = ({ signal }) => powerEventsUsingGET(params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, ...queryOptions}}
 
-export type LatestTransactionsUsingGET1QueryResult = NonNullable<Awaited<ReturnType<typeof latestTransactionsUsingGET1>>>
-export type LatestTransactionsUsingGET1QueryError = unknown
+export type PowerEventsUsingGETQueryResult = NonNullable<Awaited<ReturnType<typeof powerEventsUsingGET>>>
+export type PowerEventsUsingGETQueryError = unknown
 
 /**
- * @summary latestTransactions
+ * @summary powerEvents
  */
-export const useLatestTransactionsUsingGET1 = <TData = Awaited<ReturnType<typeof latestTransactionsUsingGET1>>, TError = unknown>(
- params?: LatestTransactionsUsingGET1Params, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof latestTransactionsUsingGET1>>, TError, TData>, request?: SecondParameter<typeof latestTransactionsUsingGET1Mutator>}
+export const usePowerEventsUsingGET = <TData = Awaited<ReturnType<typeof powerEventsUsingGET>>, TError = unknown>(
+ params?: PowerEventsUsingGETParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof powerEventsUsingGET>>, TError, TData>, request?: SecondParameter<typeof powerEventsUsingGETMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const queryOptions = getLatestTransactionsUsingGET1QueryOptions(params,options)
+  const queryOptions = getPowerEventsUsingGETQueryOptions(params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -1045,13 +1045,13 @@ export const useStakingEventsUsingGET = <TData = Awaited<ReturnType<typeof staki
 
 
 /**
- * @summary stakingEvents
+ * @summary stakingEventDetail
  */
-export const stakingEventsUsingGET1 = (
-    params: StakingEventsUsingGET1Params,
- options?: SecondParameter<typeof stakingEventsUsingGET1Mutator>,signal?: AbortSignal
+export const stakingEventDetailUsingGET = (
+    params: StakingEventDetailUsingGETParams,
+ options?: SecondParameter<typeof stakingEventDetailUsingGETMutator>,signal?: AbortSignal
 ) => {
-      return stakingEventsUsingGET1Mutator<ApiResult>(
+      return stakingEventDetailUsingGETMutator<ApiResult>(
       {url: `/chain/staking/events/info`, method: 'get',
         params, signal
     },
@@ -1059,36 +1059,36 @@ export const stakingEventsUsingGET1 = (
     }
   
 
-export const getStakingEventsUsingGET1QueryKey = (params: StakingEventsUsingGET1Params,) => [`/chain/staking/events/info`, ...(params ? [params]: [])] as const;
+export const getStakingEventDetailUsingGETQueryKey = (params: StakingEventDetailUsingGETParams,) => [`/chain/staking/events/info`, ...(params ? [params]: [])] as const;
   
 
     
-export const getStakingEventsUsingGET1QueryOptions = <TData = Awaited<ReturnType<typeof stakingEventsUsingGET1>>, TError = unknown>(params: StakingEventsUsingGET1Params, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof stakingEventsUsingGET1>>, TError, TData>, request?: SecondParameter<typeof stakingEventsUsingGET1Mutator>}
-): UseQueryOptions<Awaited<ReturnType<typeof stakingEventsUsingGET1>>, TError, TData> & { queryKey: QueryKey } => {
+export const getStakingEventDetailUsingGETQueryOptions = <TData = Awaited<ReturnType<typeof stakingEventDetailUsingGET>>, TError = unknown>(params: StakingEventDetailUsingGETParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof stakingEventDetailUsingGET>>, TError, TData>, request?: SecondParameter<typeof stakingEventDetailUsingGETMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof stakingEventDetailUsingGET>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getStakingEventsUsingGET1QueryKey(params);
+  const queryKey =  queryOptions?.queryKey ?? getStakingEventDetailUsingGETQueryKey(params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof stakingEventsUsingGET1>>> = ({ signal }) => stakingEventsUsingGET1(params, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof stakingEventDetailUsingGET>>> = ({ signal }) => stakingEventDetailUsingGET(params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, ...queryOptions}}
 
-export type StakingEventsUsingGET1QueryResult = NonNullable<Awaited<ReturnType<typeof stakingEventsUsingGET1>>>
-export type StakingEventsUsingGET1QueryError = unknown
+export type StakingEventDetailUsingGETQueryResult = NonNullable<Awaited<ReturnType<typeof stakingEventDetailUsingGET>>>
+export type StakingEventDetailUsingGETQueryError = unknown
 
 /**
- * @summary stakingEvents
+ * @summary stakingEventDetail
  */
-export const useStakingEventsUsingGET1 = <TData = Awaited<ReturnType<typeof stakingEventsUsingGET1>>, TError = unknown>(
- params: StakingEventsUsingGET1Params, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof stakingEventsUsingGET1>>, TError, TData>, request?: SecondParameter<typeof stakingEventsUsingGET1Mutator>}
+export const useStakingEventDetailUsingGET = <TData = Awaited<ReturnType<typeof stakingEventDetailUsingGET>>, TError = unknown>(
+ params: StakingEventDetailUsingGETParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof stakingEventDetailUsingGET>>, TError, TData>, request?: SecondParameter<typeof stakingEventDetailUsingGETMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const queryOptions = getStakingEventsUsingGET1QueryOptions(params,options)
+  const queryOptions = getStakingEventDetailUsingGETQueryOptions(params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -1904,11 +1904,11 @@ export const useRoundListUsingGET = <TData = Awaited<ReturnType<typeof roundList
 /**
  * @summary runtimeStats
  */
-export const runtimeStatsUsingGET1 = (
-    params: RuntimeStatsUsingGET1Params,
- options?: SecondParameter<typeof runtimeStatsUsingGET1Mutator>,signal?: AbortSignal
+export const runtimeStatsUsingGET = (
+    params: RuntimeStatsUsingGETParams,
+ options?: SecondParameter<typeof runtimeStatsUsingGETMutator>,signal?: AbortSignal
 ) => {
-      return runtimeStatsUsingGET1Mutator<ApiResult>(
+      return runtimeStatsUsingGETMutator<ApiResult>(
       {url: `/runtime/stats`, method: 'get',
         params, signal
     },
@@ -1916,115 +1916,7 @@ export const runtimeStatsUsingGET1 = (
     }
   
 
-export const getRuntimeStatsUsingGET1QueryKey = (params: RuntimeStatsUsingGET1Params,) => [`/runtime/stats`, ...(params ? [params]: [])] as const;
-  
-
-    
-export const getRuntimeStatsUsingGET1QueryOptions = <TData = Awaited<ReturnType<typeof runtimeStatsUsingGET1>>, TError = unknown>(params: RuntimeStatsUsingGET1Params, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof runtimeStatsUsingGET1>>, TError, TData>, request?: SecondParameter<typeof runtimeStatsUsingGET1Mutator>}
-): UseQueryOptions<Awaited<ReturnType<typeof runtimeStatsUsingGET1>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getRuntimeStatsUsingGET1QueryKey(params);
-
-  
-  
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof runtimeStatsUsingGET1>>> = ({ signal }) => runtimeStatsUsingGET1(params, requestOptions, signal);
-    
-      
-      
-   return  { queryKey, queryFn, ...queryOptions}}
-
-export type RuntimeStatsUsingGET1QueryResult = NonNullable<Awaited<ReturnType<typeof runtimeStatsUsingGET1>>>
-export type RuntimeStatsUsingGET1QueryError = unknown
-
-/**
- * @summary runtimeStats
- */
-export const useRuntimeStatsUsingGET1 = <TData = Awaited<ReturnType<typeof runtimeStatsUsingGET1>>, TError = unknown>(
- params: RuntimeStatsUsingGET1Params, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof runtimeStatsUsingGET1>>, TError, TData>, request?: SecondParameter<typeof runtimeStatsUsingGET1Mutator>}
-
-  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
-
-  const queryOptions = getRuntimeStatsUsingGET1QueryOptions(params,options)
-
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-/**
- * @summary runtimeStats
- */
-export const runtimeStatsUsingGET2 = (
-    params: RuntimeStatsUsingGET2Params,
- options?: SecondParameter<typeof runtimeStatsUsingGET2Mutator>,signal?: AbortSignal
-) => {
-      return runtimeStatsUsingGET2Mutator<ApiResult>(
-      {url: `/runtime/transaction/info`, method: 'get',
-        params, signal
-    },
-      options);
-    }
-  
-
-export const getRuntimeStatsUsingGET2QueryKey = (params: RuntimeStatsUsingGET2Params,) => [`/runtime/transaction/info`, ...(params ? [params]: [])] as const;
-  
-
-    
-export const getRuntimeStatsUsingGET2QueryOptions = <TData = Awaited<ReturnType<typeof runtimeStatsUsingGET2>>, TError = unknown>(params: RuntimeStatsUsingGET2Params, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof runtimeStatsUsingGET2>>, TError, TData>, request?: SecondParameter<typeof runtimeStatsUsingGET2Mutator>}
-): UseQueryOptions<Awaited<ReturnType<typeof runtimeStatsUsingGET2>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getRuntimeStatsUsingGET2QueryKey(params);
-
-  
-  
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof runtimeStatsUsingGET2>>> = ({ signal }) => runtimeStatsUsingGET2(params, requestOptions, signal);
-    
-      
-      
-   return  { queryKey, queryFn, ...queryOptions}}
-
-export type RuntimeStatsUsingGET2QueryResult = NonNullable<Awaited<ReturnType<typeof runtimeStatsUsingGET2>>>
-export type RuntimeStatsUsingGET2QueryError = unknown
-
-/**
- * @summary runtimeStats
- */
-export const useRuntimeStatsUsingGET2 = <TData = Awaited<ReturnType<typeof runtimeStatsUsingGET2>>, TError = unknown>(
- params: RuntimeStatsUsingGET2Params, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof runtimeStatsUsingGET2>>, TError, TData>, request?: SecondParameter<typeof runtimeStatsUsingGET2Mutator>}
-
-  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
-
-  const queryOptions = getRuntimeStatsUsingGET2QueryOptions(params,options)
-
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-/**
- * @summary runtimeStats
- */
-export const runtimeStatsUsingGET = (
-    params: RuntimeStatsUsingGETParams,
- options?: SecondParameter<typeof runtimeStatsUsingGETMutator>,signal?: AbortSignal
-) => {
-      return runtimeStatsUsingGETMutator<ApiResult>(
-      {url: `/runtime/transaction/list`, method: 'get',
-        params, signal
-    },
-      options);
-    }
-  
-
-export const getRuntimeStatsUsingGETQueryKey = (params: RuntimeStatsUsingGETParams,) => [`/runtime/transaction/list`, ...(params ? [params]: [])] as const;
+export const getRuntimeStatsUsingGETQueryKey = (params: RuntimeStatsUsingGETParams,) => [`/runtime/stats`, ...(params ? [params]: [])] as const;
   
 
     
@@ -2054,6 +1946,114 @@ export const useRuntimeStatsUsingGET = <TData = Awaited<ReturnType<typeof runtim
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getRuntimeStatsUsingGETQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary runtimeTransactionDetail
+ */
+export const runtimeTransactionDetailUsingGET = (
+    params: RuntimeTransactionDetailUsingGETParams,
+ options?: SecondParameter<typeof runtimeTransactionDetailUsingGETMutator>,signal?: AbortSignal
+) => {
+      return runtimeTransactionDetailUsingGETMutator<ApiResult>(
+      {url: `/runtime/transaction/info`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getRuntimeTransactionDetailUsingGETQueryKey = (params: RuntimeTransactionDetailUsingGETParams,) => [`/runtime/transaction/info`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getRuntimeTransactionDetailUsingGETQueryOptions = <TData = Awaited<ReturnType<typeof runtimeTransactionDetailUsingGET>>, TError = unknown>(params: RuntimeTransactionDetailUsingGETParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof runtimeTransactionDetailUsingGET>>, TError, TData>, request?: SecondParameter<typeof runtimeTransactionDetailUsingGETMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof runtimeTransactionDetailUsingGET>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getRuntimeTransactionDetailUsingGETQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof runtimeTransactionDetailUsingGET>>> = ({ signal }) => runtimeTransactionDetailUsingGET(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type RuntimeTransactionDetailUsingGETQueryResult = NonNullable<Awaited<ReturnType<typeof runtimeTransactionDetailUsingGET>>>
+export type RuntimeTransactionDetailUsingGETQueryError = unknown
+
+/**
+ * @summary runtimeTransactionDetail
+ */
+export const useRuntimeTransactionDetailUsingGET = <TData = Awaited<ReturnType<typeof runtimeTransactionDetailUsingGET>>, TError = unknown>(
+ params: RuntimeTransactionDetailUsingGETParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof runtimeTransactionDetailUsingGET>>, TError, TData>, request?: SecondParameter<typeof runtimeTransactionDetailUsingGETMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getRuntimeTransactionDetailUsingGETQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * @summary runtimeLatestTransactions
+ */
+export const runtimeLatestTransactionsUsingGET = (
+    params: RuntimeLatestTransactionsUsingGETParams,
+ options?: SecondParameter<typeof runtimeLatestTransactionsUsingGETMutator>,signal?: AbortSignal
+) => {
+      return runtimeLatestTransactionsUsingGETMutator<ApiResult>(
+      {url: `/runtime/transaction/list`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getRuntimeLatestTransactionsUsingGETQueryKey = (params: RuntimeLatestTransactionsUsingGETParams,) => [`/runtime/transaction/list`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getRuntimeLatestTransactionsUsingGETQueryOptions = <TData = Awaited<ReturnType<typeof runtimeLatestTransactionsUsingGET>>, TError = unknown>(params: RuntimeLatestTransactionsUsingGETParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof runtimeLatestTransactionsUsingGET>>, TError, TData>, request?: SecondParameter<typeof runtimeLatestTransactionsUsingGETMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof runtimeLatestTransactionsUsingGET>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getRuntimeLatestTransactionsUsingGETQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof runtimeLatestTransactionsUsingGET>>> = ({ signal }) => runtimeLatestTransactionsUsingGET(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type RuntimeLatestTransactionsUsingGETQueryResult = NonNullable<Awaited<ReturnType<typeof runtimeLatestTransactionsUsingGET>>>
+export type RuntimeLatestTransactionsUsingGETQueryError = unknown
+
+/**
+ * @summary runtimeLatestTransactions
+ */
+export const useRuntimeLatestTransactionsUsingGET = <TData = Awaited<ReturnType<typeof runtimeLatestTransactionsUsingGET>>, TError = unknown>(
+ params: RuntimeLatestTransactionsUsingGETParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof runtimeLatestTransactionsUsingGET>>, TError, TData>, request?: SecondParameter<typeof runtimeLatestTransactionsUsingGETMutator>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getRuntimeLatestTransactionsUsingGETQueryOptions(params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -2333,49 +2333,49 @@ export const useValidatorsUsingGET = <TData = Awaited<ReturnType<typeof validato
 
 
 /**
- * @summary network
+ * @summary validatorsOnNetwork
  */
-export const networkUsingGET1 = (
+export const validatorsOnNetworkUsingGET = (
     
- options?: SecondParameter<typeof networkUsingGET1Mutator>,signal?: AbortSignal
+ options?: SecondParameter<typeof validatorsOnNetworkUsingGETMutator>,signal?: AbortSignal
 ) => {
-      return networkUsingGET1Mutator<ApiResult>(
+      return validatorsOnNetworkUsingGETMutator<ApiResult>(
       {url: `/validator/network`, method: 'get', signal
     },
       options);
     }
   
 
-export const getNetworkUsingGET1QueryKey = () => [`/validator/network`] as const;
+export const getValidatorsOnNetworkUsingGETQueryKey = () => [`/validator/network`] as const;
   
 
     
-export const getNetworkUsingGET1QueryOptions = <TData = Awaited<ReturnType<typeof networkUsingGET1>>, TError = unknown>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof networkUsingGET1>>, TError, TData>, request?: SecondParameter<typeof networkUsingGET1Mutator>}
-): UseQueryOptions<Awaited<ReturnType<typeof networkUsingGET1>>, TError, TData> & { queryKey: QueryKey } => {
+export const getValidatorsOnNetworkUsingGETQueryOptions = <TData = Awaited<ReturnType<typeof validatorsOnNetworkUsingGET>>, TError = unknown>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof validatorsOnNetworkUsingGET>>, TError, TData>, request?: SecondParameter<typeof validatorsOnNetworkUsingGETMutator>}
+): UseQueryOptions<Awaited<ReturnType<typeof validatorsOnNetworkUsingGET>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getNetworkUsingGET1QueryKey();
+  const queryKey =  queryOptions?.queryKey ?? getValidatorsOnNetworkUsingGETQueryKey();
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof networkUsingGET1>>> = ({ signal }) => networkUsingGET1(requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof validatorsOnNetworkUsingGET>>> = ({ signal }) => validatorsOnNetworkUsingGET(requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, ...queryOptions}}
 
-export type NetworkUsingGET1QueryResult = NonNullable<Awaited<ReturnType<typeof networkUsingGET1>>>
-export type NetworkUsingGET1QueryError = unknown
+export type ValidatorsOnNetworkUsingGETQueryResult = NonNullable<Awaited<ReturnType<typeof validatorsOnNetworkUsingGET>>>
+export type ValidatorsOnNetworkUsingGETQueryError = unknown
 
 /**
- * @summary network
+ * @summary validatorsOnNetwork
  */
-export const useNetworkUsingGET1 = <TData = Awaited<ReturnType<typeof networkUsingGET1>>, TError = unknown>(
-  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof networkUsingGET1>>, TError, TData>, request?: SecondParameter<typeof networkUsingGET1Mutator>}
+export const useValidatorsOnNetworkUsingGET = <TData = Awaited<ReturnType<typeof validatorsOnNetworkUsingGET>>, TError = unknown>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof validatorsOnNetworkUsingGET>>, TError, TData>, request?: SecondParameter<typeof validatorsOnNetworkUsingGETMutator>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const queryOptions = getNetworkUsingGET1QueryOptions(options)
+  const queryOptions = getValidatorsOnNetworkUsingGETQueryOptions(options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

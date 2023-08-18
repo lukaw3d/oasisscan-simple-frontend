@@ -410,8 +410,8 @@
         "tags": [
           "chain-controller"
         ],
-        "summary": "latestTransactions",
-        "operationId": "latestTransactionsUsingGET_1",
+        "summary": "powerEvents",
+        "operationId": "powerEventsUsingGET",
         "produces": [
           "*/*"
         ],
@@ -533,8 +533,8 @@
         "tags": [
           "chain-controller"
         ],
-        "summary": "stakingEvents",
-        "operationId": "stakingEventsUsingGET_1",
+        "summary": "stakingEventDetail",
+        "operationId": "stakingEventDetailUsingGET",
         "produces": [
           "*/*"
         ],
@@ -996,7 +996,7 @@
           "runtime-controller"
         ],
         "summary": "runtimeStats",
-        "operationId": "runtimeStatsUsingGET_1",
+        "operationId": "runtimeStatsUsingGET",
         "produces": [
           "*/*"
         ],
@@ -1033,8 +1033,8 @@
         "tags": [
           "runtime-controller"
         ],
-        "summary": "runtimeStats",
-        "operationId": "runtimeStatsUsingGET_2",
+        "summary": "runtimeTransactionDetail",
+        "operationId": "runtimeTransactionDetailUsingGET",
         "produces": [
           "*/*"
         ],
@@ -1077,8 +1077,8 @@
         "tags": [
           "runtime-controller"
         ],
-        "summary": "runtimeStats",
-        "operationId": "runtimeStatsUsingGET",
+        "summary": "runtimeLatestTransactions",
+        "operationId": "runtimeLatestTransactionsUsingGET",
         "produces": [
           "*/*"
         ],
@@ -1327,8 +1327,8 @@
         "tags": [
           "validator-controller"
         ],
-        "summary": "network",
-        "operationId": "networkUsingGET_1",
+        "summary": "validatorsOnNetwork",
+        "operationId": "validatorsOnNetworkUsingGET",
         "produces": [
           "*/*"
         ],
