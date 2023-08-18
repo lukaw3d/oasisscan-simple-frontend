@@ -1,10 +1,12 @@
 import { useParams, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetRuntimeTransactionsTxHash, Runtime } from '../../oasisscan/generated/api'
+import { useRuntimeTransactionDetailUsingGET } from '../../oasisscan/generated/api'
+import { ParaTime, paraTimesConfig, selectedNetwork } from '../../config'
 
-export function TransactionsHash({ paratime = 'emerald' as Runtime }) {
-  const txHash = useParams().txHash!
+export function TransactionsHash({ paratime = 'emerald' as ParaTime }) {
+  const hash = useParams().txHash!
   const searchParams = Object.fromEntries(useSearchParams()[0])
+  const id = paraTimesConfig[paratime][selectedNetwork].runtimeId
   return (
     <>
       <h2>Transactions</h2>
@@ -12,7 +14,7 @@ export function TransactionsHash({ paratime = 'emerald' as Runtime }) {
         fieldPriority: {},
         fieldDisplay: {},
       }}>
-        <DisplayData result={useGetRuntimeTransactionsTxHash(paratime, txHash, { ...searchParams })}></DisplayData>
+        <DisplayData result={useRuntimeTransactionDetailUsingGET({ ...searchParams, hash, id })}></DisplayData>
       </CustomDisplayProvider>
     </>
   )

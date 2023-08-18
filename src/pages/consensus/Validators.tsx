@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetConsensusValidators } from '../../oasisscan/generated/api'
+import { useValidatorsUsingGET } from '../../oasisscan/generated/api'
 
 export function Validators() {
   const searchParams = Object.fromEntries(useSearchParams()[0])
@@ -11,7 +11,7 @@ export function Validators() {
         fieldPriority: {},
         fieldDisplay: {},
       }}>
-        <DisplayData result={useGetConsensusValidators({ ...searchParams })}></DisplayData>
+        <DisplayData result={useValidatorsUsingGET({ ...searchParams })}></DisplayData>
       </CustomDisplayProvider>
     </>
   )

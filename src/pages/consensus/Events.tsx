@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetConsensusEvents } from '../../oasisscan/generated/api'
+import { useStakingEventsUsingGET } from '../../oasisscan/generated/api'
 
 export function Events() {
   const searchParams = Object.fromEntries(useSearchParams()[0])
@@ -11,7 +11,7 @@ export function Events() {
         fieldPriority: {},
         fieldDisplay: {},
       }}>
-        <DisplayData result={useGetConsensusEvents({ ...searchParams })}></DisplayData>
+        <DisplayData result={useStakingEventsUsingGET({ ...searchParams })}></DisplayData>
       </CustomDisplayProvider>
     </>
   )

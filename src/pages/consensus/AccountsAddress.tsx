@@ -1,10 +1,9 @@
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetConsensusAccountsAddress } from '../../oasisscan/generated/api'
+import { useAccountInfoUsingGET } from '../../oasisscan/generated/api'
 
 export function AccountsAddress() {
   const address = useParams().address!
-  const searchParams = Object.fromEntries(useSearchParams()[0])
   return (
     <>
       <h2>Accounts</h2>
@@ -12,7 +11,7 @@ export function AccountsAddress() {
         fieldPriority: {},
         fieldDisplay: {},
       }}>
-        <DisplayData result={useGetConsensusAccountsAddress(address, { ...searchParams })}></DisplayData>
+        <DisplayData result={useAccountInfoUsingGET(address)}></DisplayData>
       </CustomDisplayProvider>
     </>
   )

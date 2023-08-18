@@ -1,9 +1,7 @@
-import { useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetConsensusProposals } from '../../oasisscan/generated/api'
+import { useProposalListUsingGET } from '../../oasisscan/generated/api'
 
 export function Proposals() {
-  const searchParams = Object.fromEntries(useSearchParams()[0])
   return (
     <>
       <h2>Proposals</h2>
@@ -11,7 +9,7 @@ export function Proposals() {
         fieldPriority: {},
         fieldDisplay: {},
       }}>
-        <DisplayData result={useGetConsensusProposals({ ...searchParams })}></DisplayData>
+        <DisplayData result={useProposalListUsingGET()}></DisplayData>
       </CustomDisplayProvider>
     </>
   )

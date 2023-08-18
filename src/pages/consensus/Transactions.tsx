@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetConsensusTransactions } from '../../oasisscan/generated/api'
+import { useLatestTransactionsUsingGET } from '../../oasisscan/generated/api'
 
 export function Transactions() {
   const searchParams = Object.fromEntries(useSearchParams()[0])
@@ -12,7 +12,7 @@ export function Transactions() {
         fieldPriority: {},
         fieldDisplay: {},
       }}>
-        <DisplayData result={useGetConsensusTransactions({ ...searchParams })}></DisplayData>
+        <DisplayData result={useLatestTransactionsUsingGET({ ...searchParams })}></DisplayData>
       </CustomDisplayProvider>
     </>
   )

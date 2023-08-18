@@ -1,6 +1,6 @@
 import { useParams, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetConsensusAccountsAddressDelegations } from '../../oasisscan/generated/api'
+import { useAccountDelegationsUsingGET } from '../../oasisscan/generated/api'
 
 export function AccountsAddressDelegations() {
   const address = useParams().address!
@@ -12,7 +12,7 @@ export function AccountsAddressDelegations() {
         fieldPriority: {},
         fieldDisplay: {},
       }}>
-        <DisplayData result={useGetConsensusAccountsAddressDelegations(address, { ...searchParams })}></DisplayData>
+        <DisplayData result={useAccountDelegationsUsingGET({ ...searchParams, address })}></DisplayData>
       </CustomDisplayProvider>
     </>
   )

@@ -1,9 +1,11 @@
 import { useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetRuntimeBlocks, Runtime } from '../../oasisscan/generated/api'
+import { useRoundListUsingGET } from '../../oasisscan/generated/api'
+import { ParaTime, paraTimesConfig, selectedNetwork } from '../../config'
 
-export function Blocks({ paratime = 'emerald' as Runtime }) {
+export function Blocks({ paratime = 'emerald' as ParaTime }) {
   const searchParams = Object.fromEntries(useSearchParams()[0])
+  const id = paraTimesConfig[paratime][selectedNetwork].runtimeId
   return (
     <>
       <h2>Blocks</h2>
@@ -11,7 +13,7 @@ export function Blocks({ paratime = 'emerald' as Runtime }) {
         fieldPriority: {},
         fieldDisplay: {},
       }}>
-        <DisplayData result={useGetRuntimeBlocks(paratime, { ...searchParams })}></DisplayData>
+        <DisplayData result={useRoundListUsingGET({ ...searchParams, id })}></DisplayData>
       </CustomDisplayProvider>
     </>
   )

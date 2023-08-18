@@ -1,9 +1,11 @@
 import { useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetRuntimeTransactions, Runtime } from '../../oasisscan/generated/api'
+import { useRuntimeLatestTransactionsUsingGET } from '../../oasisscan/generated/api'
+import { ParaTime, paraTimesConfig, selectedNetwork } from '../../config'
 
-export function Transactions({ paratime = 'emerald' as Runtime }) {
+export function Transactions({ paratime = 'emerald' as ParaTime }) {
   const searchParams = Object.fromEntries(useSearchParams()[0])
+  const id = paraTimesConfig[paratime][selectedNetwork].runtimeId
 
   return (
     <>
@@ -12,7 +14,7 @@ export function Transactions({ paratime = 'emerald' as Runtime }) {
         fieldPriority: {},
         fieldDisplay: {},
       }}>
-        <DisplayData result={useGetRuntimeTransactions(paratime, { ...searchParams })}></DisplayData>
+        <DisplayData result={useRuntimeLatestTransactionsUsingGET({ ...searchParams, id })}></DisplayData>
       </CustomDisplayProvider>
     </>
   )

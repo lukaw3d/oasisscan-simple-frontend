@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetConsensusBlocks } from '../../oasisscan/generated/api'
+import { useLatestBlocksUsingGET } from '../../oasisscan/generated/api'
 
 export function Blocks() {
   const searchParams = Object.fromEntries(useSearchParams()[0])
@@ -11,7 +11,7 @@ export function Blocks() {
         fieldPriority: {},
         fieldDisplay: {},
       }}>
-        <DisplayData result={useGetConsensusBlocks({ ...searchParams })}></DisplayData>
+        <DisplayData result={useLatestBlocksUsingGET({ ...searchParams })}></DisplayData>
       </CustomDisplayProvider>
     </>
   )
