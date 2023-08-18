@@ -39,4 +39,4 @@ export const paraTimesConfig = {
 
 export type ParaTime = keyof typeof paraTimesConfig
 
-export const selectedNetwork: 'mainnet' | 'testnet' = 'mainnet'
+export const selectedNetwork = import.meta.env.VITE_APP_INDEXER_API.includes('mainnet') ? 'mainnet' : 'testnet'
