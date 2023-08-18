@@ -27,6 +27,9 @@ export function Home() {
       <Link to="/sapphire/transactions/0xcdc01786ffede74baf471267f5f058ef4da09cc2f80ae4fd34ba43ffe5080ca1">Transaction</Link><br />
 
       <h2>Cipher</h2>
+      <Link to="/cipher/blocks?size=100&page=1">Blocks</Link><br />
+      <Link to="/cipher/transactions?size=100&page=1">Transactions</Link><br />
+      <Link to="/cipher/transactions/">Transaction</Link><br />
 
       <br />
       <h2>Misc</h2>
