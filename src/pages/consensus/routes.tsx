@@ -6,12 +6,8 @@ import { TransactionsHash } from './TransactionsHash.tsx'
 import { AccountsAddress } from './AccountsAddress.tsx'
 import { AccountsAddressDelegations } from './AccountsAddressDelegations.tsx'
 import { AccountsAddressDebondingDelegations } from './AccountsAddressDebondingDelegations.tsx'
-import { Entities } from './Entities.tsx'
 import { Validators } from './Validators.tsx'
-import { Epochs } from './Epochs.tsx'
 import { Proposals } from './Proposals.tsx'
-import { StatsActiveAccounts } from '../emerald/StatsActiveAccounts.tsx'
-import { StatsTxVolume } from '../emerald/StatsTxVolume.tsx'
 
 export const routes: RouteObject[] = [
   { path: 'blocks', element: <Blocks /> },
@@ -21,10 +17,6 @@ export const routes: RouteObject[] = [
   { path: 'accounts/:address', element: <AccountsAddress /> },
   { path: 'accounts-delegations/:address', element: <AccountsAddressDelegations /> },
   { path: 'accounts-debonding-delegations/:address', element: <AccountsAddressDebondingDelegations /> },
-  { path: 'entities', element: <Entities /> },
   { path: 'validators', element: <Validators /> },
-  { path: 'epochs', element: <Epochs /> },
   { path: 'proposals', element: <Proposals /> },
-  { path: 'stats-tx-volume', element: <StatsTxVolume layer='consensus' /> },
-  { path: 'stats-active-accounts', element: <StatsActiveAccounts layer='consensus' /> },
 ]
