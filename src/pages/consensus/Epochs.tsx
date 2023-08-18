@@ -1,13 +1,13 @@
 import { useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetConsensusEpochs, EpochList } from '../../oasisscan/generated/api'
+import { useGetConsensusEpochs } from '../../oasisscan/generated/api'
 
 export function Epochs() {
   const searchParams = Object.fromEntries(useSearchParams()[0])
   return (
     <>
       <h2>Epochs</h2>
-      <CustomDisplayProvider<EpochList> value={{
+      <CustomDisplayProvider<any> value={{
         fieldPriority: {},
         fieldDisplay: {},
       }}>

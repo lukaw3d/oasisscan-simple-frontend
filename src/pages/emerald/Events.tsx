@@ -1,31 +1,15 @@
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useGetRuntimeEvents, RuntimeEventList, Runtime } from '../../oasisscan/generated/api'
+import { useGetRuntimeEvents, Runtime } from '../../oasisscan/generated/api'
 
 export function Events({ paratime = 'emerald' as Runtime }) {
   const searchParams = Object.fromEntries(useSearchParams()[0])
   return (
     <>
       <h2>Events</h2>
-      <CustomDisplayProvider<RuntimeEventList> value={{
-        fieldPriority: {
-          'events.0.round': -4,
-          'events.0.type': -3,
-          'events.0.evm_log_name': -2,
-          'events.0.evm_log_params': -1,
-          'events.0.body': 100,
-        },
-        fieldDisplay: {
-          'events.0.round': ({ value }) => {
-            return <Link to={`/${paratime}/blocks?limit=1&to=${value}`}>{value}</Link>
-          },
-          'events.0.type': ({ value }) => {
-            return <Link to={`/${paratime}/events/?limit=100&offset=0&type=${value}`}>{value}</Link>
-          },
-          'events.0.tx_hash': ({ value }) => {
-            return <Link to={`/${paratime}/transactions/${value}`}>{value}</Link>
-          },
-        },
+      <CustomDisplayProvider<any> value={{
+        fieldPriority: {},
+        fieldDisplay: {},
       }}>
         <DisplayData result={useGetRuntimeEvents(paratime, { ...searchParams })}></DisplayData>
       </CustomDisplayProvider>
