@@ -12,7 +12,11 @@ export function TransactionsHash({ paratime = 'emerald' as ParaTime }) {
       <h2>Transactions</h2>
       <CustomDisplayProvider<any> value={{
         fieldPriority: {},
-        fieldDisplay: {},
+        fieldDisplay: {
+          'data.result': ({ value }) => {
+            return <span style={!value ? {color: 'red'} : {}}>{value.toString()}</span>
+          },
+        },
       }}>
         <DisplayData result={useRuntimeTransactionDetailUsingGET({ ...searchParams, hash, id })}></DisplayData>
       </CustomDisplayProvider>

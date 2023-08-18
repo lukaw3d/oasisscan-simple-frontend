@@ -12,7 +12,11 @@ export function Transactions({ paratime = 'emerald' as ParaTime }) {
       <h2>Transactions</h2>
       <CustomDisplayProvider<any> value={{
         fieldPriority: {},
-        fieldDisplay: {},
+        fieldDisplay: {
+          'data.list.0.result': ({ value }) => {
+            return <span style={!value ? {color: 'red'} : {}}>{value.toString()}</span>
+          },
+        },
       }}>
         <DisplayData result={useRuntimeLatestTransactionsUsingGET({ ...searchParams, id })}></DisplayData>
       </CustomDisplayProvider>

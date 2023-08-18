@@ -10,7 +10,11 @@ export function Transactions() {
       <h2>Transactions</h2>
       <CustomDisplayProvider<any> value={{
         fieldPriority: {},
-        fieldDisplay: {},
+        fieldDisplay: {
+          'data.list.0.status': ({ value }) => {
+            return <span style={!value ? {color: 'red'} : {}}>{value.toString()}</span>
+          },
+        },
       }}>
         <DisplayData result={useLatestTransactionsUsingGET({ ...searchParams })}></DisplayData>
       </CustomDisplayProvider>
