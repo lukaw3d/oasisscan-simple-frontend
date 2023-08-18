@@ -5,7 +5,6 @@ import './index.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import { routes } from './pages/routes'
-import './utils/polyfill'
 
 axios.defaults.baseURL = import.meta.env.VITE_APP_INDEXER_API
 const queryClient = new QueryClient({
