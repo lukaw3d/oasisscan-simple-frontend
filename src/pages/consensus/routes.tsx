@@ -8,12 +8,14 @@ import { AccountsAddressDelegations } from './AccountsAddressDelegations.tsx'
 import { AccountsAddressDebondingDelegations } from './AccountsAddressDebondingDelegations.tsx'
 import { Validators } from './Validators.tsx'
 import { Proposals } from './Proposals.tsx'
+import { EventsId } from './EventsId.tsx'
 
 export const routes: RouteObject[] = [
   { path: 'blocks', element: <Blocks /> },
   { path: 'transactions', element: <Transactions /> },
   { path: 'transactions/:txHash', element: <TransactionsHash /> },
   { path: 'events', element: <Events /> },
+  { path: 'events/:id', element: <EventsId /> },
   { path: 'accounts/:address', element: <AccountsAddress /> },
   { path: 'accounts-delegations/:address', element: <AccountsAddressDelegations /> },
   { path: 'accounts-debonding-delegations/:address', element: <AccountsAddressDebondingDelegations /> },
