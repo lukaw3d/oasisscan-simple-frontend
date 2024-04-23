@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useLatestTransactionsUsingGET } from '../../oasisscan/generated/api'
+import { useLatestTransactionsUsingGET, useTransactionMethodUsingGET } from '../../oasisscan/generated/api'
 
 export function Transactions() {
   const searchParams = Object.fromEntries(useSearchParams()[0])
@@ -8,6 +8,15 @@ export function Transactions() {
   return (
     <>
       <h2>Transactions</h2>
+      <ul>
+        {useTransactionMethodUsingGET().data?.data.data?.list.sort().map((value: string) =>
+          <li key={value}>
+            <Link to={`/consensus/transactions?size=100&page=1&method=${value}`}>{value}</Link>
+            &nbsp;
+          </li>
+        )}
+      </ul>
+
       <CustomDisplayProvider<any> value={{
         fieldPriority: {},
         fieldDisplay: {
