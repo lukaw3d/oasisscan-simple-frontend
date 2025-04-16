@@ -35,8 +35,8 @@ jobs:
         run: yarn
 
       # - name: Build
-      - run: VITE_APP_INDEXER_API=https://api.oasisscan.com/testnet/  yarn build --outDir dist/testnet/ --base=/oasisscan-simple-frontend/testnet/
-      - run: VITE_APP_INDEXER_API=https://api.oasisscan.com/mainnet/  yarn build --outDir dist/mainnet/ --base=/oasisscan-simple-frontend/mainnet/
+      - run: VITE_APP_INDEXER_API=https://api.oasisscan.com/v2/testnet/  yarn build --outDir dist/testnet/ --base=/oasisscan-simple-frontend/testnet/
+      - run: VITE_APP_INDEXER_API=https://api.oasisscan.com/v2/mainnet/  yarn build --outDir dist/mainnet/ --base=/oasisscan-simple-frontend/mainnet/
       - run: echo '' > dist/index.html
       - run: echo '<!DOCTYPE html>' >> dist/index.html
       - run: echo '<html><head><meta http-equiv="refresh" content="0; URL=mainnet" /></head></html>' >> dist/index.html
