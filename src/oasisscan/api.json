@@ -18,7 +18,7 @@
   "paths": {
     "/account/debonding": {
       "get": {
-        "operationId": "AccountDebondingHandler",
+        "operationId": "accountDebondingUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -61,7 +61,7 @@
     },
     "/account/delegations": {
       "get": {
-        "operationId": "AccountDelegationsHandler",
+        "operationId": "accountDelegationsUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -112,7 +112,7 @@
     },
     "/account/info/{address}": {
       "get": {
-        "operationId": "AccountInfoHandler",
+        "operationId": "accountInfoUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -136,7 +136,7 @@
     },
     "/account/reward/export": {
       "get": {
-        "operationId": "AccountRewardExportHandler",
+        "operationId": "accountRewardExportUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -163,7 +163,7 @@
     },
     "/account/reward/list": {
       "get": {
-        "operationId": "AccountRewardHandler",
+        "operationId": "accountRewardUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -206,7 +206,7 @@
     },
     "/account/reward/stats": {
       "get": {
-        "operationId": "AccountRewardStatsHandler",
+        "operationId": "accountRewardStatsUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -233,7 +233,7 @@
     },
     "/account/staking/events": {
       "get": {
-        "operationId": "AccountStakingEventsHandler",
+        "operationId": "stakingEventsUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -276,7 +276,7 @@
     },
     "/account/staking/events/info": {
       "get": {
-        "operationId": "AccountStakingEventsInfoHandler",
+        "operationId": "stakingEventUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -303,7 +303,7 @@
     },
     "/chain/block/{height}": {
       "get": {
-        "operationId": "ChainBlockInfoHandler",
+        "operationId": "blockDetailGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -327,7 +327,7 @@
     },
     "/chain/blocks": {
       "get": {
-        "operationId": "ChainBlocksHandler",
+        "operationId": "latestBlocksUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -364,7 +364,7 @@
     },
     "/chain/methods": {
       "get": {
-        "operationId": "ChainMethodsHandler",
+        "operationId": "transactionMethodsUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -380,7 +380,7 @@
     },
     "/chain/proposedblocks": {
       "get": {
-        "operationId": "ChainProposedBlocksHandler",
+        "operationId": "proposedBlocksUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -423,7 +423,7 @@
     },
     "/chain/search": {
       "get": {
-        "operationId": "ChainSearchHandler",
+        "operationId": "searchUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -450,7 +450,7 @@
     },
     "/chain/transaction/{hash}": {
       "get": {
-        "operationId": "ChainTransactionInfoHandler",
+        "operationId": "transactionDetailUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -474,7 +474,7 @@
     },
     "/chain/transactions": {
       "get": {
-        "operationId": "ChainTransactionsHandler",
+        "operationId": "latestTransactionsUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -538,7 +538,7 @@
     },
     "/governance/proposallist": {
       "get": {
-        "operationId": "GovernanceProposalListHandler",
+        "operationId": "proposalListUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -554,7 +554,7 @@
     },
     "/governance/proposalwithvotes": {
       "get": {
-        "operationId": "GovernanceProposalWithVotesHandler",
+        "operationId": "proposalWithVotesUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -582,7 +582,7 @@
     },
     "/governance/votes": {
       "get": {
-        "operationId": "GovernanceVotesHandler",
+        "operationId": "governanceVotesUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -632,7 +632,7 @@
     },
     "/health": {
       "get": {
-        "operationId": "HealthHandler",
+        "operationId": "healthUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -648,7 +648,7 @@
     },
     "/market/chart": {
       "get": {
-        "operationId": "MarketChartHandler",
+        "operationId": "marketChartUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -664,7 +664,7 @@
     },
     "/market/info": {
       "get": {
-        "operationId": "MarketInfoHandler",
+        "operationId": "marketDetailUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -680,7 +680,7 @@
     },
     "/network/status": {
       "get": {
-        "operationId": "NetworkStatusHandler",
+        "operationId": "networkStatusUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -696,7 +696,7 @@
     },
     "/runtime/list": {
       "get": {
-        "operationId": "RuntimeListHandler",
+        "operationId": "runtimeListUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -712,7 +712,7 @@
     },
     "/runtime/round/info": {
       "get": {
-        "operationId": "RuntimeRoundInfoHandler",
+        "operationId": "runtimeRoundDetailUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -746,7 +746,7 @@
     },
     "/runtime/round/list": {
       "get": {
-        "operationId": "RuntimeRoundListHandler",
+        "operationId": "roundListUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -789,7 +789,7 @@
     },
     "/runtime/stats": {
       "get": {
-        "operationId": "RuntimeStatsHandler",
+        "operationId": "runtimeStatsUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -816,7 +816,7 @@
     },
     "/runtime/transaction/info": {
       "get": {
-        "operationId": "RuntimeTransactionInfoHandler",
+        "operationId": "runtimeTransactionDetailUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -856,7 +856,7 @@
     },
     "/runtime/transaction/list": {
       "get": {
-        "operationId": "RuntimeTransactionListHandler",
+        "operationId": "runtimeLatestTransactionsUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -912,7 +912,7 @@
     },
     "/trend": {
       "get": {
-        "operationId": "NetworkTrendHandler",
+        "operationId": "networkTrendUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -928,7 +928,7 @@
     },
     "/validator/blocksstats": {
       "get": {
-        "operationId": "ValidatorBlocksStatsHandler",
+        "operationId": "validatorBlocksStatsUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -955,7 +955,7 @@
     },
     "/validator/delegators": {
       "get": {
-        "operationId": "DelegatorsHandler",
+        "operationId": "delegatorsUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -998,7 +998,7 @@
     },
     "/validator/escrowevent": {
       "get": {
-        "operationId": "ValidatorEscrowEventHandler",
+        "operationId": "validatorEscrowEventUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1041,7 +1041,7 @@
     },
     "/validator/escrowstats": {
       "get": {
-        "operationId": "ValidatorEscrowStatsHandler",
+        "operationId": "validatorEscrowStatsUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1068,7 +1068,7 @@
     },
     "/validator/info": {
       "get": {
-        "operationId": "ValidatorInfoHandler",
+        "operationId": "validatorDetailUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1095,7 +1095,7 @@
     },
     "/validator/list": {
       "get": {
-        "operationId": "ValidatorListHandler",
+        "operationId": "validatorsUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1130,7 +1130,7 @@
     },
     "/validator/signstats": {
       "get": {
-        "operationId": "ValidatorSignStatsHandler",
+        "operationId": "validatorSignStatsUsingGET",
         "responses": {
           "200": {
             "description": "A successful response.",

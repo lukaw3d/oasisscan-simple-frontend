@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
 import { useRuntimeLatestTransactionsUsingGET } from '../../oasisscan/generated/api'
 import { ParaTime, paraTimesConfig, selectedNetwork } from '../../config'
@@ -13,8 +13,11 @@ export function Transactions({ paratime = 'emerald' as ParaTime }) {
       <CustomDisplayProvider<any> value={{
         fieldPriority: {},
         fieldDisplay: {
-          'data.list.0.result': ({ value }) => {
-            return <span style={!value ? {color: 'red'} : {}}>{value.toString()}</span>
+          'list.0.result': ({ value }) => {
+            return <span style={!value ? {color: 'red'} : {}}>{(value ?? false).toString()}</span>
+          },
+          'list.0.txHash': ({ value, parentValue }) => {
+            return <Link to={`/${paratime}/transactions/${value}?round=${parentValue.round}`}>{value}</Link>
           },
         },
       }}>

@@ -19,12 +19,10 @@ export function Home() {
       <h2>Emerald</h2>
       <Link to="/emerald/blocks?size=100&page=1">Blocks</Link><br />
       <Link to="/emerald/transactions?size=100&page=1">Transactions</Link><br />
-      <Link to="/emerald/transactions/0x0c6e8e933834eaf4342c882b7bb52cde945e6eda2611197db671de541d072e2f">Transaction</Link><br />
 
       <h2>Sapphire</h2>
       <Link to="/sapphire/blocks?size=100&page=1">Blocks</Link><br />
       <Link to="/sapphire/transactions?size=100&page=1">Transactions</Link><br />
-      <Link to="/sapphire/transactions/0xcdc01786ffede74baf471267f5f058ef4da09cc2f80ae4fd34ba43ffe5080ca1">Transaction</Link><br />
 
       <h2>Cipher</h2>
       <Link to="/cipher/blocks?size=100&page=1">Blocks</Link><br />

@@ -10,16 +10,16 @@ export function TransactionsHash() {
       <CustomDisplayProvider<any> value={{
         fieldPriority: {},
         fieldDisplay: {
-          'data.status': ({ value }) => {
+          'status': ({ value }) => {
             return <span style={!value ? {color: 'red'} : {}}>{value.toString()}</span>
           },
-          'data.raw': ({ value }) => {
+          'raw': ({ value }) => {
             return <RecursiveValue value={JSON.parse(value)} path='' parentValue={{}} />
           },
-          'data.from': ({ value }) => {
+          'from': ({ value }) => {
             return <Link to={`/consensus/accounts/${value}`}>{value}</Link>
           },
-          'data.to': ({ value }) => {
+          'to': ({ value }) => {
             return <Link to={`/consensus/accounts/${value}`}>{value}</Link>
           },
         },

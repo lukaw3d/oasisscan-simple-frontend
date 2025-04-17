@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import { CustomDisplayProvider, DisplayData } from '../../DisplayData'
-import { useStakingEventDetailUsingGET } from '../../oasisscan/generated/api'
+import { useStakingEventUsingGET } from '../../oasisscan/generated/api'
 
 export function EventsId() {
   const id = useParams().id!
@@ -10,15 +10,15 @@ export function EventsId() {
       <CustomDisplayProvider<any> value={{
         fieldPriority: {},
         fieldDisplay: {
-          'data.tx_hash': ({ value }) => {
+          'txHash': ({ value }) => {
             return <Link to={`/consensus/transactions/${value}`}>{value}</Link>
           },
-          'data.timestamp': ({ value }) => {
+          'timestamp': ({ value }) => {
             return <span>{new Date(value * 1000).toISOString()}</span>
           },
         },
       }}>
-        <DisplayData result={useStakingEventDetailUsingGET({id})}></DisplayData>
+        <DisplayData result={useStakingEventUsingGET({id})}></DisplayData>
       </CustomDisplayProvider>
     </>
   )

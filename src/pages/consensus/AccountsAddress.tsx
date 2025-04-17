@@ -10,7 +10,7 @@ export function AccountsAddress() {
       <CustomDisplayProvider<any> value={{
         fieldPriority: {},
         fieldDisplay: {
-          'data.address': ({ value }) => {
+          'address': ({ value }) => {
             return <span>
               <Link to={`/consensus/accounts/${value}`}>{value}</Link>
               ,&nbsp;
@@ -19,14 +19,14 @@ export function AccountsAddress() {
               <Link to={`/consensus/events?size=100&page=1&address=${value}`}>events</Link>
             </span>
           },
-          'data.escrow': ({ value, parentValue }) => {
+          'escrow': ({ value, parentValue }) => {
             return <span>
               {value}
               ,&nbsp;
               <Link to={`/consensus/accounts-delegations/${parentValue.address}`}>delegations</Link>
             </span>
           },
-          'data.debonding': ({ value, parentValue }) => {
+          'debonding': ({ value, parentValue }) => {
             return <span>
               {value}
               ,&nbsp;

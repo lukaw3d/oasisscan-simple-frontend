@@ -10,10 +10,10 @@ export function Blocks() {
       <CustomDisplayProvider<any> value={{
         fieldPriority: {},
         fieldDisplay: {
-          'data.list.0.timestamp': ({ value }) => {
+          'list.0.timestamp': ({ value }) => {
             return <span>{new Date(value * 1000).toISOString()}</span>
           },
-          'data.list.0.txs': ({ value, parentValue }) => {
+          'list.0.txs': ({ value, parentValue }) => {
             return <Link to={`/consensus/transactions?size=100&page=1&height=${parentValue.height}`}>{value}</Link>
           },
         },

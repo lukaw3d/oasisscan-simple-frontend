@@ -10,10 +10,12 @@ export function Events() {
       <CustomDisplayProvider<any> value={{
         fieldPriority: {},
         fieldDisplay: {
-          'data.list.0.id': ({ value }) => {
+          'list.0.id': ({ value }) => {
             return <Link to={`/consensus/events/${value}`}>{value}</Link>
           },
-          'data.list.0.tx_hash': ({ value }) => {
+          'list.0.txHash': ({ value }) => {
+            // https://emn178.github.io/online-tools/sha512_256.html?input_type=utf-8&hmac_input_type=utf-8
+            if (value === 'c672b8d1ef56ed28ab87c3622c5114069bdd3ad7b8f9737498d0c01ecef0967a' /* sha512_256('') */) return null
             return <Link to={`/consensus/transactions/${value}`}>{value}</Link>
           },
         },

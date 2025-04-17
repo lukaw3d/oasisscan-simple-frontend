@@ -76,7 +76,7 @@ export function DisplayData({ result }: { result: UseQueryResult<AxiosResponse<a
   if (result.isLoading) return <div>Loading...</div>
   if (result.error) return <div>{result.error.toString()}</div>
   return (<div>
-    <Recursive field='' value={result.data?.data} path='' parentValue={result.data?.data} />
+    <Recursive field='' value={result.data?.data?.data} path='' parentValue={result.data?.data?.data} />
   </div>
   )
 }
